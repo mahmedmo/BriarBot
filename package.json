@@ -1,0 +1,31 @@
+{
+	"name": "briar-bot",
+	"version": "1.0.0",
+	"description": "Epic Seven discord bot for optimal build reccomendations.",
+	"main": "briar-bot.js",
+	"scripts": {
+		"start": "node src/briar-bot.js",
+		"dev": "nodemon src/briar-bot.js",
+		"test": "node tests/test-run-all.js",
+		"test:search": "node tests/test-search.js",
+		"test:bot": "node tests/test-briar-bot.js",
+		"test:interactive": "node tests/test-interactive.js"
+	},
+	"dependencies": {
+		"discord.js": "^14.14.1",
+		"dotenv": "^16.3.1",
+		"puppeteer": "^24.16.2",
+		"node-fetch": "^2.6.7"
+	},
+	"devDependencies": {
+		"nodemon": "^3.0.2"
+	},
+	"keywords": [
+		"discord",
+		"bot",
+		"epic-seven",
+		"e7"
+	],
+	"author": "mahmedmo",
+	"license": "MIT"
+}
