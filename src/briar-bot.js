@@ -9,6 +9,83 @@ const getHeroImageUrl = require('./fetch-hero');
 const { findBestCharacterMatch, getCharacterSuggestions } = require('./character-search');
 require('dotenv').config();
 
+function getPuppeteerConfig() {
+	const isProduction = process.env.NODE_ENV === 'production';
+    
+	if (isProduction) {
+		return {
+			headless: true,
+			timeout: 30000,
+			args: [
+				'--no-sandbox',
+				'--disable-setuid-sandbox',
+				'--disable-dev-shm-usage',
+				'--disable-extensions',
+				'--disable-plugins',
+				'--no-first-run',
+				'--disable-default-apps',
+				'--disable-background-timer-throttling',
+				'--disable-renderer-backgrounding',
+				'--disable-backgrounding-occluded-windows',
+				'--disable-features=VizDisplayCompositor',
+				'--disable-ipc-flooding-protection',
+				'--disable-background-networking',
+				'--disable-component-extensions-with-background-pages',
+				'--disable-default-apps',
+				'--disable-domain-reliability',
+				'--disable-features=AudioServiceOutOfProcess',
+				'--disable-hang-monitor',
+				'--disable-notifications',
+				'--disable-offer-store-unmasked-wallet-cards',
+				'--disable-popup-blocking',
+				'--disable-print-preview',
+				'--disable-prompt-on-repost',
+				'--disable-speech-api',
+				'--disable-sync',
+				'--hide-scrollbars',
+				'--ignore-gpu-blacklist',
+				'--metrics-recording-only',
+				'--mute-audio',
+				'--no-default-browser-check',
+				'--no-pings',
+				'--password-store=basic',
+				'--use-mock-keychain',
+				'--disable-fre',
+				'--disable-gpu',
+				'--run-all-compositor-stages-before-draw',
+				'--disable-threaded-animation',
+				'--disable-threaded-scrolling',
+				'--disable-in-process-stack-traces',
+				'--disable-histogram-customizer',
+				'--disable-gl-extensions',
+				'--disable-composited-antialiasing',
+				'--disable-canvas-aa',
+				'--disable-3d-apis',
+				'--disable-accelerated-2d-canvas',
+				'--disable-accelerated-jpeg-decoding',
+				'--disable-accelerated-mjpeg-decode',
+				'--disable-app-list-dismiss-on-blur',
+				'--disable-accelerated-video-decode'
+			],
+			// Try to find Chrome executable
+			executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined
+		};
+	}
+    
+	// Local development configuration
+	return {
+		headless: true,
+		timeout: 30000,
+		args: [
+			'--disable-dev-shm-usage',
+			'--disable-extensions',
+			'--disable-plugins',
+			'--no-first-run',
+			'--disable-default-apps'
+		]
+	};
+}
+
 const client = new Client({
 	intents: [
 		GatewayIntentBits.Guilds,
@@ -995,24 +1072,7 @@ async function generateReportImage(data) {
 
 	let browser;
 	try {
-		browser = await puppeteer.launch({
-			headless: true,
-			timeout: 30000, // 30 second timeout
-			args: [
-				'--disable-dev-shm-usage',
-				'--disable-extensions',
-				'--disable-plugins',
-				'--no-first-run',
-				'--disable-default-apps',
-				'--disable-background-timer-throttling',
-				'--disable-renderer-backgrounding',
-				'--disable-backgrounding-occluded-windows',
-				// Only add no-sandbox in container environments
-				...(process.env.NODE_ENV === 'production' && process.env.DOCKER ? ['--no-sandbox', '--disable-setuid-sandbox'] : []),
-				// Allow local file access only for screenshot generation
-				'--allow-file-access-from-files'
-			]
-		});
+		const browser = await puppeteer.launch(getPuppeteerConfig());
 
 		const page = await browser.newPage();
 		await page.setContent(html);

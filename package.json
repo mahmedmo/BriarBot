@@ -7,6 +7,8 @@
 		"start": "node src/briar-bot.js",
 		"dev": "nodemon src/briar-bot.js",
 		"test": "node tests/test-run-all.js",
+		"build": "npm run install-chrome",
+		"install-chrome": "npx puppeteer browsers install chrome",
 		"test:search": "node tests/test-search.js",
 		"test:bot": "node tests/test-briar-bot.js",
 		"test:interactive": "node tests/test-interactive.js",
@@ -20,6 +22,9 @@
 	},
 	"devDependencies": {
 		"nodemon": "^3.0.2"
+	},
+	"engines": {
+		"node": ">=18.0.0"
 	},
 	"keywords": [
 		"discord",
