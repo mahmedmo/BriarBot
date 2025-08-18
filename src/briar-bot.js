@@ -337,6 +337,8 @@ async function analyzeHeroData(heroName) {
 			headless: true,
 			timeout: 30000, // 30 second timeout
 			args: [
+				'--no-sandbox',
+				'--disable-setuid-sandbox',
 				'--disable-dev-shm-usage',
 				'--disable-extensions',
 				'--disable-plugins',
@@ -346,8 +348,7 @@ async function analyzeHeroData(heroName) {
 				'--disable-background-timer-throttling',
 				'--disable-renderer-backgrounding',
 				'--disable-backgrounding-occluded-windows',
-				// Only add no-sandbox in container environments
-				...(process.env.NODE_ENV === 'production' && process.env.DOCKER ? ['--no-sandbox'] : [])
+				'--disable-features=VizDisplayCompositor'
 			]
 		});
 
