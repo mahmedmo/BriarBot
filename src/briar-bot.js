@@ -2,6 +2,7 @@ const { Client, GatewayIntentBits, AttachmentBuilder } = require('discord.js');
 const fetch = require('node-fetch');
 const fs = require('fs');
 const path = require('path');
+const http = require('http');
 const puppeteer = require('puppeteer');
 const getArtifactImage = require('./fetch-artifact');
 const getHeroImageUrl = require('./fetch-hero');
@@ -1051,8 +1052,20 @@ async function generateReportImage(data) {
 	}
 }
 
+// Create HTTP server for Render deployment
+const server = http.createServer((req, res) => {
+	res.writeHead(200, { 'Content-Type': 'text/plain' });
+	res.end('BriarBot is running!\n');
+});
+
 // Only run Discord bot if this file is executed directly, not when imported
 if (require.main === module) {
+	// Start HTTP server for Render
+	const port = process.env.PORT || 3000;
+	server.listen(port, '0.0.0.0', () => {
+		console.log(`HTTP server running on port ${port}`);
+	});
+
 	client.once('ready', async () => {
 		console.log(`Logged in as ${client.user.tag}!`);
 		await loadGameData();
