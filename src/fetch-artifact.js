@@ -19,7 +19,8 @@ const getArtifactImage = async (artifactName) => {
 		// Return the image URL
 		return `${imageUrl}`;
 	} catch (err) {
-		return `<div>Error: ${err.message}</div>`;
+		console.error('Artifact fetch error:', err.message);
+		return `<div>Error: Unable to load artifact image</div>`;
 	}
 };
 

@@ -22,6 +22,53 @@ let heroData = {};
 let artifactData = {};
 let artifactsById = {};
 
+// Rate limiting map: userId -> { count, lastReset }
+const userRateLimit = new Map();
+const RATE_LIMIT_REQUESTS = 5; // Max 5 requests
+const RATE_LIMIT_WINDOW = 60000; // Per 60 seconds
+
+// Input validation function
+function validateAndSanitizeInput(input) {
+	// Check length limits
+	if (input.length > 100) {
+		throw new Error('Input too long. Maximum 100 characters allowed.');
+	}
+	
+	// Allow only alphanumeric characters, spaces, hyphens, apostrophes, and common punctuation
+	const allowedPattern = /^[a-zA-Z0-9\s\-'.\+]+$/;
+	if (!allowedPattern.test(input)) {
+		throw new Error('Invalid characters in input. Only letters, numbers, spaces, hyphens, apostrophes, dots, and plus signs are allowed.');
+	}
+	
+	// Sanitize by trimming and normalizing spaces
+	return input.trim().replace(/\s+/g, ' ');
+}
+
+// Rate limiting function
+function checkRateLimit(userId) {
+	const now = Date.now();
+	const userLimit = userRateLimit.get(userId);
+	
+	if (!userLimit) {
+		userRateLimit.set(userId, { count: 1, lastReset: now });
+		return true;
+	}
+	
+	// Reset if window has passed
+	if (now - userLimit.lastReset > RATE_LIMIT_WINDOW) {
+		userRateLimit.set(userId, { count: 1, lastReset: now });
+		return true;
+	}
+	
+	// Check if under limit
+	if (userLimit.count < RATE_LIMIT_REQUESTS) {
+		userLimit.count++;
+		return true;
+	}
+	
+	return false;
+}
+
 const HERO_CACHE = "https://e7-optimizer-game-data.s3-accelerate.amazonaws.com/herodata.json";
 const ARTIFACT_CACHE = "https://e7-optimizer-game-data.s3-accelerate.amazonaws.com/artifactdata.json";
 const BUILDS_API = "https://krivpfvxi0.execute-api.us-west-2.amazonaws.com/dev/getBuilds";
@@ -272,16 +319,35 @@ async function analyzeHeroData(heroName) {
 		// Use the matched hero name or the original if no match found
 		const actualHeroName = matchedHero ? heroData[matchedHero].name || matchedHero : heroName;
 
-		// Convert hero name to URL format (spaces to +)
-		const urlHeroName = actualHeroName.replace(/\s+/g, '+');
+		// Convert hero name to URL format (spaces to +) and validate
+		const urlHeroName = encodeURIComponent(actualHeroName);
 		const heroLibraryUrl = `https://fribbels.github.io/e7/hero-library.html?hero=${urlHeroName}`;
+		
+		// Validate URL to ensure it's the expected domain
+		const url = new URL(heroLibraryUrl);
+		if (url.hostname !== 'fribbels.github.io' || !url.pathname.startsWith('/e7/hero-library.html')) {
+			throw new Error('Invalid URL detected');
+		}
 
 		console.log(`Fetching data from: ${heroLibraryUrl}`);
 
 		// Launch puppeteer to scrape the page
 		const browser = await puppeteer.launch({
 			headless: true,
-			args: ['--no-sandbox', '--disable-setuid-sandbox']
+			timeout: 30000, // 30 second timeout
+			args: [
+				'--disable-dev-shm-usage',
+				'--disable-extensions',
+				'--disable-plugins',
+				'--disable-images',
+				'--no-first-run',
+				'--disable-default-apps',
+				'--disable-background-timer-throttling',
+				'--disable-renderer-backgrounding',
+				'--disable-backgrounding-occluded-windows',
+				// Only add no-sandbox in container environments
+				...(process.env.NODE_ENV === 'production' && process.env.DOCKER ? ['--no-sandbox'] : [])
+			]
 		});
 
 		const page = await browser.newPage();
@@ -929,10 +995,19 @@ async function generateReportImage(data) {
 	try {
 		browser = await puppeteer.launch({
 			headless: true,
+			timeout: 30000, // 30 second timeout
 			args: [
-				'--no-sandbox',
-				'--disable-setuid-sandbox',
-				'--disable-web-security',
+				'--disable-dev-shm-usage',
+				'--disable-extensions',
+				'--disable-plugins',
+				'--no-first-run',
+				'--disable-default-apps',
+				'--disable-background-timer-throttling',
+				'--disable-renderer-backgrounding',
+				'--disable-backgrounding-occluded-windows',
+				// Only add no-sandbox in container environments
+				...(process.env.NODE_ENV === 'production' && process.env.DOCKER ? ['--no-sandbox', '--disable-setuid-sandbox'] : []),
+				// Allow local file access only for screenshot generation
 				'--allow-file-access-from-files'
 			]
 		});
@@ -987,7 +1062,23 @@ if (require.main === module) {
 		if (message.author.bot) return;
 
 		if (message.content.startsWith('!') && message.content.length > 1) {
-			const userInput = message.content.slice(1);
+			// Rate limiting check
+			if (!checkRateLimit(message.author.id)) {
+				await message.reply('⏳ You pester me too often... begone for now, and return in a minute if you must.'
+				);
+				return;
+			}
+
+			const rawInput = message.content.slice(1);
+			
+			// Input validation and sanitization
+			let userInput;
+			try {
+				userInput = validateAndSanitizeInput(rawInput);
+			} catch (error) {
+				await message.reply(`？ Your words make no sense... speak clearly, or be silent. **${error.message}**`);
+				return;
+			}
 
 			// Use fuzzy search to find the best character match
 			const searchResult = findBestCharacterMatch(userInput);
