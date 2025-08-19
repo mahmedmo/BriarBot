@@ -8,11 +8,9 @@
 		"dev": "nodemon src/briar-bot.js",
 		"test": "node tests/test-run-all.js",
 		"build": "npm run install-chrome",
-		"install-chrome": "npx puppeteer browsers install chrome",
 		"test:search": "node tests/test-search.js",
 		"test:bot": "node tests/test-briar-bot.js",
-		"test:interactive": "node tests/test-interactive.js",
-		"postinstall": "npx puppeteer browsers install chrome"
+		"test:interactive": "node tests/test-interactive.js"
 	},
 	"dependencies": {
 		"discord.js": "^14.14.1",

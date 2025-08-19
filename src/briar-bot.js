@@ -14,60 +14,75 @@ function getPuppeteerConfig() {
     
 	if (isProduction) {
 		return {
-			headless: true,
-			timeout: 30000,
+			headless: 'new', // Use new headless mode (faster)
+			timeout: 15000, // Reduced from 30000
 			args: [
+				// Essential security flags
 				'--no-sandbox',
 				'--disable-setuid-sandbox',
+				
+				// Memory optimization
 				'--disable-dev-shm-usage',
+				'--memory-pressure-off',
+				'--max_old_space_size=512', // Limit memory usage
+				
+				// Disable unnecessary features
 				'--disable-extensions',
 				'--disable-plugins',
-				'--no-first-run',
-				'--disable-default-apps',
+				'--disable-images', // Don't load images (big savings!)
+				'--disable-javascript', // Your scraping might not need JS
+				'--disable-css', // Don't process CSS
+				'--disable-fonts', // Don't load fonts
+				'--disable-background-networking',
 				'--disable-background-timer-throttling',
 				'--disable-renderer-backgrounding',
 				'--disable-backgrounding-occluded-windows',
-				'--disable-features=VizDisplayCompositor',
-				'--disable-ipc-flooding-protection',
-				'--disable-background-networking',
-				'--disable-component-extensions-with-background-pages',
-				'--disable-default-apps',
-				'--disable-domain-reliability',
-				'--disable-features=AudioServiceOutOfProcess',
-				'--disable-hang-monitor',
-				'--disable-notifications',
-				'--disable-offer-store-unmasked-wallet-cards',
-				'--disable-popup-blocking',
-				'--disable-print-preview',
-				'--disable-prompt-on-repost',
-				'--disable-speech-api',
+				'--disable-client-side-phishing-detection',
 				'--disable-sync',
-				'--hide-scrollbars',
-				'--ignore-gpu-blacklist',
-				'--metrics-recording-only',
-				'--mute-audio',
-				'--no-default-browser-check',
-				'--no-pings',
-				'--password-store=basic',
-				'--use-mock-keychain',
-				'--disable-fre',
+				'--disable-translate',
+				'--disable-ipc-flooding-protection',
+				
+				// Performance optimizations
 				'--disable-gpu',
-				'--run-all-compositor-stages-before-draw',
-				'--disable-threaded-animation',
-				'--disable-threaded-scrolling',
-				'--disable-in-process-stack-traces',
-				'--disable-histogram-customizer',
-				'--disable-gl-extensions',
-				'--disable-composited-antialiasing',
+				'--disable-software-rasterizer',
 				'--disable-canvas-aa',
-				'--disable-3d-apis',
+				'--disable-2d-canvas-clip-aa',
+				'--disable-gl-drawing-for-tests',
 				'--disable-accelerated-2d-canvas',
 				'--disable-accelerated-jpeg-decoding',
-				'--disable-accelerated-mjpeg-decode',
-				'--disable-app-list-dismiss-on-blur',
-				'--disable-accelerated-video-decode'
+				'--disable-accelerated-video-decode',
+				'--disable-features=VizDisplayCompositor,AudioServiceOutOfProcess',
+				
+				// Resource limits
+				'--aggressive-cache-discard',
+				'--disable-hang-monitor',
+				'--disable-prompt-on-repost',
+				'--disable-domain-reliability',
+				'--disable-component-extensions-with-background-pages',
+				
+				// Network optimizations
+				'--disable-background-networking',
+				'--disable-default-apps',
+				'--disable-popup-blocking',
+				'--no-default-browser-check',
+				'--no-first-run',
+				
+				// Audio/Video (not needed)
+				'--mute-audio',
+				'--disable-audio-output',
+				
+				// Process optimization
+				'--single-process', // Use single process (careful - less stable but lighter)
+				'--disable-web-security', // Only if scraping allows it
 			],
-			// Try to find Chrome executable
+			
+			// Browser settings
+			defaultViewport: {
+				width: 1024,
+				height: 768
+			},
+			
+			// Only if you have a specific Chrome path
 			executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined
 		};
 	}
@@ -85,6 +100,8 @@ function getPuppeteerConfig() {
 		]
 	};
 }
+
+
 
 const client = new Client({
 	intents: [
