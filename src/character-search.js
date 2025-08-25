@@ -90,7 +90,8 @@ const COMMUNITY_ABBREVIATIONS = {
 	'lermia': 'Lionheart Cermia',
 	'cavel': 'Commander Pavel',
 	'barunka': 'Boss Arunka',
-	'Moona': 'New Moon Luna',
+	'moona': 'New Moon Luna',
+	'clilias': 'Conquerer Lilias',
 };
 
 // Normalize text for better matching

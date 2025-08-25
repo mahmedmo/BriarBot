@@ -327,6 +327,9 @@ async function getHeroWithDeduplication(heroName, message) {
         }
     }
     
+    // Set up timeout cleanup first
+    let timeoutId;
+    
     const requestPromise = (async () => {
         try {
             // Check cache first
@@ -369,7 +372,7 @@ async function getHeroWithDeduplication(heroName, message) {
     ongoingRequests.set(normalizedHeroName, requestData);
     
     // Set up timeout cleanup
-    const timeoutId = setTimeout(() => {
+    timeoutId = setTimeout(() => {
         if (ongoingRequests.has(normalizedHeroName)) {
             console.warn(`⏰ Request timeout for ${heroName}, cleaning up`);
             ongoingRequests.delete(normalizedHeroName);
@@ -854,6 +857,13 @@ async function getPopularBuilds(heroName, retryCount = 0) {
 
 	} catch (error) {
 		const status = error.response?.status;
+		console.error(`API fetch failed for ${heroName}:`, {
+			status,
+			message: error.message,
+			code: error.code,
+			timeout: error.code === 'ECONNABORTED',
+			retryCount
+		});
 		
 		// Update rate limiter with the error status
 		rateLimiter.updateApiHealth(status);
@@ -1269,7 +1279,7 @@ async function analyzeHeroData(heroName) {
 		const rawBuilds = await getPopularBuilds(actualHeroName);
 		
 		if (!rawBuilds || !rawBuilds.data || rawBuilds.data.length === 0) {
-			console.log('No build data found');
+			console.log(`No build data found for ${actualHeroName}. Raw response:`, rawBuilds ? 'Response received but no data' : 'No response received');
 			return null;
 		}
 
@@ -1916,7 +1926,7 @@ if (require.main === module) {
 			// Check if user is already being processed
 			if (processingCommands.has(message.author.id)) {
 				const processingMessage = getRandomResponse('alreadyProcessing');
-				await message.reply(`🔄 ${processingMessage}`);
+				await message.reply(`𝌗 ${processingMessage}`);
 				return;
 			}
 
@@ -1943,7 +1953,7 @@ if (require.main === module) {
 					character: characterName, 
 					position: queueResult.position - MAX_CONCURRENT_COMMANDS 
 				});
-				await message.reply(`⌛ ${queuedMessage}`);
+				await message.reply(`䷄ ${queuedMessage}`);
 			}
 		}
 	});
