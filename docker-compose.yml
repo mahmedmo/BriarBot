@@ -46,6 +46,7 @@ services:
     cap_add:
       - SETGID
       - SETUID
+      - CHOWN
     security_opt:
       - no-new-privileges:true
     tmpfs:

@@ -1768,39 +1768,47 @@ async function generateReportImage(data) {
 
 	const puppeteer = require('puppeteer');
 	let browser;
+	let page;
+	
 	try {
 		const isProduction = process.env.NODE_ENV === 'production';
 		
 		const config = {
-			headless: 'new',
-			timeout: 60000,
-			protocolTimeout: 60000,
+			headless: true,
+			timeout: 120000,
+			protocolTimeout: 120000,
 			args: [
 				'--no-sandbox',
 				'--disable-setuid-sandbox',
 				'--disable-dev-shm-usage',
 				'--disable-gpu',
-				'--disable-javascript',
-				'--single-process',
-				'--disable-web-security',
-				'--disable-features=VizDisplayCompositor',
+				'--disable-software-rasterizer',
 				'--disable-background-timer-throttling',
 				'--disable-renderer-backgrounding',
 				'--disable-backgrounding-occluded-windows',
 				'--disable-ipc-flooding-protection',
 				'--memory-pressure-off',
-				'--no-first-run',
+				'--disable-web-security',
+				'--disable-features=VizDisplayCompositor',
+				'--disable-features=TranslateUI',
 				'--disable-extensions',
 				'--disable-default-apps',
-				'--disable-component-extensions-with-background-pages',
 				'--disable-background-networking',
 				'--disable-sync',
-				'--metrics-recording-only',
+				'--disable-domain-reliability',
+				'--no-first-run',
 				'--no-default-browser-check',
 				'--mute-audio',
 				'--hide-scrollbars',
-				'--disable-features=TranslateUI',
-				'--disable-domain-reliability'
+				'--single-process',
+				'--disable-javascript',
+				'--disable-plugins',
+				'--disable-images',
+				'--disable-notifications',
+				'--run-all-compositor-stages-before-draw',
+				'--disable-checker-imaging',
+				'--use-gl=disabled',
+				'--disable-dev-shm-usage'
 			]
 		};
 		
@@ -1808,15 +1816,19 @@ async function generateReportImage(data) {
 			config.executablePath = process.env.PUPPETEER_EXECUTABLE_PATH || undefined;
 		}
 
-		const browser = await puppeteer.launch(config);
+		browser = await puppeteer.launch(config);
 
-		const page = await browser.newPage();
+		page = await browser.newPage();
 		
 		// Optimize page settings for VM performance
 		await page.setCacheEnabled(false);
 		await page.setOfflineMode(false);
 		
-		await page.setContent(html, { waitUntil: 'domcontentloaded' });
+		await page.setContent(html, { 
+			waitUntil: 'domcontentloaded',
+			timeout: 30000
+		});
+		
 		await page.setViewport({
 			width: 600,
 			height: 975,
@@ -1824,7 +1836,7 @@ async function generateReportImage(data) {
 		});
 
 		// Reduced wait time for faster response
-		await new Promise(resolve => setTimeout(resolve, 500));
+		await new Promise(resolve => setTimeout(resolve, 1000));
 
 		const screenshot = await page.screenshot({
 			type: 'png',
@@ -1835,10 +1847,16 @@ async function generateReportImage(data) {
 
 		return screenshot;
 
+	} catch (error) {
+		console.error('Puppeteer error:', error.message);
+		throw error;
 	} finally {
-		if (browser) {
-			await browser.close();
-		}
+		try {
+			if (page) await page.close();
+		} catch (e) { /* ignore */ }
+		try {
+			if (browser) await browser.close();
+		} catch (e) { /* ignore */ }
 	}
 }
 
