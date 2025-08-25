@@ -63,91 +63,73 @@ const BRIAR_RESPONSES = {
 	],
 
 	characterNotFound: [
-		'**{input}**... nothing but silence. Don\'t waste my time.',
-		'**{input}** exists only in your imagination.',
-		'The spirits know nothing of **{input}**.',
-		'**{input}**? Your knowledge is lacking, mortal.',
-		'**{input}**... such ignorance.',
-		'I see no trace of **{input}** in the threads of fate.',
-		'**{input}**? The forest swallows such names whole.',
-		'**{input}** is a shadow with no corpse to cast it.',
-		'Even my thorns cannot reach someone named **{input}**.',
-		'Perhaps **{input}** wandered too deep, never to return.',
-		'No roots remember **{input}**.',
-		'**{input}** is dust in the wind—insignificant.',
-		'The curse laughs at such a name as **{input}**.',
-		'**{input}**? Nothing but bones gnawed by time.',
-		'I cast the name **{input}** into the bramble—nothing answers.',
-		'Fate does not bother weaving threads for **{input}**.'
+		'🕸️ **{input}**... nothing but silence. Don\'t waste my time.',
+		'🕸️ **{input}** exists only in your imagination.',
+		'🕸️ The spirits know nothing of **{input}**.',
+		'🕸️ **{input}**? Your knowledge is lacking, mortal.',
+		'🕸️ **{input}**... such ignorance.',
+		'🕸️ I see no trace of **{input}** in the threads of fate.',
+		'🕸️ **{input}**? The forest swallows such names whole.',
+		'🕸️ **{input}** is a shadow with no corpse to cast it.',
+		'🕸️ Even my thorns cannot reach someone named **{input}**.',
+		'🕸️ Perhaps **{input}** wandered too deep, never to return.',
+		'🕸️ No roots remember **{input}**.',
+		'🕸️ **{input}** is dust in the wind—insignificant.',
+		'🕸️ The curse laughs at such a name as **{input}**.',
+		'🕸️ **{input}**? Nothing but bones gnawed by time.',
+		'🕸️ I cast the name **{input}** into the bramble—nothing answers.',
+		'🕸️ Fate does not bother weaving threads for **{input}**.'
 	],
 
 	characterNotFoundWithSuggestions: [
-		'**{input}** does not exist.\n*Perhaps you meant:*\n{suggestions}',
-		'**{input}**... unknown to me.\n*Did you mean:*\n{suggestions}',
-		'I know not of **{input}**.\n*These names whisper to me instead:*\n{suggestions}',
-		'**{input}** eludes me.\n*Consider these alternatives:*\n{suggestions}',
-		'**{input}** is but a dead leaf.\n*Try instead:*\n{suggestions}',
-		'**{input}** has no thread in fate.\n*The forest hums of these:*\n{suggestions}',
-		'The curse recoils from **{input}**.\n*Perhaps you mean:*\n{suggestions}',
-		'**{input}**? Empty soil.\n*But these might bloom:*\n{suggestions}',
-		'**{input}** fell to rot.\n*But these roots still live:*\n{suggestions}',
-		'The spirits do not whisper **{input}**.\n*Yet they murmur of:*\n{suggestions}',
-		'**{input}**? That seed never sprouted.\n*Try these:*\n{suggestions}',
-		'The bramble forgot **{input}**.\n*But it remembers:*\n{suggestions}'
-	],
-
-	alreadyProcessing: [
-		'A previous command is still being processed. Please wait...',
-		'Patience... I am still weaving the last request.',
-		'The spirits are still working on your previous inquiry.',
-		'One request at a time, mortal. Wait.',
-		'The last command still echoes through the forest.',
-		'The threads are already woven. Tug again and they’ll snap.',
-		'The curse gnaws on your last demand still. Wait.',
-		'My dolls are still working—must I break them for your haste?',
-		'Your request lingers like a bad omen. Let it finish.',
-		'You’ll get your turn, thornling. Wait.',
-		'The bramble does not rush for anyone.',
-		'Twist the thread too soon and you unravel it all.',
-		'The forest groans—stop pulling at its seams.',
-		'You have already stirred the cauldron. Let it cool.',
-		'Try to force it, and you’ll only be pricked.'
+		'🕸️ **{input}** does not exist.\n*Perhaps you meant:*\n{suggestions}',
+		'🕸️ **{input}**... unknown to me.\n*Did you mean:*\n{suggestions}',
+		'🕸️ I know not of **{input}**.\n*These names whisper to me instead:*\n{suggestions}',
+		'🕸️ **{input}** eludes me.\n*Consider these alternatives:*\n{suggestions}',
+		'🕸️ **{input}** is but a dead leaf.\n*Try instead:*\n{suggestions}',
+		'🕸️ **{input}** has no thread in fate.\n*The forest hums of these:*\n{suggestions}',
+		'🕸️ The curse recoils from **{input}**.\n*Perhaps you mean:*\n{suggestions}',
+		'🕸️ **{input}**? Empty soil.\n*But these might bloom:*\n{suggestions}',
+		'🕸️ **{input}** fell to rot.\n*But these roots still live:*\n{suggestions}',
+		'🕸️ The spirits do not whisper **{input}**.\n*Yet they murmur of:*\n{suggestions}',
+		'🕸️ **{input}**? That seed never sprouted.\n*Try these:*\n{suggestions}',
+		'🕸️ The bramble forgot **{input}**.\n*But it remembers:*\n{suggestions}'
 	],
 
 	queueFull: [
-		'The spirits are overwhelmed... try again in a moment.',
-		'My power has limits. Return when the forest is calmer.',
-		'Too many voices call at once. Try again shortly.',
-		'The magical threads are tangled. Wait and try again.',
-		'Even I cannot handle such chaos. Return later.',
-		'The forest is choking with requests—yours will wither for now.',
-		'Even curses have limits… wait for the tangle to ease.',
-		'Your voice is just one of many lost in the thicket.',
-		'Too many fools pulled the vines at once. Wait.',
-		'The curse snarls when overfed. Return later.',
-		'The bramble has no room for one more thorn.',
-		'The roots cannot drink from all cups at once.',
-		'Patience—your turn will grow in the soil of time.',
-		'The grove is too loud. Silence yourself awhile.',
-		'Wait, or be lost among the tangled cries.'
+		'🕯 The spirits are overwhelmed... try again in a moment.',
+		'🕯 My power has limits. Return when the forest is calmer.',
+		'🕯 Too many voices call at once. Try again shortly.',
+		'🕯 The magical threads are tangled. Wait and try again.',
+		'🕯 Even I cannot handle such chaos. Return later.',
+		'🕯 The forest is choking with requests—yours will wither for now.',
+		'🕯 Even curses have limits… wait for the tangle to ease.',
+		'🕯 Your voice is just one of many lost in the thicket.',
+		'🕯 Too many fools pulled the vines at once. Wait.',
+		'🕯 The curse snarls when overfed. Return later.',
+		'🕯 The bramble has no room for one more thorn.',
+		'🕯 The roots cannot drink from all cups at once.',
+		'🕯 Patience—your turn will grow in the soil of time.',
+		'🕯 The grove is too loud. Silence yourself awhile.',
+		'🕯 Wait, or be lost among the tangled cries.'
 	],
 
 	queued: [
-		'Your request for **{character}** is queued (position {position}).',
-		'**{character}**... I shall attend to you shortly (position {position}).',
-		'The spirits whisper of **{character}**. You wait at position {position}.',
-		'**{character}** shall be revealed in due time (position {position}).',
-		'Patience... **{character}**\'s secrets await (position {position}).',
-		'The forest remembers **{character}**… you are thorn {position} in line.',
-		'**{character}** is bound for you—eventually (position {position}).',
-		'You are not the only one seeking **{character}**’s secrets (position {position}).',
-		'The vines wind toward **{character}**… you are {position} in the braid.',
-		'Wait, or the forest will wait for you—**{character}** is at position {position}.',
-		'**{character}** lingers in the mist. Your place is {position}.',
-		'The thorns point toward **{character}**, but not yet—position {position}.',
-		'Roots grow slowly… you are {position} before **{character}** blooms.',
-		'**{character}** rests beneath the bark. You are queued at {position}.',
-		'Remain still—**{character}** comes when the forest wills (position {position}).'
+		'🧵 Your request for **{character}** drifts within the witch’s reach, waiting at **{position}**.',
+		'🧵 **{character}** lingers in the cursed grove, your place marked at **{position}**.',
+		'🧵 The forest whispers of **{character}**, your thread rests at **{position}**.',
+		'🧵 **{character}** will answer when the briars part, your wait is **{position}**.',
+		'🧵 Patience, the thorns have set your turn at **{position}**.',
+		'🧵 The old trees remember **{character}**, your strand holds at **{position}**.',
+		'🧵 **{character}** remains bound until the witch calls from **{position}**.',
+		'🧵 Your voice drifts with others, **{character}** awaits at **{position}**.',
+		'🧵 The mists coil around **{character}**, your time comes at **{position}**.',
+		'🧵 Wait, the grove does not rush, **{character}** lies at **{position}**.',
+		'🧵 **{character}** stirs faintly, your place is etched at **{position}**.',
+		'🧵 The roots tighten near **{character}**, your wait is **{position}**.',
+		'🧵 Shadows stretch across the path, your name lies at **{position}**.',
+		'🧵 **{character}** rests beyond the briars, your turn is **{position}**.',
+		'🧵 Remain still, the witch watches, your moment is **{position}**.'
 	]
 };
 
@@ -1322,11 +1304,11 @@ function generateSetHTML(sets) {
 	if (iconsHtml) {
 		const setClass = totalIcons === 1 ? 'single-set' : 'multi-set';
 		return `
-            <div class="set-icons-group ${setClass}">
-                ${iconsHtml}
-            </div>
-            <span class="set-name">${setNameText}</span>
-        `;
+			<div class="set-icons-group ${setClass}">
+				${iconsHtml}
+			</div>
+			<span class="set-name">${setNameText}</span>
+		`;
 	}
 
 	return '<span class="broken-sets">Broken</span>';
@@ -1423,213 +1405,213 @@ async function generateHTML(data) {
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+	<meta charset="UTF-8">
+	<style>
+		* { margin: 0; padding: 0; box-sizing: border-box; }
         
-        html, body {
-            margin: 0;
-            padding: 0;
-            background: transparent;
-        }
+		html, body {
+			margin: 0;
+			padding: 0;
+			background: transparent;
+		}
         
-        body {
-            font-family: 'Segoe UI', 'San Francisco', -apple-system, BlinkMacSystemFont, sans-serif;
-            width: 600px;
-            height: 975px; /* Fixed height instead of min-height */
-            background: linear-gradient(145deg, #1a1d3a 0%, #2a2d5a 25%, #1e2142 50%, #151829 75%, #0f1020 100%);
-            border-radius: 24px;
-            box-shadow: 
-                0 25px 50px rgba(0, 0, 0, 0.6),
-                0 0 0 1px rgba(255, 255, 255, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-            padding: 30px;
-            position: relative;
-            overflow: hidden;
-        }
+		body {
+			font-family: 'Segoe UI', 'San Francisco', -apple-system, BlinkMacSystemFont, sans-serif;
+			width: 600px;
+			height: 975px; /* Fixed height instead of min-height */
+			background: linear-gradient(145deg, #1a1d3a 0%, #2a2d5a 25%, #1e2142 50%, #151829 75%, #0f1020 100%);
+			border-radius: 24px;
+			box-shadow: 
+				0 25px 50px rgba(0, 0, 0, 0.6),
+				0 0 0 1px rgba(255, 255, 255, 0.1),
+				inset 0 1px 0 rgba(255, 255, 255, 0.1);
+			color: #ffffff;
+			padding: 30px;
+			position: relative;
+			overflow: hidden;
+		}
         
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 20%, rgba(120, 150, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(255, 120, 200, 0.08) 0%, transparent 50%);
-            pointer-events: none;
-            border-radius: 24px;
-        }
+		body::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: 
+				radial-gradient(circle at 20% 20%, rgba(120, 150, 255, 0.1) 0%, transparent 50%),
+				radial-gradient(circle at 80% 80%, rgba(255, 120, 200, 0.08) 0%, transparent 50%);
+			pointer-events: none;
+			border-radius: 24px;
+		}
         
-        .watermark-container {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            z-index: 10;
-        }
+		.watermark-container {
+			position: absolute;
+			top: 20px;
+			right: 20px;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			z-index: 10;
+		}
         
-        .watermark {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            border: 1.5px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 
-                0 6px 15px rgba(0, 0, 0, 0.3),
-                0 0 0 1px rgba(255, 255, 255, 0.1);
-            object-fit: cover;
-            opacity: 0.9;
-        }
+		.watermark {
+			width: 35px;
+			height: 35px;
+			border-radius: 50%;
+			border: 1.5px solid rgba(255, 255, 255, 0.2);
+			box-shadow: 
+				0 6px 15px rgba(0, 0, 0, 0.3),
+				0 0 0 1px rgba(255, 255, 255, 0.1);
+			object-fit: cover;
+			opacity: 0.9;
+		}
         
-        .watermark-text {
-            font-size: 12px;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.8);
-            text-shadow: 
-                0 0 6px rgba(255, 255, 255, 0.4),
-                0 1px 2px rgba(0, 0, 0, 0.3);
-            letter-spacing: 0.2px;
-        }
+		.watermark-text {
+			font-size: 12px;
+			font-weight: 600;
+			color: rgba(255, 255, 255, 0.8);
+			text-shadow: 
+				0 0 6px rgba(255, 255, 255, 0.4),
+				0 1px 2px rgba(0, 0, 0, 0.3);
+			letter-spacing: 0.2px;
+		}
         
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: left;
-            gap: 20px;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-            position: relative;
-        }
+		.header {
+			display: flex;
+			align-items: center;
+			justify-content: left;
+			gap: 20px;
+			margin-bottom: 30px;
+			padding-bottom: 20px;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+			position: relative;
+		}
         
-        .hero-icon {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            border: 3px solid rgba(142, 197, 252, 0.6);
-            box-shadow: 
-                0 0 30px rgba(142, 197, 252, 0.4),
-                0 8px 25px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            object-fit: cover;
-            object-position: center;
-        }
+		.hero-icon {
+			width: 70px;
+			height: 70px;
+			border-radius: 50%;
+			border: 3px solid rgba(142, 197, 252, 0.6);
+			box-shadow: 
+				0 0 30px rgba(142, 197, 252, 0.4),
+				0 8px 25px rgba(0, 0, 0, 0.3),
+				inset 0 1px 0 rgba(255, 255, 255, 0.2);
+			object-fit: cover;
+			object-position: center;
+		}
         
-        .hero-info {
-            text-align: left;
-        }
+		.hero-info {
+			text-align: left;
+		}
         
-        .hero-name {
-            font-size: 28px;
-            font-weight: 800;
-            color: #ffffff;
-            text-shadow: 
-                0 0 20px rgba(142, 197, 252, 0.8),
-                0 0 40px rgba(142, 197, 252, 0.6),
-                0 0 60px rgba(142, 197, 252, 0.4),
-                0 2px 8px rgba(0, 0, 0, 0.5);
-            margin-bottom: 8px;
-            letter-spacing: 0.5px;
-        }
+		.hero-name {
+			font-size: 28px;
+			font-weight: 800;
+			color: #ffffff;
+			text-shadow: 
+				0 0 20px rgba(142, 197, 252, 0.8),
+				0 0 40px rgba(142, 197, 252, 0.6),
+				0 0 60px rgba(142, 197, 252, 0.4),
+				0 2px 8px rgba(0, 0, 0, 0.5);
+			margin-bottom: 8px;
+			letter-spacing: 0.5px;
+		}
         
-        .build-count {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.8);
-            text-shadow: 
-                0 0 10px rgba(255, 255, 255, 0.5),
-                0 1px 3px rgba(0, 0, 0, 0.3);
-            font-weight: 500;
-        }
+		.build-count {
+			font-size: 14px;
+			color: rgba(255, 255, 255, 0.8);
+			text-shadow: 
+				0 0 10px rgba(255, 255, 255, 0.5),
+				0 1px 3px rgba(0, 0, 0, 0.3);
+			font-weight: 500;
+		}
         
-        .section {
-            margin-bottom: 30px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 16px;
-            padding: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-        }
+		.section {
+			margin-bottom: 30px;
+			background: rgba(255, 255, 255, 0.03);
+			border-radius: 16px;
+			padding: 20px;
+			border: 1px solid rgba(255, 255, 255, 0.08);
+			backdrop-filter: blur(10px);
+			box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+		}
         
-        .section-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: #ffffff;
-            text-shadow: 
-                0 0 15px rgba(142, 197, 252, 0.8),
-                0 0 30px rgba(142, 197, 252, 0.5),
-                0 1px 4px rgba(0, 0, 0, 0.4);
-            margin-bottom: 15px;
-            letter-spacing: 0.3px;
-        }
+		.section-title {
+			font-size: 16px;
+			font-weight: 700;
+			color: #ffffff;
+			text-shadow: 
+				0 0 15px rgba(142, 197, 252, 0.8),
+				0 0 30px rgba(142, 197, 252, 0.5),
+				0 1px 4px rgba(0, 0, 0, 0.4);
+			margin-bottom: 15px;
+			letter-spacing: 0.3px;
+		}
         
-        .sets-row {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
-            position: relative;
-        }
+		.sets-row {
+			display: flex;
+			gap: 12px;
+			align-items: center;
+			justify-content: space-between;
+			margin-bottom: 12px;
+			position: relative;
+		}
         
-        .set-combo {
-            position: relative;
-            display: inline-block;
-        }
+		.set-combo {
+			position: relative;
+			display: inline-block;
+		}
         
-        .set-icons-group {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            justify-content: center;
-            min-width: 80px; /* Consistent width for alignment */
-        }
+		.set-icons-group {
+			display: flex;
+			gap: 8px;
+			align-items: center;
+			justify-content: center;
+			min-width: 80px; /* Consistent width for alignment */
+		}
         
-        .set-icons-group.single-set {
+		.set-icons-group.single-set {
 			padding-right: 16px;
-            justify-content: center;
-        }
+			justify-content: center;
+		}
         
-        .set-icons-group.multi-set {
-            justify-content: flex-start;
-        }
+		.set-icons-group.multi-set {
+			justify-content: flex-start;
+		}
         
-        .set-name {
-            font-size: 14px;
-            color: #ffffff;
-            font-weight: 600;
-            text-shadow: 
-                0 0 8px rgba(255, 255, 255, 0.4),
-                0 1px 2px rgba(0, 0, 0, 0.3);
-            position: absolute;
-            left: 120px; /* Fixed position to align with artifact names */
-            flex: 1;
-        }
+		.set-name {
+			font-size: 14px;
+			color: #ffffff;
+			font-weight: 600;
+			text-shadow: 
+				0 0 8px rgba(255, 255, 255, 0.4),
+				0 1px 2px rgba(0, 0, 0, 0.3);
+			position: absolute;
+			left: 120px; /* Fixed position to align with artifact names */
+			flex: 1;
+		}
         
-        .set-icon {
-            width: 28px;
-            height: 28px;
-            border-radius: 4px;
-        }
+		.set-icon {
+			width: 28px;
+			height: 28px;
+			border-radius: 4px;
+		}
         
-        .broken-icon {
-            width: 28px;
-            height: 28px;
-            border-radius: 4px;
-            background: rgba(255, 107, 107, 0.2);
-            border: 1px solid rgba(255, 107, 107, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 700;
-            color: #FF6B6B;
-            text-shadow: 0 0 5px rgba(255, 107, 107, 0.5);
-        }
+		.broken-icon {
+			width: 28px;
+			height: 28px;
+			border-radius: 4px;
+			background: rgba(255, 107, 107, 0.2);
+			border: 1px solid rgba(255, 107, 107, 0.4);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 12px;
+			font-weight: 700;
+			color: #FF6B6B;
+			text-shadow: 0 0 5px rgba(255, 107, 107, 0.5);
+		}
         
 		.percentage {
 			font-size: 16px;
@@ -1646,186 +1628,186 @@ async function generateHTML(data) {
 			border: 1px solid rgba(142, 197, 252, 0.3);
 		}
         
-        .artifact-row {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            margin-bottom: 15px;
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            transition: all 0.3s ease;
-        }
+		.artifact-row {
+			display: flex;
+			align-items: center;
+			gap: 18px;
+			margin-bottom: 15px;
+			padding: 12px;
+			background: rgba(255, 255, 255, 0.04);
+			border-radius: 12px;
+			border: 1px solid rgba(255, 255, 255, 0.06);
+			transition: all 0.3s ease;
+		}
         
-        .artifact-row:hover {
-            background: rgba(255, 255, 255, 0.06);
-        }
+		.artifact-row:hover {
+			background: rgba(255, 255, 255, 0.06);
+		}
         
-        .artifact-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 10px;
-            box-shadow:
-                0 6px 20px rgba(0, 0, 0, 0.3),
-                0 0 15px rgba(142, 197, 252, 0.1);
+		.artifact-icon {
+			width: 50px;
+			height: 50px;
+			border-radius: 10px;
+			box-shadow:
+				0 6px 20px rgba(0, 0, 0, 0.3),
+				0 0 15px rgba(142, 197, 252, 0.1);
 			object-fit: contain;
 			object-position: center;
-        }
+		}
         
-        .artifact-name {
-            font-size: 14px;
-            flex: 1;
-            color: #ffffff;
-            text-shadow: 
-                0 0 8px rgba(255, 255, 255, 0.4),
-                0 1px 2px rgba(0, 0, 0, 0.3);
-            font-weight: 600;
-        }
+		.artifact-name {
+			font-size: 14px;
+			flex: 1;
+			color: #ffffff;
+			text-shadow: 
+				0 0 8px rgba(255, 255, 255, 0.4),
+				0 1px 2px rgba(0, 0, 0, 0.3);
+			font-weight: 600;
+		}
         
-        .stats-flow {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 8px;
-            max-width: 500px;
-        }
+		.stats-flow {
+			display: grid;
+			grid-template-columns: repeat(5, 1fr);
+			gap: 8px;
+			max-width: 500px;
+		}
         
-        .stats-row-2 {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            margin-top: 8px;
-            max-width: 500px;
-        }
+		.stats-row-2 {
+			display: grid;
+			grid-template-columns: repeat(4, 1fr);
+			gap: 8px;
+			margin-top: 8px;
+			max-width: 500px;
+		}
         
-        .stat-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
-            border-radius: 12px;
-            padding: 12px 10px;
-            justify-content: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 
-                0 4px 15px rgba(0, 0, 0, 0.2),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
+		.stat-item {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+			border-radius: 12px;
+			padding: 12px 10px;
+			justify-content: center;
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			box-shadow: 
+				0 4px 15px rgba(0, 0, 0, 0.2),
+				inset 0 1px 0 rgba(255, 255, 255, 0.1);
+			transition: all 0.3s ease;
+		}
         
-        .stat-item:hover {
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
-            transform: translateY(-1px);
-        }
+		.stat-item:hover {
+			background: linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
+			transform: translateY(-1px);
+		}
         
-        .stat-icon {
-            width: 22px;
-            height: 22px;
-            filter: brightness(1.3) drop-shadow(0 0 8px rgba(142, 197, 252, 0.3));
-        }
+		.stat-icon {
+			width: 22px;
+			height: 22px;
+			filter: brightness(1.3) drop-shadow(0 0 8px rgba(142, 197, 252, 0.3));
+		}
         
-        .stat-value {
-            font-size: 12px;
-            font-weight: 700;
-            color: #ffffff;
-            text-shadow: 
-                0 0 10px rgba(255, 255, 255, 0.6),
-                0 0 20px rgba(142, 197, 252, 0.4),
-                0 1px 2px rgba(0, 0, 0, 0.4);
-            letter-spacing: 0.2px;
-        }
+		.stat-value {
+			font-size: 12px;
+			font-weight: 700;
+			color: #ffffff;
+			text-shadow: 
+				0 0 10px rgba(255, 255, 255, 0.6),
+				0 0 20px rgba(142, 197, 252, 0.4),
+				0 1px 2px rgba(0, 0, 0, 0.4);
+			letter-spacing: 0.2px;
+		}
         
-        .broken-sets {
-            color: #FF6B6B;
-            font-size: 12px;
-            font-style: italic;
-        }
-    </style>
+		.broken-sets {
+			color: #FF6B6B;
+			font-size: 12px;
+			font-style: italic;
+		}
+	</style>
 </head>
 <body>
-    ${watermarkDataUrl ? `
-        <div class="watermark-container">
-            <img src="${watermarkDataUrl}" class="watermark" alt="BriarBot">
-            <span class="watermark-text">Briar Bot</span>
-        </div>
-    ` : ''}
-    <div class="header">
-        ${heroImageUrl ? `<img src="${heroImageUrl}" class="hero-icon" alt="${data.heroName}">` : ''}
-        <div class="hero-info">
-            <div class="hero-name">${data.heroName}</div>
-            <div class="build-count">${data.totalBuilds.toLocaleString()}+ builds analyzed</div>
-        </div>
-    </div>
+	${watermarkDataUrl ? `
+		<div class="watermark-container">
+			<img src="${watermarkDataUrl}" class="watermark" alt="BriarBot">
+			<span class="watermark-text">Briar Bot</span>
+		</div>
+	` : ''}
+	<div class="header">
+		${heroImageUrl ? `<img src="${heroImageUrl}" class="hero-icon" alt="${data.heroName}">` : ''}
+		<div class="hero-info">
+			<div class="hero-name">${data.heroName}</div>
+			<div class="build-count">${data.totalBuilds.toLocaleString()}+ builds analyzed</div>
+		</div>
+	</div>
     
-    <div class="section">
-        <div class="section-title">Popular Sets</div>
-        ${data.topSets.map(setData => `
-            <div class="sets-row">
-                ${generateSetHTML(setData.sets)}
-                <div class="percentage">${setData.percentage}%</div>
-            </div>
-        `).join('')}
-    </div>
+	<div class="section">
+		<div class="section-title">Popular Sets</div>
+		${data.topSets.map(setData => `
+			<div class="sets-row">
+				${generateSetHTML(setData.sets)}
+				<div class="percentage">${setData.percentage}%</div>
+			</div>
+		`).join('')}
+	</div>
     
-    <div class="section">
-        <div class="section-title">Popular Artifacts</div>
-        ${await Promise.all(data.topArtifacts.map(async (artifact) => {
+	<div class="section">
+		<div class="section-title">Popular Artifacts</div>
+		${await Promise.all(data.topArtifacts.map(async (artifact) => {
 		if (artifact.name.toLowerCase() == "succubus mirror") artifact.name = "Nostalgic Music Box";
 		if (artifact.name.toLowerCase() == "elegiac candles") artifact.name = "Elegiac Candle";
 		const artifactImageUrl = await getArtifactImage(artifact.name);
 		return `
-                <div class="artifact-row">
-                    <img class="artifact-icon" src="${artifactImageUrl}" alt="${artifact.name}">
-                    <div class="artifact-name">${artifact.name}</div>
-                    <div class="percentage">${artifact.percentage}%</div>
-                </div>
-            `;
+				<div class="artifact-row">
+					<img class="artifact-icon" src="${artifactImageUrl}" alt="${artifact.name}">
+					<div class="artifact-name">${artifact.name}</div>
+					<div class="percentage">${artifact.percentage}%</div>
+				</div>
+			`;
 	})).then(rows => rows.join(''))}
-    </div>
+	</div>
     
-    <div class="section">
-        <div class="section-title">Average Stats</div>
-        <div class="stats-flow">
-            <div class="stat-item">
-                <img src="${statIconDataUrls.atk || ''}" class="stat-icon">
-                <div class="stat-value">${(data.avgStats.atk / 1000).toFixed(1)}k</div>
-            </div>
-            <div class="stat-item">
-                <img src="${statIconDataUrls.def || ''}" class="stat-icon">
-                <div class="stat-value">${(data.avgStats.def / 1000).toFixed(1)}k</div>
-            </div>
-            <div class="stat-item">
-                <img src="${statIconDataUrls.hp || ''}" class="stat-icon">
-                <div class="stat-value">${(data.avgStats.hp / 1000).toFixed(1)}k</div>
-            </div>
-            <div class="stat-item">
-                <img src="${statIconDataUrls.spd || ''}" class="stat-icon">
-                <div class="stat-value">${data.avgStats.spd}</div>
-            </div>
-            <div class="stat-item">
-                <img src="${statIconDataUrls.chc || ''}" class="stat-icon">
-                <div class="stat-value">${data.avgStats.chc}%</div>
-            </div>
-        </div>
-        <div class="stats-row-2">
-            <div class="stat-item">
-                <img src="${statIconDataUrls.chd || ''}" class="stat-icon">
-                <div class="stat-value">${data.avgStats.chd}%</div>
-            </div>
-            <div class="stat-item">
-                <img src="${statIconDataUrls.eff || ''}" class="stat-icon">
-                <div class="stat-value">${data.avgStats.eff}%</div>
-            </div>
-            <div class="stat-item">
-                <img src="${statIconDataUrls.efr || ''}" class="stat-icon">
-                <div class="stat-value">${data.avgStats.efr}%</div>
-            </div>
+	<div class="section">
+		<div class="section-title">Average Stats</div>
+		<div class="stats-flow">
+			<div class="stat-item">
+				<img src="${statIconDataUrls.atk || ''}" class="stat-icon">
+				<div class="stat-value">${(data.avgStats.atk / 1000).toFixed(1)}k</div>
+			</div>
+			<div class="stat-item">
+				<img src="${statIconDataUrls.def || ''}" class="stat-icon">
+				<div class="stat-value">${(data.avgStats.def / 1000).toFixed(1)}k</div>
+			</div>
+			<div class="stat-item">
+				<img src="${statIconDataUrls.hp || ''}" class="stat-icon">
+				<div class="stat-value">${(data.avgStats.hp / 1000).toFixed(1)}k</div>
+			</div>
+			<div class="stat-item">
+				<img src="${statIconDataUrls.spd || ''}" class="stat-icon">
+				<div class="stat-value">${data.avgStats.spd}</div>
+			</div>
+			<div class="stat-item">
+				<img src="${statIconDataUrls.chc || ''}" class="stat-icon">
+				<div class="stat-value">${data.avgStats.chc}%</div>
+			</div>
+		</div>
+		<div class="stats-row-2">
+			<div class="stat-item">
+				<img src="${statIconDataUrls.chd || ''}" class="stat-icon">
+				<div class="stat-value">${data.avgStats.chd}%</div>
+			</div>
+			<div class="stat-item">
+				<img src="${statIconDataUrls.eff || ''}" class="stat-icon">
+				<div class="stat-value">${data.avgStats.eff}%</div>
+			</div>
+			<div class="stat-item">
+				<img src="${statIconDataUrls.efr || ''}" class="stat-icon">
+				<div class="stat-value">${data.avgStats.efr}%</div>
+			</div>
 			<div class="stat-item">
 				<img src="${statIconDataUrls.gs || ''}" class="stat-icon">
 				<div class="stat-value">${data.avgStats.gs}</div>
 			</div>
-        </div>
-    </div>
+		</div>
+	</div>
 </body>
 </html>`;
 }
@@ -1989,10 +1971,10 @@ if (require.main === module) {
 						input: userInput,
 						suggestions: suggestionsText
 					});
-					await message.reply(`❌ ${suggestionMessage}`);
+					await message.reply(`${suggestionMessage}`);
 				} else {
 					const notFoundMessage = getRandomResponse('characterNotFound', { input: userInput });
-					await message.reply(`❌ ${notFoundMessage}`);
+					await message.reply(`${notFoundMessage}`);
 				}
 				return;
 			}
