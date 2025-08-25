@@ -24,12 +24,8 @@ class CacheManager {
         this.init();
     }
 
-    /**
-     * Initialize cache directories and load existing metadata
-     */
     init() {
         try {
-            // Create cache directories if they don't exist
             if (!fs.existsSync(this.cacheDir)) {
                 fs.mkdirSync(this.cacheDir, { recursive: true });
             }
@@ -37,7 +33,6 @@ class CacheManager {
                 fs.mkdirSync(this.heroImagesDir, { recursive: true });
             }
 
-            // Load existing metadata
             if (fs.existsSync(this.metadataFile)) {
                 try {
                     const existingMetadata = JSON.parse(fs.readFileSync(this.metadataFile, 'utf8'));
@@ -47,7 +42,6 @@ class CacheManager {
                 }
             }
 
-            // Validate and clean up metadata on startup
             this.validateCacheIntegrity();
             
             console.log(`Cache Manager initialized: ${this.getCacheStats().totalImages} images cached`);

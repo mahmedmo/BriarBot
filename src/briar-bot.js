@@ -9,7 +9,6 @@ const getHeroImageUrl = require('./fetch-hero');
 const { findBestCharacterMatch, getCharacterSuggestions } = require('./character-search');
 const CacheManager = require('./cache-manager');
 const RateLimiter = require('./rate-limiter');
-const HealthMonitor = require('./health-monitor');
 require('dotenv').config();
 
 
@@ -23,18 +22,90 @@ const client = new Client({
 
 const BOT_TOKEN = process.env.BOT_TOKEN;
 
+// Briar Witch Iseria response variations
+const BRIAR_RESPONSES = {
+	rateLimited: [
+		'You pester me too often... begone for now, and return in {time} seconds.',
+		'Your impatience tries my patience. Wait {time} seconds before speaking again.',
+		'The spirits grow restless with your constant demands. Return in {time} seconds.',
+		'Silence, mortal. You may speak again in {time} seconds.',
+		'My magic requires rest. Come back in {time} seconds.',
+		'Too hasty... the forest spirits need {time} seconds to recover.'
+	],
+	
+	invalidInput: [
+		'Your words make no sense... speak clearly, or be silent. **{error}**',
+		'Such gibberish offends the spirits. **{error}**',
+		'I cannot divine meaning from your rambling. **{error}**',
+		'Speak plainly, fool. **{error}**',
+		'The forest does not understand your nonsense. **{error}**'
+	],
+	
+	characterNotFound: [
+		'**{input}**... nothing but silence. Don\'t waste my time.',
+		'**{input}** exists only in your imagination.',
+		'The spirits know nothing of **{input}**.',
+		'**{input}**? Your knowledge is lacking, mortal.',
+		'**{input}**... such ignorance.',
+		'I see no trace of **{input}** in the threads of fate.'
+	],
+	
+	characterNotFoundWithSuggestions: [
+		'**{input}** does not exist.\n*Perhaps you meant:*\n{suggestions}',
+		'**{input}**... unknown to me.\n*Did you mean:*\n{suggestions}',
+		'I know not of **{input}**.\n*These names whisper to me instead:*\n{suggestions}',
+		'**{input}** eludes me.\n*Consider these alternatives:*\n{suggestions}'
+	],
+	
+	alreadyProcessing: [
+		'Your previous command is still being processed. Please wait...',
+		'Patience... I am still weaving your last request.',
+		'The spirits are still working on your previous inquiry.',
+		'One request at a time, mortal. Wait.',
+		'Your last command still echoes through the forest.'
+	],
+	
+	queueFull: [
+		'The spirits are overwhelmed... try again in a moment.',
+		'My power has limits. Return when the forest is calmer.',
+		'Too many voices call at once. Try again shortly.',
+		'The magical threads are tangled. Wait and try again.',
+		'Even I cannot handle such chaos. Return later.'
+	],
+	
+	queued: [
+		'Your request for **{character}** is queued (position {position}).',
+		'**{character}**... I shall attend to you shortly (position {position}).',
+		'The spirits whisper of **{character}**. You wait at position {position}.',
+		'**{character}** shall be revealed in due time (position {position}).',
+		'Patience... **{character}**\'s secrets await (position {position}).'
+	]
+};
+
+// Helper function to get random response
+const getRandomResponse = (category, replacements = {}) => {
+	const responses = BRIAR_RESPONSES[category];
+	const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+	
+	// Replace placeholders
+	let message = randomResponse;
+	for (const [key, value] of Object.entries(replacements)) {
+		message = message.replace(new RegExp(`{${key}}`, 'g'), value);
+	}
+	
+	return message;
+};
+
 let heroData = {};
 let artifactData = {};
 let artifactsById = {};
 
-// Initialize persistent cache manager
 const cacheManager = new CacheManager({
     cacheDir: path.join(__dirname, '..', 'cache'),
     ttl: 30 * 24 * 60 * 60 * 1000, // 30 days in milliseconds
     maxCacheSize: 500
 });
 
-// Initialize rate limiter
 const rateLimiter = new RateLimiter({
     maxRetries: 12,
     baseDelay: 1000,
@@ -44,28 +115,19 @@ const rateLimiter = new RateLimiter({
     circuitBreakerResetTime: 900000 // 15 minutes
 });
 
-// Log rate limiter events
 rateLimiter.on('circuitBreakerOpen', (data) => {
-    console.log(`🔴 CIRCUIT BREAKER: API calls suspended due to ${data.failures} failures`);
+    console.log(`Circuit breaker open: ${data.failures} failures`);
 });
 
 rateLimiter.on('circuitBreakerClose', () => {
-    console.log(`🟢 CIRCUIT BREAKER: Resuming API calls`);
+    console.log('Circuit breaker closed');
 });
 
-// Initialize health monitor
-const healthMonitor = new HealthMonitor({
-    port: process.env.HEALTH_PORT || 3000,
-    cacheManager: cacheManager,
-    rateLimiter: rateLimiter
-});
 
-// In-memory cache for API data (separate from image cache)
 const dataCache = new Map();
 const CACHE_TTL = 1800000; // 30 minutes for API data
 const MAX_CACHE_SIZE = 50;
 
-// Cache management
 function getCachedData(key) {
 	const cached = dataCache.get(key);
 	if (!cached) return null;
@@ -268,9 +330,6 @@ async function getHeroWithDeduplication(heroName, message) {
         }
     }
     
-    // Create a new request
-    console.log(`🚀 Starting new request for ${heroName}`);
-    
     const requestPromise = (async () => {
         try {
             // Check cache first
@@ -278,12 +337,10 @@ async function getHeroWithDeduplication(heroName, message) {
             
             if (screenshot) {
                 console.log(`📄 Cache hit for ${heroName}`);
-                healthMonitor.recordCacheHit();
                 return { screenshot, fromCache: true };
             }
             
             // Generate new image if not cached
-            healthMonitor.recordCacheMiss();
             const heroAnalysis = await analyzeHeroData(heroName);
             
             if (!heroAnalysis) {
@@ -295,7 +352,6 @@ async function getHeroWithDeduplication(heroName, message) {
             // Cache the generated image
             const cached = await cacheManager.cacheHeroImage(heroName, screenshot, heroAnalysis);
             if (cached) {
-                console.log(`💾 Cached new image for ${heroName}`);
             }
             
             return { screenshot, fromCache: false };
@@ -541,17 +597,14 @@ async function getPopularBuilds(heroName, retryCount = 0) {
 	try {
 		// Check if we should attempt the request
 		if (!rateLimiter.shouldAttemptRequest()) {
-			console.log(`🔴 Circuit breaker open, skipping request for ${heroName}`);
 			return { data: [] };
 		}
 		
-		console.log(`🔥 API REQUEST: ${heroName}${retryCount > 0 ? ` (RETRY ${retryCount})` : ''}`);
 		
 		// Use intelligent backoff delay if this is a retry
 		if (retryCount > 0) {
 			const delay = rateLimiter.calculateDelay(retryCount - 1);
 			const explanation = rateLimiter.getStrategyExplanation(retryCount - 1, delay);
-			console.log(`   ⏱️ ${explanation}`);
 			await new Promise(resolve => setTimeout(resolve, delay));
 		}
 		
@@ -743,7 +796,6 @@ async function getPopularBuilds(heroName, retryCount = 0) {
 		// PROTOCOL CHAOS
 		const httpVersion = getRandomElement(['1.1', '2.0']);
 		
-		console.log(`   🔥 HARDCORE SET ${techniqueSet}: ${method} HTTP/${httpVersion}, ${numIpHeaders} IP headers, region=${region}, ${processedHeroName !== heroName ? 'MANGLED' : 'PLAIN'} name`);
 
 		// MAXIMUM AXIOS CONFIGURATION - All options for maximum bypass
 		const axiosConfig = {
@@ -838,7 +890,6 @@ async function getPopularBuilds(heroName, retryCount = 0) {
 			
 			// Log current rate limiter health for debugging
 			const health = rateLimiter.getHealthStats();
-			console.log(`   📊 API Health: ${health.successRate} success rate, strategy: ${health.strategy}`);
 			
 			return { data: [] };
 		}
@@ -1813,9 +1864,6 @@ if (require.main === module) {
 		await loadGameData();
 		logMemoryUsage();
 		
-		// Start health monitor
-		healthMonitor.start(client);
-		console.log('🏥 Health monitoring started');
 	});
 
 	client.on('messageCreate', async (message) => {
@@ -1825,9 +1873,8 @@ if (require.main === module) {
 			// Enhanced rate limiting check
 			const rateLimitResult = checkRateLimit(message.author.id);
 			if (!rateLimitResult.allowed) {
-				await message.reply(
-					`⏳ You pester me too often... begone for now, and return in ${rateLimitResult.resetTime} seconds.`
-				);
+				const rateLimitMessage = getRandomResponse('rateLimited', { time: rateLimitResult.resetTime });
+				await message.reply(`⏳ ${rateLimitMessage}`);
 				return;
 			}
 
@@ -1838,7 +1885,8 @@ if (require.main === module) {
 			try {
 				userInput = validateAndSanitizeInput(rawInput);
 			} catch (error) {
-				await message.reply(`？ Your words make no sense... speak clearly, or be silent. **${error.message}**`);
+				const invalidMessage = getRandomResponse('invalidInput', { error: error.message });
+				await message.reply(`？ ${invalidMessage}`);
 				return;
 			}
 
@@ -1848,11 +1896,15 @@ if (require.main === module) {
 			if (!searchResult) {
 				const suggestions = getCharacterSuggestions(userInput, 3);
 				if (suggestions.length > 0) {
-					await message.reply(
-						`❌ **${userInput}** does not exist.\n*Perhaps you meant:*\n${suggestions.map(s => `• ${s}`).join('\n')}`
-					);
+					const suggestionsText = suggestions.map(s => `• ${s}`).join('\n');
+					const suggestionMessage = getRandomResponse('characterNotFoundWithSuggestions', { 
+						input: userInput, 
+						suggestions: suggestionsText 
+					});
+					await message.reply(`❌ ${suggestionMessage}`);
 				} else {
-					await message.reply(`❌ **${userInput}**... nothing but silence. Don't waste my time.`);
+					const notFoundMessage = getRandomResponse('characterNotFound', { input: userInput });
+					await message.reply(`❌ ${notFoundMessage}`);
 				}
 				return;
 			}
@@ -1862,7 +1914,8 @@ if (require.main === module) {
 
 			// Check if user is already being processed
 			if (processingCommands.has(message.author.id)) {
-				await message.reply('🔄 Your previous command is still being processed. Please wait...');
+				const processingMessage = getRandomResponse('alreadyProcessing');
+				await message.reply(`🔄 ${processingMessage}`);
 				return;
 			}
 
@@ -1877,14 +1930,19 @@ if (require.main === module) {
 
 			if (!queueResult.success) {
 				if (queueResult.reason === 'queue_full') {
-					await message.reply('⏳ The spirits are overwhelmed... try again in a moment.');
+					const queueFullMessage = getRandomResponse('queueFull');
+					await message.reply(queueFullMessage);
 				}
 				return;
 			}
 
 			// Notify user of queue position if not being processed immediately
 			if (queueResult.position > MAX_CONCURRENT_COMMANDS) {
-				await message.reply(`⌛ Your request for **${characterName}** is queued (position ${queueResult.position - MAX_CONCURRENT_COMMANDS}).`);
+				const queuedMessage = getRandomResponse('queued', { 
+					character: characterName, 
+					position: queueResult.position - MAX_CONCURRENT_COMMANDS 
+				});
+				await message.reply(`⌛ ${queuedMessage}`);
 			}
 		}
 	});

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastGlobalUpdate": "2025-08-25T02:49:15.538Z",
+  "lastGlobalUpdate": "2025-08-25T07:16:15.137Z",
   "heroes": {
     "Cerise": {
       "filename": "cerise",
@@ -1567,17 +1567,6 @@
       "validData": true,
       "sessionIndex": 7005
     },
-    "Violet": {
-      "filename": "violet",
-      "cacheKey": "d1d813a4",
-      "lastUpdated": "2025-08-25T02:49:10.735Z",
-      "fileExists": true,
-      "fileSizeBytes": 844707,
-      "totalBuilds": 3000,
-      "validData": true,
-      "accessCount": 0,
-      "lastAccessed": "2025-08-25T02:49:10.735Z"
-    },
     "Arbiter Vildred": {
       "filename": "arbiter_vildred",
       "cacheKey": "f71d035c",
@@ -1586,12 +1575,34 @@
       "fileSizeBytes": 860082,
       "totalBuilds": 3000,
       "validData": true,
-      "accessCount": 0,
-      "lastAccessed": "2025-08-25T02:49:15.538Z"
+      "accessCount": 9,
+      "lastAccessed": "2025-08-25T07:24:37.742Z"
+    },
+    "Seaside Bellona": {
+      "filename": "seaside_bellona",
+      "cacheKey": "a9571f11",
+      "lastUpdated": "2025-08-25T06:55:59.488Z",
+      "fileExists": true,
+      "fileSizeBytes": 855851,
+      "totalBuilds": 3000,
+      "validData": true,
+      "accessCount": 8,
+      "lastAccessed": "2025-08-25T07:24:37.744Z"
+    },
+    "Violet": {
+      "filename": "violet",
+      "cacheKey": "d1d813a4",
+      "lastUpdated": "2025-08-25T07:16:15.137Z",
+      "fileExists": true,
+      "fileSizeBytes": 844707,
+      "totalBuilds": 3000,
+      "validData": true,
+      "accessCount": 2,
+      "lastAccessed": "2025-08-25T07:24:37.739Z"
     }
   },
-  "totalHeroes": 184,
-  "successfulHeroes": 184,
+  "totalHeroes": 185,
+  "successfulHeroes": 185,
   "failedHeroes": [
     {
       "hero": "Cidd",
@@ -1769,8 +1780,8 @@
       "builds": 1
     }
   ],
-  "cacheSize": 184,
-  "totalDiskUsage": 1.63,
+  "cacheSize": 185,
+  "totalDiskUsage": 2.44,
   "lastProcessedIndex": 26,
   "rateLimitDetected": true,
   "sessionCount": 6

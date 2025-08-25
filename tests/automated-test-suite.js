@@ -59,17 +59,17 @@ class AutomatedTestSuite {
             console.log(colorize('Initializing test environment...', 'yellow'));
             await loadGameData();
             
-            console.log(colorize('✅ Environment ready', 'green'));
-            console.log(`   📊 Heroes loaded: ${Object.keys(heroData).length}`);
+            console.log(colorize(' Environment ready', 'green'));
+            console.log(`    Heroes loaded: ${Object.keys(heroData).length}`);
             console.log(`   🎭 Artifacts loaded: ${Object.keys(artifactData).length}`);
             
             const cacheStats = this.cacheManager.getCacheStats();
-            console.log(`   💾 Cached images: ${cacheStats.totalImages}`);
+            console.log(`    Cached images: ${cacheStats.totalImages}`);
             console.log('');
             
             return true;
         } catch (error) {
-            console.log(colorize(`❌ Initialization failed: ${error.message}`, 'red'));
+            console.log(colorize(`Initialization failed: ${error.message}`, 'red'));
             return false;
         }
     }
@@ -122,10 +122,10 @@ class AutomatedTestSuite {
             const result = this.runSingleSearchTest(test);
             if (result.passed) {
                 passed++;
-                console.log(colorize(`  ✅ ${test.type}: "${test.input}" → ${test.expected || 'null'}`, 'green'));
+                console.log(colorize(`   ${test.type}: "${test.input}" → ${test.expected || 'null'}`, 'green'));
             } else {
                 failed++;
-                console.log(colorize(`  ❌ ${test.type}: "${test.input}"`, 'red'));
+                console.log(colorize(`   ${test.type}: "${test.input}"`, 'red'));
                 if (result.actual && test.expected) {
                     console.log(colorize(`     Expected: ${test.expected}`, 'dim'));
                     console.log(colorize(`     Actual: ${result.actual}`, 'dim'));
@@ -139,9 +139,9 @@ class AutomatedTestSuite {
         
         console.log('');
         console.log(colorize('🔍 Search Test Results:', 'bold'));
-        console.log(`  ✅ Passed: ${colorize(passed, 'green')}`);
-        console.log(`  ❌ Failed: ${colorize(failed, 'red')}`);
-        console.log(`  📈 Success Rate: ${colorize(((passed / (passed + failed)) * 100).toFixed(1) + '%', 'cyan')}`);
+        console.log(`   Passed: ${colorize(passed, 'green')}`);
+        console.log(`   Failed: ${colorize(failed, 'red')}`);
+        console.log(`   Success Rate: ${colorize(((passed / (passed + failed)) * 100).toFixed(1) + '%', 'cyan')}`);
         console.log('');
         
         return failed === 0;
@@ -182,10 +182,10 @@ class AutomatedTestSuite {
             const testResult = await this.runSingleWorkflowTest(heroName);
             if (testResult.passed) {
                 passed++;
-                console.log(colorize(`  ✅ ${heroName}: ${testResult.duration}ms, ${testResult.imageSize}`, 'green'));
+                console.log(colorize(`   ${heroName}: ${testResult.duration}ms, ${testResult.imageSize}`, 'green'));
             } else {
                 failed++;
-                console.log(colorize(`  ❌ ${heroName}: ${testResult.error}`, 'red'));
+                console.log(colorize(`   ${heroName}: ${testResult.error}`, 'red'));
             }
             
             console.log('');
@@ -194,9 +194,9 @@ class AutomatedTestSuite {
         this.results.workflowTests = { passed, failed, total: passed + failed };
         
         console.log(colorize('🔄 Workflow Test Results:', 'bold'));
-        console.log(`  ✅ Passed: ${colorize(passed, 'green')}`);
-        console.log(`  ❌ Failed: ${colorize(failed, 'red')}`);
-        console.log(`  📈 Success Rate: ${colorize(((passed / (passed + failed)) * 100).toFixed(1) + '%', 'cyan')}`);
+        console.log(`   Passed: ${colorize(passed, 'green')}`);
+        console.log(`   Failed: ${colorize(failed, 'red')}`);
+        console.log(`   Success Rate: ${colorize(((passed / (passed + failed)) * 100).toFixed(1) + '%', 'cyan')}`);
         console.log('');
         
         return failed === 0;
@@ -254,7 +254,7 @@ class AutomatedTestSuite {
     }
 
     async runCacheTests() {
-        console.log(colorize('💾 Running Cache Tests...', 'bold'));
+        console.log(colorize(' Running Cache Tests...', 'bold'));
         console.log('');
         
         let passed = 0;
@@ -268,14 +268,14 @@ class AutomatedTestSuite {
                 typeof stats.validImages === 'number' && 
                 typeof stats.totalSizeMB === 'string') {
                 passed++;
-                console.log(colorize('  ✅ Cache statistics working', 'green'));
+                console.log(colorize('   Cache statistics working', 'green'));
             } else {
                 failed++;
-                console.log(colorize('  ❌ Cache statistics invalid format', 'red'));
+                console.log(colorize('   Cache statistics invalid format', 'red'));
             }
         } catch (error) {
             failed++;
-            console.log(colorize(`  ❌ Cache statistics error: ${error.message}`, 'red'));
+            console.log(colorize(`   Cache statistics error: ${error.message}`, 'red'));
         }
         
         // Test 2: Cache validation
@@ -283,10 +283,10 @@ class AutomatedTestSuite {
         try {
             this.cacheManager.validateCacheIntegrity();
             passed++;
-            console.log(colorize('  ✅ Cache validation working', 'green'));
+            console.log(colorize('   Cache validation working', 'green'));
         } catch (error) {
             failed++;
-            console.log(colorize(`  ❌ Cache validation error: ${error.message}`, 'red'));
+            console.log(colorize(`   Cache validation error: ${error.message}`, 'red'));
         }
         
         // Test 3: Cache cleanup
@@ -294,19 +294,19 @@ class AutomatedTestSuite {
         try {
             const cleanedCount = this.cacheManager.cleanupExpiredEntries();
             passed++;
-            console.log(colorize(`  ✅ Cache cleanup working (${cleanedCount} expired entries)`, 'green'));
+            console.log(colorize(`   Cache cleanup working (${cleanedCount} expired entries)`, 'green'));
         } catch (error) {
             failed++;
-            console.log(colorize(`  ❌ Cache cleanup error: ${error.message}`, 'red'));
+            console.log(colorize(`    Cache cleanup error: ${error.message}`, 'red'));
         }
         
         this.results.cacheTests = { passed, failed, total: passed + failed };
         
         console.log('');
-        console.log(colorize('💾 Cache Test Results:', 'bold'));
-        console.log(`  ✅ Passed: ${colorize(passed, 'green')}`);
-        console.log(`  ❌ Failed: ${colorize(failed, 'red')}`);
-        console.log(`  📈 Success Rate: ${colorize(((passed / (passed + failed)) * 100).toFixed(1) + '%', 'cyan')}`);
+        console.log(colorize(' Cache Test Results:', 'bold'));
+        console.log(`   Passed: ${colorize(passed, 'green')}`);
+        console.log(`   Failed: ${colorize(failed, 'red')}`);
+        console.log(`   Success Rate: ${colorize(((passed / (passed + failed)) * 100).toFixed(1) + '%', 'cyan')}`);
         console.log('');
         
         return failed === 0;
@@ -324,7 +324,7 @@ class AutomatedTestSuite {
             
             fs.writeFileSync(filepath, imageBuffer);
         } catch (error) {
-            console.warn(colorize(`    ⚠️ Failed to save test output: ${error.message}`, 'dim'));
+            console.warn(colorize(`    WARNING: Failed to save test output: ${error.message}`, 'dim'));
         }
     }
 
@@ -344,7 +344,7 @@ class AutomatedTestSuite {
             
         this.results.overall.total = this.results.overall.passed + this.results.overall.failed;
         
-        console.log(colorize('📊 FINAL TEST REPORT', 'bold'));
+        console.log(colorize(' FINAL TEST REPORT', 'bold'));
         console.log(colorize('='*50, 'cyan'));
         console.log('');
         
@@ -368,8 +368,8 @@ class AutomatedTestSuite {
         // Overall results
         const overallSuccess = ((this.results.overall.passed / this.results.overall.total) * 100).toFixed(1);
         const overallStatus = this.results.overall.failed === 0 ? 
-            colorize('✅ ALL TESTS PASSED', 'green') : 
-            colorize('❌ SOME TESTS FAILED', 'red');
+            colorize(' ALL TESTS PASSED', 'green') : 
+            colorize(' SOME TESTS FAILED', 'red');
         
         console.log(colorize('Overall Results:', 'bold'));
         console.log(`  Status: ${overallStatus}`);
@@ -416,7 +416,7 @@ if (require.main === module) {
     
     // Handle graceful shutdown
     process.on('SIGINT', () => {
-        console.log(colorize('\n⚠️ Test suite interrupted', 'yellow'));
+        console.log(colorize('\nWARNING: Test suite interrupted', 'yellow'));
         process.exit(1);
     });
     

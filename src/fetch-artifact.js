@@ -21,7 +21,6 @@ const getArtifactImage = async (artifactName) => {
 		
 		if (correctionKey) {
 			const correction = ARTIFACT_NAME_CORRECTIONS[correctionKey];
-			console.log(`🔧 Artifact name correction: "${artifactName}" → "${correction}"`);
 			correctedName = correction;
 		} else {
 			correctedName = artifactName;

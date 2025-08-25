@@ -176,7 +176,6 @@ class RateLimiter extends EventEmitter {
                 timestamp: now
             });
             
-            console.log(`🔴 CIRCUIT BREAKER OPEN: ${this.circuitBreaker.failureCount} consecutive failures`);
         }
         
         // Check if we should close the circuit breaker
@@ -190,7 +189,6 @@ class RateLimiter extends EventEmitter {
                 timestamp: now
             });
             
-            console.log(`🟢 CIRCUIT BREAKER CLOSED: Attempting to resume normal operations`);
         }
     }
     
@@ -315,7 +313,6 @@ class RateLimiter extends EventEmitter {
         this.currentStrategy = this.strategies.MODERATE;
         
         this.emit('reset', { timestamp: Date.now() });
-        console.log('📊 Rate limiter metrics reset');
     }
 }
 

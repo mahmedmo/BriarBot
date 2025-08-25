@@ -9,15 +9,7 @@
 		"test": "node tests/automated-test-suite.js",
 		"test:interactive": "node tests/interactive-test-runner.js",
 		"test:auto": "node tests/automated-test-suite.js",
-		"build": "npm run install-chrome",
-		"static": "node src/static-bot.js",
-		"static:dev": "nodemon src/static-bot.js",
-		"cache:status": "node scripts/cache-manager.js status",
-		"cache:cleanup": "node scripts/cache-manager.js cleanup",
-		"cache:add": "node scripts/cache-manager.js add",
-		"cache:remove": "node scripts/cache-manager.js remove",
-		"cache:list": "node scripts/cache-manager.js list",
-		"cache:reset": "node scripts/cache-manager.js reset"
+		"build": "npm run install-chrome"
 	},
 	"dependencies": {
 		"axios": "^1.6.0",

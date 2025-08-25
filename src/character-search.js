@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Load character names
-const characterDataPath = path.join(__dirname, '..', 'data', 'character-names.json');
+const characterDataPath = path.join(__dirname, '..', 'assets', 'character-names.json');
 let characterNames = [];
 
 try {
@@ -88,6 +88,9 @@ const COMMUNITY_ABBREVIATIONS = {
     'lqc': 'Little Queen Charlotte',
 	'lhc': 'Lionheart Cermia',
 	'lermia': 'Lionheart Cermia',
+	'cavel': 'Commander Pavel',
+	'barunka': 'Boss Arunka',
+	'Moona': 'New Moon Luna',
 };
 
 // Normalize text for better matching
