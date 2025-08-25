@@ -1,0 +1,71 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime files
+*.log
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+.nyc_output
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Development files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Docker files (don't include in build context)
+Dockerfile*
+.dockerignore
+
+# Documentation
+README.md
+docs/
+
+# Test files (exclude from production image)
+tests/output/
+
+# Temporary files
+tmp/
+temp/
+
+# Build artifacts
+dist/
+build/
+
+# Cache directories (these will be mounted as volumes)
+cache/
+
+# Static output (might be large)
+static-output/
+
+# PM2 logs
+.pm2/

@@ -1,9 +1,34 @@
 const fetch = require('node-fetch');
 
+// Artifact name corrections for known typos and variants
+const ARTIFACT_NAME_CORRECTIONS = {
+	'elegiac candles': 'elegiac candle',
+	'elegiac-candles': 'elegiac-candle',
+	'elegiaccandles': 'elegiaccandle'
+};
+
 const getArtifactImage = async (artifactName) => {
 	try {
+		// Apply artifact name corrections first
+		let correctedName = artifactName.toLowerCase();
+		
+		// Check for known corrections
+		const correctionKey = Object.keys(ARTIFACT_NAME_CORRECTIONS).find(key => 
+			correctedName.includes(key.replace(/-/g, ' ')) || 
+			correctedName.includes(key.replace(/-/g, '')) ||
+			correctedName === key
+		);
+		
+		if (correctionKey) {
+			const correction = ARTIFACT_NAME_CORRECTIONS[correctionKey];
+			console.log(`🔧 Artifact name correction: "${artifactName}" → "${correction}"`);
+			correctedName = correction;
+		} else {
+			correctedName = artifactName;
+		}
+		
 		// Format artifact name by replacing spaces with hyphens
-		const formattedName = artifactName.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '-').toLowerCase();
+		const formattedName = correctedName.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '-').toLowerCase();
 
 		// Fetch artifact data from the first API
 		const response = await fetch(`https://cecilia-bot-api.vercel.app/api/v1/getItem?list=artifact&id=${formattedName}`);

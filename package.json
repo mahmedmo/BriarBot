@@ -6,17 +6,26 @@
 	"scripts": {
 		"start": "node src/briar-bot.js",
 		"dev": "nodemon src/briar-bot.js",
-		"test": "node tests/test-run-all.js",
+		"test": "node tests/automated-test-suite.js",
+		"test:interactive": "node tests/interactive-test-runner.js",
+		"test:auto": "node tests/automated-test-suite.js",
 		"build": "npm run install-chrome",
-		"test:search": "node tests/test-search.js",
-		"test:bot": "node tests/test-briar-bot.js",
-		"test:interactive": "node tests/test-interactive.js"
+		"static": "node src/static-bot.js",
+		"static:dev": "nodemon src/static-bot.js",
+		"cache:status": "node scripts/cache-manager.js status",
+		"cache:cleanup": "node scripts/cache-manager.js cleanup",
+		"cache:add": "node scripts/cache-manager.js add",
+		"cache:remove": "node scripts/cache-manager.js remove",
+		"cache:list": "node scripts/cache-manager.js list",
+		"cache:reset": "node scripts/cache-manager.js reset"
 	},
 	"dependencies": {
+		"axios": "^1.6.0",
 		"discord.js": "^14.14.1",
 		"dotenv": "^16.3.1",
-		"puppeteer": "^24.16.2",
-		"node-fetch": "^2.6.7"
+		"node-fetch": "^2.6.7",
+		"pm2": "^6.0.8",
+		"puppeteer": "^24.16.2"
 	},
 	"devDependencies": {
 		"nodemon": "^3.0.2"

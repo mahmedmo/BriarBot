@@ -3,104 +3,14 @@ const fetch = require('node-fetch');
 const fs = require('fs');
 const path = require('path');
 const http = require('http');
-const puppeteer = require('puppeteer');
+const axios = require('axios');
 const getArtifactImage = require('./fetch-artifact');
 const getHeroImageUrl = require('./fetch-hero');
 const { findBestCharacterMatch, getCharacterSuggestions } = require('./character-search');
+const CacheManager = require('./cache-manager');
+const RateLimiter = require('./rate-limiter');
+const HealthMonitor = require('./health-monitor');
 require('dotenv').config();
-
-function getPuppeteerConfig() {
-	const isProduction = process.env.NODE_ENV === 'production';
-    
-	if (isProduction) {
-		return {
-			headless: 'new', // Use new headless mode (faster)
-			timeout: 15000, // Reduced from 30000
-			args: [
-				// Essential security flags
-				'--no-sandbox',
-				'--disable-setuid-sandbox',
-				
-				// Memory optimization
-				'--disable-dev-shm-usage',
-				'--memory-pressure-off',
-				'--max_old_space_size=512', // Limit memory usage
-				
-				// Disable unnecessary features
-				'--disable-extensions',
-				'--disable-plugins',
-				'--disable-images', // Don't load images (big savings!)
-				'--disable-javascript', // Your scraping might not need JS
-				'--disable-css', // Don't process CSS
-				'--disable-fonts', // Don't load fonts
-				'--disable-background-networking',
-				'--disable-background-timer-throttling',
-				'--disable-renderer-backgrounding',
-				'--disable-backgrounding-occluded-windows',
-				'--disable-client-side-phishing-detection',
-				'--disable-sync',
-				'--disable-translate',
-				'--disable-ipc-flooding-protection',
-				
-				// Performance optimizations
-				'--disable-gpu',
-				'--disable-software-rasterizer',
-				'--disable-canvas-aa',
-				'--disable-2d-canvas-clip-aa',
-				'--disable-gl-drawing-for-tests',
-				'--disable-accelerated-2d-canvas',
-				'--disable-accelerated-jpeg-decoding',
-				'--disable-accelerated-video-decode',
-				'--disable-features=VizDisplayCompositor,AudioServiceOutOfProcess',
-				
-				// Resource limits
-				'--aggressive-cache-discard',
-				'--disable-hang-monitor',
-				'--disable-prompt-on-repost',
-				'--disable-domain-reliability',
-				'--disable-component-extensions-with-background-pages',
-				
-				// Network optimizations
-				'--disable-background-networking',
-				'--disable-default-apps',
-				'--disable-popup-blocking',
-				'--no-default-browser-check',
-				'--no-first-run',
-				
-				// Audio/Video (not needed)
-				'--mute-audio',
-				'--disable-audio-output',
-				
-				// Process optimization
-				'--single-process', // Use single process (careful - less stable but lighter)
-				'--disable-web-security', // Only if scraping allows it
-			],
-			
-			// Browser settings
-			defaultViewport: {
-				width: 1024,
-				height: 768
-			},
-			
-			// Only if you have a specific Chrome path
-			executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined
-		};
-	}
-    
-	// Local development configuration
-	return {
-		headless: true,
-		timeout: 30000,
-		args: [
-			'--disable-dev-shm-usage',
-			'--disable-extensions',
-			'--disable-plugins',
-			'--no-first-run',
-			'--disable-default-apps'
-		]
-	};
-}
-
 
 
 const client = new Client({
@@ -117,10 +27,90 @@ let heroData = {};
 let artifactData = {};
 let artifactsById = {};
 
-// Rate limiting map: userId -> { count, lastReset }
+// Initialize persistent cache manager
+const cacheManager = new CacheManager({
+    cacheDir: path.join(__dirname, '..', 'cache'),
+    ttl: 30 * 24 * 60 * 60 * 1000, // 30 days in milliseconds
+    maxCacheSize: 500
+});
+
+// Initialize rate limiter
+const rateLimiter = new RateLimiter({
+    maxRetries: 12,
+    baseDelay: 1000,
+    maxDelay: 300000, // 5 minutes max
+    jitterFactor: 0.15,
+    circuitBreakerThreshold: 15,
+    circuitBreakerResetTime: 900000 // 15 minutes
+});
+
+// Log rate limiter events
+rateLimiter.on('circuitBreakerOpen', (data) => {
+    console.log(`🔴 CIRCUIT BREAKER: API calls suspended due to ${data.failures} failures`);
+});
+
+rateLimiter.on('circuitBreakerClose', () => {
+    console.log(`🟢 CIRCUIT BREAKER: Resuming API calls`);
+});
+
+// Initialize health monitor
+const healthMonitor = new HealthMonitor({
+    port: process.env.HEALTH_PORT || 3000,
+    cacheManager: cacheManager,
+    rateLimiter: rateLimiter
+});
+
+// In-memory cache for API data (separate from image cache)
+const dataCache = new Map();
+const CACHE_TTL = 1800000; // 30 minutes for API data
+const MAX_CACHE_SIZE = 50;
+
+// Cache management
+function getCachedData(key) {
+	const cached = dataCache.get(key);
+	if (!cached) return null;
+	
+	if (Date.now() - cached.timestamp > CACHE_TTL) {
+		dataCache.delete(key);
+		return null;
+	}
+	
+	return cached.data;
+}
+
+function setCachedData(key, data) {
+	// Implement LRU-like behavior
+	if (dataCache.size >= MAX_CACHE_SIZE) {
+		const firstKey = dataCache.keys().next().value;
+		dataCache.delete(firstKey);
+	}
+	
+	dataCache.set(key, {
+		data,
+		timestamp: Date.now()
+	});
+}
+
+// Enhanced rate limiting and queue system
 const userRateLimit = new Map();
-const RATE_LIMIT_REQUESTS = 5; // Max 5 requests
-const RATE_LIMIT_WINDOW = 60000; // Per 60 seconds
+const RATE_LIMIT_REQUESTS = 3; // Max 3 requests
+const RATE_LIMIT_WINDOW = 30000; // Per 30 seconds
+
+// Command queue system
+const commandQueue = [];
+const processingCommands = new Set();
+const MAX_CONCURRENT_COMMANDS = 2; // Process max 2 commands simultaneously
+const QUEUE_MAX_SIZE = 20; // Max queue size to prevent memory issues
+let isProcessingQueue = false;
+
+// Request deduplication system
+const ongoingRequests = new Map(); // heroName -> { promise, requesters: [messages] }
+const REQUEST_TIMEOUT = 120000; // 2 minutes timeout for ongoing requests
+
+// Memory and performance tracking
+let activeConnections = 0;
+let lastMemoryCleanup = Date.now();
+const MEMORY_CLEANUP_INTERVAL = 300000; // 5 minutes
 
 // Input validation function
 function validateAndSanitizeInput(input) {
@@ -139,34 +129,853 @@ function validateAndSanitizeInput(input) {
 	return input.trim().replace(/\s+/g, ' ');
 }
 
-// Rate limiting function
+// Enhanced rate limiting function
 function checkRateLimit(userId) {
 	const now = Date.now();
 	const userLimit = userRateLimit.get(userId);
 	
 	if (!userLimit) {
 		userRateLimit.set(userId, { count: 1, lastReset: now });
-		return true;
+		return { allowed: true, remainingRequests: RATE_LIMIT_REQUESTS - 1 };
 	}
 	
 	// Reset if window has passed
 	if (now - userLimit.lastReset > RATE_LIMIT_WINDOW) {
 		userRateLimit.set(userId, { count: 1, lastReset: now });
-		return true;
+		return { allowed: true, remainingRequests: RATE_LIMIT_REQUESTS - 1 };
 	}
 	
 	// Check if under limit
 	if (userLimit.count < RATE_LIMIT_REQUESTS) {
 		userLimit.count++;
-		return true;
+		return { allowed: true, remainingRequests: RATE_LIMIT_REQUESTS - userLimit.count };
 	}
 	
-	return false;
+	const resetTime = Math.ceil((userLimit.lastReset + RATE_LIMIT_WINDOW - now) / 1000);
+	return { allowed: false, resetTime };
+}
+
+// Command queue management
+function addToQueue(commandData) {
+	if (commandQueue.length >= QUEUE_MAX_SIZE) {
+		return { success: false, reason: 'queue_full', position: -1 };
+	}
+	
+	commandQueue.push(commandData);
+	const position = commandQueue.length;
+	
+	if (!isProcessingQueue) {
+		processQueue();
+	}
+	
+	return { success: true, position };
+}
+
+async function processQueue() {
+	if (isProcessingQueue || commandQueue.length === 0) return;
+	
+	isProcessingQueue = true;
+	
+	while (commandQueue.length > 0 && processingCommands.size < MAX_CONCURRENT_COMMANDS) {
+		const commandData = commandQueue.shift();
+		processCommand(commandData);
+	}
+	
+	isProcessingQueue = false;
+	
+	// Continue processing if there are more commands
+	if (commandQueue.length > 0) {
+		setTimeout(processQueue, 100);
+	}
+}
+
+async function processCommand(commandData) {
+	const { message, userInput, characterName, confidence, searchResult } = commandData;
+	const userId = message.author.id;
+	
+	processingCommands.add(userId);
+	activeConnections++;
+	
+	try {
+		let loadingContent = `🌑   Revealing **${characterName}**...`;
+		if (searchResult.matchType !== 'exact' || confidence < 100) {
+			loadingContent = `🌒   A pale echo at a ${confidence}% match... Revealing **${characterName}**...`;
+		}
+		
+		const loadingMessage = await message.reply(loadingContent);
+		
+		// Use deduplication system to handle the request
+		const result = await getHeroWithDeduplication(characterName, loadingMessage);
+		
+		if (result && result.screenshot) {
+			const attachment = new AttachmentBuilder(result.screenshot, {
+				name: `${characterName.replace(/\s+/g, '_')}.png`
+			});
+			
+			const contentPrefix = result.fromCache ? '⚡' : '☾';
+			await loadingMessage.edit({
+				content: `${contentPrefix}   ${characterName}`,
+				files: [attachment]
+			});
+		} else {
+			await loadingMessage.edit(`❌ I called for **${characterName}**... no one answered.`);
+		}
+		
+	} catch (error) {
+		console.error('Error processing command:', error);
+		try {
+			await message.reply(`❌ The witch stirs... the search for **${characterName}** is lost.`);
+		} catch (replyError) {
+			console.error('Error sending error message:', replyError);
+		}
+	} finally {
+		processingCommands.delete(userId);
+		activeConnections--;
+		
+		// Continue processing queue
+		setTimeout(processQueue, 100);
+		
+		// Periodic memory cleanup
+		if (Date.now() - lastMemoryCleanup > MEMORY_CLEANUP_INTERVAL) {
+			performMemoryCleanup();
+		}
+	}
+}
+
+/**
+ * Handle hero request with deduplication
+ * @param {string} heroName 
+ * @param {Object} message - Discord message object
+ * @returns {Promise<Buffer|null>}
+ */
+async function getHeroWithDeduplication(heroName, message) {
+    const normalizedHeroName = heroName.toLowerCase().trim();
+    
+    // Check if there's already an ongoing request for this hero
+    if (ongoingRequests.has(normalizedHeroName)) {
+        console.log(`🔗 Deduplicating request for ${heroName} - joining existing request`);
+        
+        const existingRequest = ongoingRequests.get(normalizedHeroName);
+        existingRequest.requesters.push(message);
+        
+        try {
+            // Wait for the existing request to complete
+            const result = await existingRequest.promise;
+            return result;
+        } catch (error) {
+            console.error(`❌ Deduplicated request failed for ${heroName}:`, error.message);
+            return null;
+        }
+    }
+    
+    // Create a new request
+    console.log(`🚀 Starting new request for ${heroName}`);
+    
+    const requestPromise = (async () => {
+        try {
+            // Check cache first
+            let screenshot = cacheManager.getCachedHeroImage(heroName);
+            
+            if (screenshot) {
+                console.log(`📄 Cache hit for ${heroName}`);
+                healthMonitor.recordCacheHit();
+                return { screenshot, fromCache: true };
+            }
+            
+            // Generate new image if not cached
+            healthMonitor.recordCacheMiss();
+            const heroAnalysis = await analyzeHeroData(heroName);
+            
+            if (!heroAnalysis) {
+                return null;
+            }
+            
+            screenshot = await generateReportImage(heroAnalysis);
+            
+            // Cache the generated image
+            const cached = await cacheManager.cacheHeroImage(heroName, screenshot, heroAnalysis);
+            if (cached) {
+                console.log(`💾 Cached new image for ${heroName}`);
+            }
+            
+            return { screenshot, fromCache: false };
+            
+        } finally {
+            // Clean up the ongoing request tracking
+            ongoingRequests.delete(normalizedHeroName);
+        }
+    })();
+    
+    // Store the request with timeout
+    const requestData = {
+        promise: requestPromise,
+        requesters: [message],
+        startTime: Date.now()
+    };
+    
+    ongoingRequests.set(normalizedHeroName, requestData);
+    
+    // Set up timeout cleanup
+    setTimeout(() => {
+        if (ongoingRequests.has(normalizedHeroName)) {
+            console.warn(`⏰ Request timeout for ${heroName}, cleaning up`);
+            ongoingRequests.delete(normalizedHeroName);
+        }
+    }, REQUEST_TIMEOUT);
+    
+    return requestPromise;
+}
+
+/**
+ * Clean up expired ongoing requests
+ */
+function cleanupExpiredRequests() {
+    const now = Date.now();
+    let cleanedCount = 0;
+    
+    for (const [heroName, requestData] of ongoingRequests.entries()) {
+        if (now - requestData.startTime > REQUEST_TIMEOUT) {
+            console.warn(`🧹 Cleaning up expired request for ${heroName}`);
+            ongoingRequests.delete(heroName);
+            cleanedCount++;
+        }
+    }
+    
+    if (cleanedCount > 0) {
+        console.log(`🧹 Cleaned up ${cleanedCount} expired ongoing requests`);
+    }
+    
+    return cleanedCount;
+}
+
+// Memory cleanup function
+function performMemoryCleanup() {
+	lastMemoryCleanup = Date.now();
+	
+	// Clean old rate limit entries
+	const now = Date.now();
+	for (const [userId, data] of userRateLimit.entries()) {
+		if (now - data.lastReset > RATE_LIMIT_WINDOW * 2) {
+			userRateLimit.delete(userId);
+		}
+	}
+	
+	// Clean expired cache entries
+	const expiredCount = cacheManager.cleanupExpiredEntries();
+	if (expiredCount > 0) {
+		console.log(`Cleaned up ${expiredCount} expired cache entries`);
+	}
+	
+	// Clean expired ongoing requests
+	cleanupExpiredRequests();
+	
+	// Force garbage collection if available
+	if (global.gc) {
+		global.gc();
+		console.log('Memory cleanup performed');
+	}
 }
 
 const HERO_CACHE = "https://e7-optimizer-game-data.s3-accelerate.amazonaws.com/herodata.json";
 const ARTIFACT_CACHE = "https://e7-optimizer-game-data.s3-accelerate.amazonaws.com/artifactdata.json";
 const BUILDS_API = "https://krivpfvxi0.execute-api.us-west-2.amazonaws.com/dev/getBuilds";
+const BUILDS_API_ALTERNATIVES = [
+	"https://krivpfvxi0.execute-api.us-west-2.amazonaws.com/dev/getBuilds",
+	"https://krivpfvxi0.execute-api.us-west-2.amazonaws.com/prod/getBuilds",
+	"https://krivpfvxi0.execute-api.us-west-2.amazonaws.com/stage/getBuilds",
+	"https://krivpfvxi0.execute-api.us-west-2.amazonaws.com/beta/getBuilds",
+	"https://krivpfvxi0.execute-api.us-west-2.amazonaws.com/v1/getBuilds",
+	"https://krivpfvxi0.execute-api.us-west-2.amazonaws.com/api/getBuilds"
+];
+
+// HARDCORE BYPASS CONFIGURATION - Maximum Aggression
+const USER_AGENTS = [
+	// Modern Chrome variations with different builds
+	'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+	'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
+	'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+	'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+	// Firefox variations
+	'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:120.0) Gecko/20100101 Firefox/120.0',
+	'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:120.0) Gecko/20100101 Firefox/120.0',
+	// Safari variations
+	'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.1 Safari/605.1.15',
+	'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Safari/605.1.15',
+	// Edge variations
+	'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0',
+	// Mobile browsers
+	'Mozilla/5.0 (iPhone; CPU iPhone OS 17_1_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.1 Mobile/15E148 Safari/604.1',
+	'Mozilla/5.0 (Linux; Android 10; SM-G975F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36',
+	// Curl/wget to appear as different tool types
+	'curl/7.68.0',
+	'Wget/1.20.3 (linux-gnu)',
+	// Bot-like but legitimate
+	'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+	'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)'
+];
+
+const FORWARDED_IPS = [
+	// Major DNS providers
+	'1.1.1.1', '1.0.0.1', '8.8.8.8', '8.8.4.4', '4.4.4.4', '4.4.8.8',
+	'208.67.222.222', '208.67.220.220', '9.9.9.9', '149.112.112.112',
+	'76.76.19.19', '76.223.100.101', '94.140.14.14', '94.140.15.15',
+	// Major cloud provider IPs
+	'54.239.28.85', '52.95.110.1', '13.107.42.14', '40.90.4.200',
+	'104.16.249.249', '104.16.248.249', '172.67.221.168', '104.21.2.70',
+	// Corporate/University IPs that look legitimate
+	'129.250.35.250', '198.6.1.4', '192.5.6.30', '199.7.83.42',
+	'128.8.126.63', '171.67.193.20', '192.36.148.17', '199.232.41.5'
+];
+
+// Geographic IP ranges for more realistic spoofing
+const IP_RANGES = {
+	US: ['173.252.0.0/16', '31.13.24.0/21', '66.220.144.0/20', '69.63.176.0/20'],
+	EU: ['185.60.216.0/22', '185.89.218.0/23', '31.13.64.0/18', '31.13.72.0/21'],
+	ASIA: ['103.4.96.0/22', '179.60.192.0/22', '185.89.216.0/22', '199.201.64.0/22']
+};
+
+// Common corporate/educational domains for referrer diversity
+const REFERRER_DOMAINS = [
+	'https://github.com/fribbels/',
+	'https://epic7x.com/',
+	'https://reddit.com/r/EpicSeven',
+	'https://gamepress.gg/epicseven',
+	'https://google.com/search',
+	'https://bing.com/search',
+	'https://duckduckgo.com/',
+	'https://yandex.com/search',
+	'https://baidu.com/s',
+	'https://fribbels.github.io',
+	'https://fribbels.github.io/e7',
+	'https://fribbels.github.io/e7/hero-library.html'
+];
+
+let requestCounter = 0;
+
+function getRandomElement(arr) {
+	return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function generateRandomIP() {
+	return Array.from({length: 4}, () => Math.floor(Math.random() * 256)).join('.');
+}
+
+// Generate realistic IP from CIDR ranges
+function generateRealisticIP(region = 'US') {
+	const ranges = IP_RANGES[region] || IP_RANGES.US;
+	const range = getRandomElement(ranges);
+	const [network, mask] = range.split('/');
+	const [a, b, c, d] = network.split('.').map(Number);
+	const maskBits = parseInt(mask);
+	const hostBits = 32 - maskBits;
+	const maxHosts = Math.pow(2, hostBits) - 2;
+	const randomHost = Math.floor(Math.random() * maxHosts) + 1;
+	
+	// Simple CIDR generation (not perfect but good enough for spoofing)
+	const newD = (d + randomHost) % 256;
+	const newC = (c + Math.floor((d + randomHost) / 256)) % 256;
+	return `${a}.${b}.${newC}.${newD}`;
+}
+
+// Generate session tokens to appear as different authenticated users
+function generateSessionToken() {
+	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	return Array.from({length: 32}, () => chars.charAt(Math.floor(Math.random() * chars.length))).join('');
+}
+
+// Generate request ID to appear as different requests
+function generateRequestId() {
+	return 'req_' + Math.random().toString(36).substr(2, 16) + '_' + Date.now();
+}
+
+// Multiple protocol variations 
+function getProtocolVariation() {
+	return getRandomElement(['https:', 'http:']);
+}
+
+// Advanced encoding and parameter manipulation functions
+function urlEncodeRandom(str) {
+	// Partially encode the string to create mismatch between rate limiting and processing
+	const chars = str.split('');
+	const encodableChars = /[a-zA-Z0-9]/;
+	
+	return chars.map((char, index) => {
+		if (encodableChars.test(char) && Math.random() < 0.3) { // 30% chance to encode
+			return '%' + char.charCodeAt(0).toString(16).padStart(2, '0');
+		}
+		return char;
+	}).join('');
+}
+
+function addNullByteVariation(str) {
+	// Add null bytes or other special characters to create processing mismatch
+	const variations = ['%00', '%20', '%09', '%0d', '%0a'];
+	const variation = getRandomElement(variations);
+	
+	// Add at random position
+	if (Math.random() < 0.5) {
+		return str + variation; // Append
+	} else {
+		return variation + str; // Prepend
+	}
+}
+
+function addRandomParameters(url) {
+	// Add random parameters to make requests appear unique
+	const separator = url.includes('?') ? '&' : '?';
+	const randomParams = [
+		`_t=${Date.now()}`,
+		`_r=${Math.random().toString(36).substr(2, 9)}`,
+		`cache=${Math.floor(Math.random() * 1000)}`,
+		`v=${Math.floor(Math.random() * 100)}`
+	];
+	
+	const numParams = Math.floor(Math.random() * 3) + 1; // 1-3 random params
+	const selectedParams = randomParams.sort(() => 0.5 - Math.random()).slice(0, numParams);
+	
+	return url + separator + selectedParams.join('&');
+}
+
+// HARDCORE AGGRESSIVE RATE LIMIT DESTROYER
+async function getPopularBuilds(heroName, retryCount = 0) {
+	try {
+		// Check if we should attempt the request
+		if (!rateLimiter.shouldAttemptRequest()) {
+			console.log(`🔴 Circuit breaker open, skipping request for ${heroName}`);
+			return { data: [] };
+		}
+		
+		console.log(`🔥 API REQUEST: ${heroName}${retryCount > 0 ? ` (RETRY ${retryCount})` : ''}`);
+		
+		// Use intelligent backoff delay if this is a retry
+		if (retryCount > 0) {
+			const delay = rateLimiter.calculateDelay(retryCount - 1);
+			const explanation = rateLimiter.getStrategyExplanation(retryCount - 1, delay);
+			console.log(`   ⏱️ ${explanation}`);
+			await new Promise(resolve => setTimeout(resolve, delay));
+		}
+		
+		requestCounter++;
+		
+		// ULTRA TECHNIQUE ROTATION - 50 different combinations for maximum stealth
+		const techniqueSet = requestCounter % 50;
+		const region = getRandomElement(['US', 'EU', 'ASIA', 'OCEANIA', 'AFRICA', 'SOUTH_AMERICA']);
+		
+		// Advanced fingerprint randomization
+		const browserFingerprint = {
+			chrome: getRandomElement(['119.0.0.0', '120.0.0.0', '121.0.0.0', '122.0.0.0']),
+			firefox: getRandomElement(['109.0', '110.0', '111.0', '112.0']),
+			safari: getRandomElement(['16.6', '17.0', '17.1', '17.2']),
+			edge: getRandomElement(['119.0.0.0', '120.0.0.0', '121.0.0.0'])
+		};
+		
+		// EXTREME URL MANIPULATION
+		let requestUrl = BUILDS_API;
+		
+		// Multiple URL variations applied simultaneously
+		if (techniqueSet % 2 === 0) requestUrl = addRandomParameters(requestUrl);
+		if (techniqueSet % 3 === 0) {
+			const alterations = ['/.', '/..', '/./', '/../', '/./..', '/../.', '/...', '////'];
+			requestUrl = requestUrl + getRandomElement(alterations);
+		}
+		if (techniqueSet % 4 === 0) {
+			// Case manipulation of the entire URL path
+			const urlParts = requestUrl.split('/');
+			urlParts[urlParts.length - 1] = urlParts[urlParts.length - 1].split('').map((char, i) => 
+				i % 2 === 0 ? char.toUpperCase() : char.toLowerCase()
+			).join('');
+			requestUrl = urlParts.join('/');
+		}
+		
+		// EXTREME HERO NAME MANIPULATION
+		let processedHeroName = heroName;
+		if (techniqueSet % 5 === 0) processedHeroName = urlEncodeRandom(heroName);
+		if (techniqueSet % 6 === 0) processedHeroName = addNullByteVariation(processedHeroName);
+		if (techniqueSet % 7 === 0) {
+			// Double encoding
+			processedHeroName = encodeURIComponent(processedHeroName);
+		}
+		if (techniqueSet % 8 === 0) {
+			// Unicode normalization attacks
+			processedHeroName = heroName.normalize('NFD').replace(/[\\u0300-\\u036f]/g, '');
+		}
+		
+		// ULTIMATE HEADER ARSENAL - Advanced browser simulation + ML evasion
+		const selectedBrowser = getRandomElement(['chrome', 'firefox', 'safari', 'edge']);
+		const browserVersion = browserFingerprint[selectedBrowser];
+		
+		// Generate realistic User-Agent based on selected browser
+		const generateBrowserUA = (browser, version) => {
+			const osVariants = {
+				chrome: [
+					`Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${version} Safari/537.36`,
+					`Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${version} Safari/537.36`,
+					`Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${version} Safari/537.36`
+				],
+				firefox: [
+					`Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:${version}) Gecko/20100101 Firefox/${version}`,
+					`Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:${version}) Gecko/20100101 Firefox/${version}`,
+					`Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:${version}) Gecko/20100101 Firefox/${version}`
+				],
+				safari: [
+					`Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/${version} Safari/605.1.15`,
+					`Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/${version} Mobile/15E148 Safari/604.1`
+				],
+				edge: [
+					`Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${version} Safari/537.36 Edg/${version}`,
+					`Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${version} Safari/537.36 Edg/${version}`
+				]
+			};
+			return getRandomElement(osVariants[browser]);
+		};
+		
+		const aggressiveHeaders = {
+			'Content-Type': getRandomElement([
+				'text/plain', 
+				'application/x-www-form-urlencoded', 
+				'text/plain; charset=utf-8',
+				'application/json; charset=utf-8',
+				'multipart/form-data'
+			]),
+			'Accept': getRandomElement([
+				'application/json, text/plain, */*',
+				'application/json',
+				'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+				'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+				'*/*'
+			]),
+			'Accept-Language': getRandomElement([
+				'en-US,en;q=0.9',
+				'en-US,en;q=0.8,fr;q=0.6,de;q=0.4',
+				'en-GB,en;q=0.9,fr;q=0.8',
+				'zh-CN,zh;q=0.9,en;q=0.8',
+				'ja,en-US;q=0.9,en;q=0.8',
+				'ko,en-US;q=0.9,en;q=0.8',
+				'es-ES,es;q=0.9,en;q=0.8'
+			]),
+			'Accept-Encoding': getRandomElement(['gzip, deflate, br', 'gzip, deflate', 'br, gzip, deflate']),
+			'Origin': getRandomElement([
+				'https://fribbels.github.io', 
+				'https://github.com', 
+				'https://epic7x.com',
+				'https://gamepress.gg',
+				'null'
+			]),
+			'User-Agent': generateBrowserUA(selectedBrowser, browserVersion),
+			'Referer': getRandomElement([
+				'https://fribbels.github.io/e7-gear-optimizer/',
+				'https://epic7x.com/characters/',
+				'https://gamepress.gg/epic7/',
+				'https://github.com/fribbels/e7-gear-optimizer',
+				'https://www.google.com/',
+				'https://duckduckgo.com/'
+			]),
+			'Cache-Control': getRandomElement(['no-cache', 'max-age=0', 'no-store', 'must-revalidate', 'public, max-age=0']),
+			'Pragma': getRandomElement(['no-cache', 'cache']),
+			'DNT': getRandomElement(['1', '0']),
+			
+			// Enhanced browser fingerprinting headers
+			'Sec-Fetch-Dest': getRandomElement(['empty', 'document', 'script', 'fetch']),
+			'Sec-Fetch-Mode': getRandomElement(['cors', 'navigate', 'no-cors', 'same-origin']),
+			'Sec-Fetch-Site': getRandomElement(['cross-site', 'same-origin', 'same-site', 'none']),
+			'Sec-Fetch-User': getRandomElement(['?1', undefined]),
+			'Sec-Ch-Ua': `"${selectedBrowser}";v="${browserVersion.split('.')[0]}", "Chromium";v="${browserVersion.split('.')[0]}", "Not_A Brand";v="8"`,
+			'Sec-Ch-Ua-Mobile': getRandomElement(['?0', '?1']),
+			'Sec-Ch-Ua-Platform': getRandomElement(['"Windows"', '"macOS"', '"Linux"', '"Android"', '"iOS"']),
+			
+			// Session and auth spoofing
+			'X-Requested-With': getRandomElement(['XMLHttpRequest', 'fetch', undefined]),
+			'X-Browser-Version': browserVersion,
+			'X-Client-Version': getRandomElement(['1.0.0', '1.1.0', '2.0.0', '2.1.0']),
+			'X-Request-ID': generateRequestId(),
+			'X-Session-Token': generateSessionToken(),
+			'X-CSRF-Token': Math.random().toString(36).substr(2, 32),
+			
+			// Timing headers to appear more legitimate
+			'X-Timestamp': Date.now().toString(),
+			'X-Client-Time': new Date().toISOString(),
+			
+			// Device fingerprinting
+			'X-Device-ID': Math.random().toString(36).substr(2, 16),
+			'X-Screen-Resolution': getRandomElement(['1920x1080', '1366x768', '1440x900', '2560x1440']),
+			'X-Timezone': getRandomElement(['America/New_York', 'Europe/London', 'Asia/Tokyo', 'America/Los_Angeles']),
+		};
+		
+		// EXTREME IP SPOOFING - All possible headers + realistic geographic IPs
+		const ALL_IP_HEADERS = [
+			'X-Forwarded-For', 'X-Real-IP', 'X-Originating-IP', 'Client-IP', 'X-Client-IP', 
+			'X-Cluster-Client-IP', 'X-Remote-IP', 'X-Remote-Addr', 'X-ProxyUser-Ip',
+			'CF-Connecting-IP', 'True-Client-IP', 'X-Azure-ClientIP', 'X-Forwarded-Host',
+			'Forwarded', 'Via', 'X-Coming-From', 'X-Sucuri-ClientIP', 'X-Sucuri-Country'
+		];
+		
+		// Apply 3-8 random IP headers for maximum confusion
+		const numIpHeaders = Math.floor(Math.random() * 6) + 3; // 3-8 headers
+		const selectedIpHeaders = ALL_IP_HEADERS.sort(() => 0.5 - Math.random()).slice(0, numIpHeaders);
+		
+		selectedIpHeaders.forEach((header, index) => {
+			let ip;
+			if (index === 0) {
+				// First header gets a highly legitimate IP
+				ip = getRandomElement(FORWARDED_IPS);
+			} else if (Math.random() < 0.6) {
+				// 60% chance of realistic regional IP
+				ip = generateRealisticIP(region);
+			} else {
+				// 40% chance of random IP
+				ip = generateRandomIP();
+			}
+			
+			// Some headers need special formatting
+			if (header === 'Forwarded') {
+				aggressiveHeaders[header] = `for=${ip};proto=https;by=${generateRandomIP()}`;
+			} else if (header === 'Via') {
+				aggressiveHeaders[header] = `1.1 ${ip} (CloudFront)`;
+			} else {
+				aggressiveHeaders[header] = ip;
+			}
+		});
+		
+		// EXTREME HTTP METHOD VARIATIONS
+		const methods = ['POST', 'post', 'Post', 'pOST', 'PoSt', 'poST', 'POst', 'pOsT'];
+		const method = getRandomElement(methods);
+		
+		// PROTOCOL CHAOS
+		const httpVersion = getRandomElement(['1.1', '2.0']);
+		
+		console.log(`   🔥 HARDCORE SET ${techniqueSet}: ${method} HTTP/${httpVersion}, ${numIpHeaders} IP headers, region=${region}, ${processedHeroName !== heroName ? 'MANGLED' : 'PLAIN'} name`);
+
+		// MAXIMUM AXIOS CONFIGURATION - All options for maximum bypass
+		const axiosConfig = {
+			method: method,
+			url: requestUrl,
+			data: processedHeroName,
+			headers: aggressiveHeaders,
+			timeout: 25000, // Higher timeout for stability
+			maxRedirects: 10,
+			
+			// Aggressive connection management
+			httpAgent: new (require('http').Agent)({ 
+				keepAlive: false,
+				maxSockets: 1,
+				timeout: 25000,
+				freeSocketTimeout: 4000
+			}),
+			httpsAgent: new (require('https').Agent)({ 
+				keepAlive: false,
+				maxSockets: 1,
+				timeout: 25000,
+				freeSocketTimeout: 4000,
+				secureProtocol: 'TLS_method'
+			}),
+			
+			// Protocol specific options
+			...(httpVersion === '1.1' && { 
+				httpVersion: '1.1',
+				insecureHTTPParser: true 
+			}),
+			
+			// Response handling
+			validateStatus: (status) => status >= 200 && status < 500, // Accept more status codes
+			transformResponse: [(data) => {
+				try {
+					return typeof data === 'string' ? JSON.parse(data) : data;
+				} catch {
+					return data;
+				}
+			}]
+		};
+
+		const response = await axios(axiosConfig);
+
+		// Enhanced response data handling with better validation
+		let data;
+		if (response.data && typeof response.data === 'object') {
+			if (Array.isArray(response.data)) {
+				// Response is directly an array
+				data = { data: response.data };
+			} else if (response.data.data && Array.isArray(response.data.data)) {
+				// Response has nested data property
+				data = response.data;
+			} else if (response.data.builds && Array.isArray(response.data.builds)) {
+				// Alternative structure with 'builds' property
+				data = { data: response.data.builds };
+			} else {
+				// Fallback: try to extract any array-like property
+				const arrayProp = Object.values(response.data).find(val => Array.isArray(val));
+				data = arrayProp ? { data: arrayProp } : { data: [] };
+			}
+		} else {
+			data = { data: [] };
+		}
+		
+		console.log(`   ⚡ SUCCESS: ${data.data?.length || 0} builds for ${heroName} (Status: ${response.status})`);
+		
+		// Update rate limiter with success
+		rateLimiter.updateApiHealth(200);
+		
+		return data;
+
+	} catch (error) {
+		const status = error.response?.status;
+		
+		// Update rate limiter with the error status
+		rateLimiter.updateApiHealth(status);
+		
+		if (status === 404) {
+			console.warn(`   ⚠️ No build data available for hero: ${heroName}`);
+			return { data: [] };
+		}
+		
+		// Use intelligent retry logic for all error types
+		if ((status === 403 || status === 429 || !status) && retryCount < rateLimiter.config.maxRetries) {
+			const errorType = status === 403 ? 'FORBIDDEN' : status === 429 ? 'RATE LIMITED' : 'NETWORK ERROR';
+			console.warn(`   🚫 ${errorType} ${heroName} (attempt ${retryCount + 1}/${rateLimiter.config.maxRetries})`);
+			
+			return getPopularBuilds(heroName, retryCount + 1);
+		} else {
+			console.warn(`   💀 MAX RETRIES REACHED for ${heroName} after ${retryCount + 1} attempts`);
+			
+			// Log current rate limiter health for debugging
+			const health = rateLimiter.getHealthStats();
+			console.log(`   📊 API Health: ${health.successRate} success rate, strategy: ${health.strategy}`);
+			
+			return { data: [] };
+		}
+	}
+}
+
+// Build data processing function from epic7-build-analyzer
+function processBuildData(rawBuilds, heroData, artifactData) {
+	// Enhanced validation for rawBuilds structure
+	if (!rawBuilds || 
+		!rawBuilds.data || 
+		!Array.isArray(rawBuilds.data) || 
+		rawBuilds.data.length === 0) {
+		return { builds: [], stats: null };
+	}
+
+	// Create artifact code to name mapping
+	const artifactCodeToName = {};
+	for (const [name, data] of Object.entries(artifactData)) {
+		if (data.code) {
+			artifactCodeToName[data.code] = name;
+		}
+	}
+
+	const builds = rawBuilds.data.map((build, index) => {
+		// Convert string stats to numbers
+		const stats = {
+			rank: index + 1,
+			atk: parseInt(build.atk),
+			def: parseInt(build.def), 
+			hp: parseInt(build.hp),
+			spd: parseInt(build.spd),
+			chc: parseInt(build.chc), // crit chance
+			chd: parseInt(build.chd), // crit damage
+			eff: parseInt(build.eff),
+			efr: parseInt(build.efr), // effect resistance
+			gs: parseInt(build.gs),   // gear score
+			sets: build.sets,
+			artifactCode: build.artifactCode,
+			artifactName: artifactCodeToName[build.artifactCode] || build.artifactName || 'Unknown'
+		};
+
+		return stats;
+	});
+
+	// Sort by gear score descending
+	builds.sort((a, b) => b.gs - a.gs);
+	
+	// Update ranks after sorting
+	builds.forEach((build, index) => {
+		build.rank = index + 1;
+	});
+
+	// Calculate aggregate statistics
+	const stats = calculateAggregateStats(builds);
+
+	return { builds, stats };
+}
+
+function calculateAggregateStats(builds) {
+	if (builds.length === 0) return null;
+
+	const statKeys = ['atk', 'def', 'hp', 'spd', 'chc', 'chd', 'eff', 'efr', 'gs'];
+	
+	const stats = {};
+	
+	for (const key of statKeys) {
+		const values = builds.map(build => build[key]).filter(val => !isNaN(val));
+		if (values.length > 0) {
+			stats[key] = {
+				min: Math.min(...values),
+				max: Math.max(...values),
+				avg: Math.round(values.reduce((a, b) => a + b, 0) / values.length),
+				median: calculateMedian(values)
+			};
+		}
+	}
+
+	// Set popularity analysis
+	stats.setPopularity = analyzeSetPopularity(builds);
+	stats.artifactPopularity = analyzeArtifactPopularity(builds);
+
+	return stats;
+}
+
+function calculateMedian(values) {
+	const sorted = [...values].sort((a, b) => a - b);
+	const mid = Math.floor(sorted.length / 2);
+	return sorted.length % 2 === 0 ? 
+		Math.round((sorted[mid - 1] + sorted[mid]) / 2) : 
+		sorted[mid];
+}
+
+function analyzeSetPopularity(builds) {
+	const setCombos = {};
+	const total = builds.length;
+
+	for (const build of builds) {
+		const setsStr = JSON.stringify(convertToFullSets(build.sets));
+		setCombos[setsStr] = (setCombos[setsStr] || 0) + 1;
+	}
+
+	return Object.entries(setCombos)
+		.map(([sets, count]) => ({
+			sets: JSON.parse(sets),
+			count,
+			percentage: Math.round((count / total) * 100 * 10) / 10
+		}))
+		.sort((a, b) => b.count - a.count)
+		.slice(0, 10);
+}
+
+function analyzeArtifactPopularity(builds) {
+	const artifactCounts = {};
+	
+	// Filter out builds with Unknown artifacts for accurate statistics
+	const validBuilds = builds.filter(build => build.artifactName && build.artifactName !== 'Unknown');
+	const total = validBuilds.length;
+
+	if (total === 0) {
+		return [];
+	}
+
+	for (const build of validBuilds) {
+		const artifact = build.artifactName;
+		artifactCounts[artifact] = (artifactCounts[artifact] || 0) + 1;
+	}
+
+	return Object.entries(artifactCounts)
+		.map(([name, count]) => ({
+			name,
+			count,
+			percentage: Math.round((count / total) * 100 * 10) / 10
+		}))
+		.sort((a, b) => b.count - a.count)
+		.slice(0, 10);
+}
 
 const SET_ASSETS = {
 	"set_acc": path.join(__dirname, '..', 'assets', 'sethit.png'),
@@ -201,15 +1010,28 @@ const STAT_ICONS = {
 	gs: path.join(__dirname, '..', 'assets', 'star.png')
 };
 
-// Load game data
-async function loadGameData() {
+// Load game data with retry mechanism
+async function loadGameData(retryCount = 0) {
+	const maxRetries = 3;
 	try {
 		console.log('Loading hero data...');
-		const heroResponse = await fetch(HERO_CACHE);
+		const heroResponse = await fetch(HERO_CACHE, {
+			timeout: 10000,
+			headers: {
+				'User-Agent': 'BriarBot/1.0'
+			}
+		});
+		if (!heroResponse.ok) throw new Error(`Hero data fetch failed: ${heroResponse.status}`);
 		heroData = await heroResponse.json();
 
 		console.log('Loading artifact data...');
-		const artifactResponse = await fetch(ARTIFACT_CACHE);
+		const artifactResponse = await fetch(ARTIFACT_CACHE, {
+			timeout: 10000,
+			headers: {
+				'User-Agent': 'BriarBot/1.0'
+			}
+		});
+		if (!artifactResponse.ok) throw new Error(`Artifact data fetch failed: ${artifactResponse.status}`);
 		artifactData = await artifactResponse.json();
 
 		for (const name of Object.keys(artifactData)) {
@@ -219,27 +1041,15 @@ async function loadGameData() {
 		console.log('Game data loaded successfully!');
 	} catch (error) {
 		console.error('Error loading game data:', error);
+		if (retryCount < maxRetries) {
+			console.log(`Retrying in ${(retryCount + 1) * 2} seconds... (${retryCount + 1}/${maxRetries})`);
+			await new Promise(resolve => setTimeout(resolve, (retryCount + 1) * 2000));
+			return loadGameData(retryCount + 1);
+		}
+		console.error('Failed to load game data after all retries');
 	}
 }
 
-async function getHeroBuilds(heroName) {
-	try {
-		const response = await fetch(BUILDS_API, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(heroName)
-		});
-
-		const text = await response.text();
-		const data = JSON.parse(text);
-		return data;
-	} catch (error) {
-		console.error('Error fetching builds:', error);
-		return null;
-	}
-}
 
 function convertToFullSets(sets) {
 	const fourPieceSets = ["set_att", "set_counter", "set_cri_dmg", "set_rage", "set_revenge", "set_scar", "set_speed", "set_vampire", "set_shield"];
@@ -403,6 +1213,14 @@ function generateSetHTML(sets) {
 }
 
 async function analyzeHeroData(heroName) {
+	// Check cache first
+	const cacheKey = `hero_${heroName.toLowerCase()}`;
+	const cachedResult = getCachedData(cacheKey);
+	if (cachedResult) {
+		console.log(`Cache hit for ${heroName}`);
+		return cachedResult;
+	}
+	
 	try {
 		// Find the correct hero name (case insensitive)
 		const heroKeys = Object.keys(heroData);
@@ -414,241 +1232,51 @@ async function analyzeHeroData(heroName) {
 		// Use the matched hero name or the original if no match found
 		const actualHeroName = matchedHero ? heroData[matchedHero].name || matchedHero : heroName;
 
-		// Convert hero name to URL format (spaces to +) and validate
-		const urlHeroName = encodeURIComponent(actualHeroName);
-		const heroLibraryUrl = `https://fribbels.github.io/e7/hero-library.html?hero=${urlHeroName}`;
+		console.log(`Fetching build data for: ${actualHeroName}`);
+
+		// Use direct API call instead of web scraping
+		const rawBuilds = await getPopularBuilds(actualHeroName);
 		
-		// Validate URL to ensure it's the expected domain
-		const url = new URL(heroLibraryUrl);
-		if (url.hostname !== 'fribbels.github.io' || !url.pathname.startsWith('/e7/hero-library.html')) {
-			throw new Error('Invalid URL detected');
-		}
-
-		console.log(`Fetching data from: ${heroLibraryUrl}`);
-
-		// Launch puppeteer to scrape the page
-		const browser = await puppeteer.launch({
-			headless: true,
-			timeout: 30000, // 30 second timeout
-			args: [
-				'--no-sandbox',
-				'--disable-setuid-sandbox',
-				'--disable-dev-shm-usage',
-				'--disable-extensions',
-				'--disable-plugins',
-				'--disable-images',
-				'--no-first-run',
-				'--disable-default-apps',
-				'--disable-background-timer-throttling',
-				'--disable-renderer-backgrounding',
-				'--disable-backgrounding-occluded-windows',
-				'--disable-features=VizDisplayCompositor'
-			]
-		});
-
-		const page = await browser.newPage();
-
-		// Set up request interception to monitor for getBuilds API call
-		await page.setRequestInterception(true);
-		let buildsRequestCompleted = false;
-
-		page.on('request', (request) => {
-			request.continue();
-		});
-
-		page.on('response', (response) => {
-			if (response.url().includes('getBuilds') && response.status() === 200) {
-				console.log('getBuilds request completed successfully');
-				buildsRequestCompleted = true;
-			}
-		});
-
-		await page.goto(heroLibraryUrl, { waitUntil: 'networkidle0', timeout: 30000 });
-
-		// Wait for the getBuilds request to complete
-		console.log('Waiting for build data to load...');
-		await page.waitForFunction(() => {
-			// Check if build data elements are present
-			return document.querySelectorAll('.statPreviewRow').length > 0 ||
-				document.querySelectorAll('.artifactComboRow').length > 0;
-		}, { timeout: 15000 });
-
-		// Additional wait to ensure data is fully populated
-		await new Promise(resolve => setTimeout(resolve, 2000));
-
-		// Extract data using the correct IDs found in debugging
-		const extractedData = await page.evaluate(() => {
-			const result = {
-				stats: {},
-				artifacts: [],
-				sets: [],
-				totalBuilds: 0
-			};
-
-			// Extract stats using the specific IDs found
-			const statMappings = {
-				'atkStatBefore': 'atk',
-				'defStatBefore': 'def',
-				'hpStatBefore': 'hp',
-				'spdStatBefore': 'spd',
-				'crStatBefore': 'chc',
-				'cdStatBefore': 'chd',
-				'effStatBefore': 'eff',
-				'resStatBefore': 'efr',
-				'gsStatBefore': 'gs'
-			};
-
-			for (const [elementId, statKey] of Object.entries(statMappings)) {
-				const element = document.getElementById(elementId);
-				if (element) {
-					const value = element.textContent.trim();
-					if (statKey === 'gs') {
-						result.stats[statKey] = Math.round(parseFloat(value)) || 0;
-					} else {
-						result.stats[statKey] = parseInt(value) || 0;
-					}
-				}
-			}
-
-			// Extract artifacts from artifactComboRow elements (only visible ones)
-			for (let i = 0; i < 9; i++) {
-				const row = document.getElementById(`artifactComboRow${i}`);
-				if (row) {
-					// Check if the row is visible
-					const computedStyle = window.getComputedStyle(row);
-					if (computedStyle.display !== 'none') {
-						// Look for the percentage and artifact name in the row structure
-						const cells = row.querySelectorAll('td, div');
-						let percentage = '';
-						let name = '';
-
-						// Search through all cells/divs to find percentage and name
-						for (const cell of cells) {
-							const text = cell.textContent.trim();
-							if (text.includes('%') && text.match(/^\d+(\.\d+)?%$/)) {
-								percentage = text.replace('%', '');
-							} else if (text && !text.includes('%') && !text.match(/^\d+(\.\d+)?$/)) {
-								if (text.length > 3 && !name) {
-									name = text;
-								}
-							}
-						}
-
-						if (name && percentage && parseFloat(percentage) > 0) {
-							result.artifacts.push({
-								name,
-								percentage,
-								code: ''
-							});
-						}
-					}
-				}
-			}
-
-			// Extract set combinations from setComboRow elements (only visible ones)
-			for (let i = 0; i < 9; i++) {
-				const row = document.getElementById(`setComboRow${i}`);
-				if (row) {
-					// Check if the row is visible
-					const computedStyle = window.getComputedStyle(row);
-					if (computedStyle.display !== 'none') {
-						// Look for percentage in the row
-						const cells = row.querySelectorAll('td, div');
-						let percentage = '';
-						const setImages = row.querySelectorAll('img');
-
-						// Find percentage
-						for (const cell of cells) {
-							const text = cell.textContent.trim();
-							if (text.includes('%') && text.match(/^\d+(\.\d+)?%$/)) {
-								percentage = text.replace('%', '');
-								break;
-							}
-						}
-
-						if (percentage && parseFloat(percentage) > 0) {
-							// Try to identify sets from images
-							const sets = {};
-							for (const img of setImages) {
-								const src = img.src || '';
-								// Extract set type from image source
-								if (src.includes('setspeed')) sets['set_speed'] = 4;
-								else if (src.includes('setattack')) sets['set_att'] = 4;
-								else if (src.includes('setcritical')) sets['set_cri'] = 2;
-								else if (src.includes('setimmunity')) sets['set_immune'] = 2;
-								else if (src.includes('setdestruction')) sets['set_cri_dmg'] = 4;
-								else if (src.includes('setrage')) sets['set_rage'] = 4;
-								else if (src.includes('setdefense')) sets['set_def'] = 2;
-								else if (src.includes('sethealth')) sets['set_max_hp'] = 2;
-								else if (src.includes('setresist')) sets['set_res'] = 2;
-								else if (src.includes('sethit')) sets['set_acc'] = 2;
-								else if (src.includes('setlifesteal')) sets['set_vampire'] = 4;
-								else if (src.includes('setcounter')) sets['set_counter'] = 4;
-								else if (src.includes('setrevenge')) sets['set_revenge'] = 4;
-								else if (src.includes('setinjury')) sets['set_scar'] = 4;
-								else if (src.includes('setpenetration')) sets['set_penetrate'] = 2;
-								else if (src.includes('setprotection')) sets['set_shield'] = 4;
-								else if (src.includes('settorrent')) sets['set_torrent'] = 2;
-								else if (src.includes('setunity')) sets['set_coop'] = 2;
-							}
-
-							// If no sets found from images, use placeholder
-							if (Object.keys(sets).length === 0) {
-								sets['set_speed'] = 4;
-								sets['set_cri'] = 2;
-							}
-
-							result.sets.push({
-								sets,
-								percentage
-							});
-						}
-					}
-				}
-			}
-
-			// Extract total builds from the page
-			const rootElement = document.querySelector(".ag-root.ag-unselectable.ag-layout-normal");
-			if (rootElement) {
-				const rowCount = rootElement.getAttribute("aria-rowcount");
-				result.totalBuilds = rowCount ? parseInt(rowCount, 10) : null;
-			} else {
-				result.totalBuilds = 1000;
-			}
-
-			return result;
-		});
-
-		await browser.close();
-
-		console.log('Extracted data:', {
-			stats: extractedData.stats,
-			artifacts: extractedData.artifacts.slice(0, 3),
-			sets: extractedData.sets.slice(0, 3),
-			totalBuilds: extractedData.totalBuilds
-		});
-
-		// Return null if no stats were found
-		if (Object.keys(extractedData.stats).length === 0) {
+		if (!rawBuilds || !rawBuilds.data || rawBuilds.data.length === 0) {
+			console.log('No build data found');
 			return null;
 		}
 
-		return {
+		// Process the build data
+		const buildData = processBuildData(rawBuilds, heroData, artifactData);
+		
+		const result = {
 			heroName: actualHeroName,
-			totalBuilds: extractedData.totalBuilds,
-			topSets: extractedData.sets.slice(0, 3).length > 0 ? extractedData.sets.slice(0, 3) : [
-				{ sets: { "set_speed": 4, "set_cri": 2 }, percentage: "50" },
-				{ sets: { "set_att": 4, "set_cri": 2 }, percentage: "30" },
-				{ sets: { "set_rage": 4, "set_cri": 2 }, percentage: "20" }
-			],
-			topArtifacts: extractedData.artifacts.slice(0, 3).length > 0 ? extractedData.artifacts.slice(0, 3) : [
-				{ name: "Unknown Artifact", percentage: "50", code: "" }
-			],
-			avgStats: extractedData.stats
+			totalBuilds: rawBuilds.data.length,
+			topSets: buildData.stats.setPopularity?.slice(0, 3).map(set => ({
+				sets: set.sets,
+				percentage: set.percentage.toString()
+			})) || [],
+			topArtifacts: buildData.stats.artifactPopularity?.slice(0, 3).map(artifact => ({
+				name: artifact.name,
+				percentage: artifact.percentage.toString(),
+				code: ''
+			})) || [],
+			avgStats: {
+				atk: buildData.stats.atk?.avg || 0,
+				def: buildData.stats.def?.avg || 0,
+				hp: buildData.stats.hp?.avg || 0,
+				spd: buildData.stats.spd?.avg || 0,
+				chc: buildData.stats.chc?.avg || 0,
+				chd: buildData.stats.chd?.avg || 0,
+				eff: buildData.stats.eff?.avg || 0,
+				efr: buildData.stats.efr?.avg || 0,
+				gs: buildData.stats.gs?.avg || 0
+			}
 		};
+		
+		// Cache the result
+		setCachedData(cacheKey, result);
+		
+		return result;
 
 	} catch (error) {
-		console.error('Error scraping hero data:', error);
+		console.error('Error fetching hero data:', error);
 		return null;
 	}
 }
@@ -1087,32 +1715,46 @@ async function generateHTML(data) {
 async function generateReportImage(data) {
 	const html = await generateHTML(data);
 
+	const puppeteer = require('puppeteer');
 	let browser;
 	try {
-		const browser = await puppeteer.launch(getPuppeteerConfig());
+		const isProduction = process.env.NODE_ENV === 'production';
+		
+		const config = {
+			headless: true,
+			timeout: 15000,
+			protocolTimeout: 10000,
+			args: [
+				'--no-sandbox',
+				'--disable-setuid-sandbox',
+				'--disable-dev-shm-usage',
+				'--disable-gpu',
+				'--disable-javascript',
+				'--single-process'
+			]
+		};
+		
+		if (isProduction) {
+			config.executablePath = process.env.PUPPETEER_EXECUTABLE_PATH || undefined;
+		}
+
+		const browser = await puppeteer.launch(config);
 
 		const page = await browser.newPage();
-		await page.setContent(html);
+		
+		// Optimize page settings for VM performance
+		await page.setCacheEnabled(false);
+		await page.setOfflineMode(false);
+		
+		await page.setContent(html, { waitUntil: 'domcontentloaded' });
 		await page.setViewport({
 			width: 600,
 			height: 975,
-			deviceScaleFactor: 2 // Higher resolution for crisp quality
+			deviceScaleFactor: 1.5
 		});
 
-		// Wait for all images to load properly
-		await page.evaluate(() => {
-			const images = Array.from(document.images);
-			return Promise.all(images.map(img => {
-				if (img.complete) return Promise.resolve();
-				return new Promise(resolve => {
-					img.addEventListener('load', resolve);
-					img.addEventListener('error', resolve);
-				});
-			}));
-		});
-
-		// Additional wait for stability
-		await new Promise(resolve => setTimeout(resolve, 1000));
+		// Reduced wait time for faster response
+		await new Promise(resolve => setTimeout(resolve, 500));
 
 		const screenshot = await page.screenshot({
 			type: 'png',
@@ -1136,6 +1778,25 @@ const server = http.createServer((req, res) => {
 	res.end('BriarBot is running!\n');
 });
 
+// Process optimization for VM environment
+process.on('warning', (warning) => {
+	console.warn('Node.js Warning:', warning.name, warning.message);
+});
+
+// Memory monitoring
+function logMemoryUsage() {
+	const usage = process.memoryUsage();
+	console.log('Memory Usage:', {
+		rss: Math.round(usage.rss / 1024 / 1024) + 'MB',
+		heapUsed: Math.round(usage.heapUsed / 1024 / 1024) + 'MB',
+		heapTotal: Math.round(usage.heapTotal / 1024 / 1024) + 'MB',
+		external: Math.round(usage.external / 1024 / 1024) + 'MB',
+		activeConnections,
+		queueLength: commandQueue.length,
+		cacheSize: dataCache.size
+	});
+}
+
 // Only run Discord bot if this file is executed directly, not when imported
 if (require.main === module) {
 	// Start HTTP server for Render
@@ -1144,18 +1805,28 @@ if (require.main === module) {
 		console.log(`HTTP server running on port ${port}`);
 	});
 
+	// Memory monitoring interval
+	setInterval(logMemoryUsage, 300000); // Every 5 minutes
+
 	client.once('ready', async () => {
 		console.log(`Logged in as ${client.user.tag}!`);
 		await loadGameData();
+		logMemoryUsage();
+		
+		// Start health monitor
+		healthMonitor.start(client);
+		console.log('🏥 Health monitoring started');
 	});
 
 	client.on('messageCreate', async (message) => {
 		if (message.author.bot) return;
 
 		if (message.content.startsWith('!') && message.content.length > 1) {
-			// Rate limiting check
-			if (!checkRateLimit(message.author.id)) {
-				await message.reply('⏳ You pester me too often... begone for now, and return in a minute if you must.'
+			// Enhanced rate limiting check
+			const rateLimitResult = checkRateLimit(message.author.id);
+			if (!rateLimitResult.allowed) {
+				await message.reply(
+					`⏳ You pester me too often... begone for now, and return in ${rateLimitResult.resetTime} seconds.`
 				);
 				return;
 			}
@@ -1181,7 +1852,7 @@ if (require.main === module) {
 						`❌ **${userInput}** does not exist.\n*Perhaps you meant:*\n${suggestions.map(s => `• ${s}`).join('\n')}`
 					);
 				} else {
-					`❌ **${userInput}**... nothing but silence. Don't waste my time.`
+					await message.reply(`❌ **${userInput}**... nothing but silence. Don't waste my time.`);
 				}
 				return;
 			}
@@ -1189,34 +1860,31 @@ if (require.main === module) {
 			const characterName = searchResult.character;
 			const confidence = (searchResult.confidence * 100).toFixed(1);
 
-			let loadingContent = `🌑   Revealing **${characterName}**...`;
-			if (searchResult.matchType !== 'exact') {
-				loadingContent = `🌒   A pale echo at a ${confidence}% match... Revealing **${characterName}**...`;
+			// Check if user is already being processed
+			if (processingCommands.has(message.author.id)) {
+				await message.reply('🔄 Your previous command is still being processed. Please wait...');
+				return;
 			}
 
-			const loadingMessage = await message.reply(loadingContent);
+			// Add to queue
+			const queueResult = addToQueue({
+				message,
+				userInput,
+				characterName,
+				confidence,
+				searchResult
+			});
 
-			try {
-				const heroAnalysis = await analyzeHeroData(characterName);
-
-				if (heroAnalysis) {
-					const screenshot = await generateReportImage(heroAnalysis);
-
-					const attachment = new AttachmentBuilder(screenshot, {
-						name: `${characterName.replace(/\s+/g, '_')}.png`
-					});
-
-					await loadingMessage.edit({
-						content: `☾   ${characterName}`,
-						files: [attachment]
-					});
-				} else {
-					await loadingMessage.edit(`❌ I called for **${characterName}**... no one answered.`);
+			if (!queueResult.success) {
+				if (queueResult.reason === 'queue_full') {
+					await message.reply('⏳ The spirits are overwhelmed... try again in a moment.');
 				}
+				return;
+			}
 
-			} catch (error) {
-				console.error('Error generating report:', error);
-				await loadingMessage.edit(`❌ The witch stirs... the search for **${characterName}** is lost.`);
+			// Notify user of queue position if not being processed immediately
+			if (queueResult.position > MAX_CONCURRENT_COMMANDS) {
+				await message.reply(`⌛ Your request for **${characterName}** is queued (position ${queueResult.position - MAX_CONCURRENT_COMMANDS}).`);
 			}
 		}
 	});
@@ -1236,6 +1904,7 @@ module.exports = {
 	analyzeHeroData,
 	generateReportImage,
 	generateHTML,
+	checkRateLimit,
 	heroData,
 	artifactData,
 	artifactsById

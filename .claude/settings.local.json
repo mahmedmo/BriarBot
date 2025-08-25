@@ -7,7 +7,10 @@
       "Bash(npm run test:bot:*)",
       "Bash(grep:*)",
       "Bash(npm run test:*)",
-      "Bash(chmod:*)"
+      "Bash(chmod:*)",
+      "Bash(npm test)",
+      "Bash(rm:*)",
+      "WebSearch"
     ],
     "deny": [],
     "ask": []
