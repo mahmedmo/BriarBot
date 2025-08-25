@@ -4,7 +4,8 @@ const fetch = require('node-fetch');
 const ARTIFACT_NAME_CORRECTIONS = {
 	'elegiac candles': 'elegiac candle',
 	'elegiac-candles': 'elegiac-candle',
-	'elegiaccandles': 'elegiaccandle'
+	'succubus-mirror': 'nostalgic-music-box',
+	'succubus mirror': 'nostalgic music box'
 };
 
 const getArtifactImage = async (artifactName) => {

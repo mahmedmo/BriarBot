@@ -274,9 +274,8 @@ async function processCommand(commandData) {
 				name: `${characterName.replace(/\s+/g, '_')}.png`
 			});
 			
-			const contentPrefix = result.fromCache ? '⚡' : '☾';
 			await loadingMessage.edit({
-				content: `${contentPrefix}   ${characterName}`,
+				content: `☾   ${characterName}`,
 				files: [attachment]
 			});
 		} else {
@@ -315,8 +314,6 @@ async function getHeroWithDeduplication(heroName, message) {
     
     // Check if there's already an ongoing request for this hero
     if (ongoingRequests.has(normalizedHeroName)) {
-        console.log(`🔗 Deduplicating request for ${heroName} - joining existing request`);
-        
         const existingRequest = ongoingRequests.get(normalizedHeroName);
         existingRequest.requesters.push(message);
         
@@ -336,7 +333,6 @@ async function getHeroWithDeduplication(heroName, message) {
             let screenshot = cacheManager.getCachedHeroImage(heroName);
             
             if (screenshot) {
-                console.log(`📄 Cache hit for ${heroName}`);
                 return { screenshot, fromCache: true };
             }
             
@@ -350,15 +346,16 @@ async function getHeroWithDeduplication(heroName, message) {
             screenshot = await generateReportImage(heroAnalysis);
             
             // Cache the generated image
-            const cached = await cacheManager.cacheHeroImage(heroName, screenshot, heroAnalysis);
-            if (cached) {
-            }
+            await cacheManager.cacheHeroImage(heroName, screenshot, heroAnalysis);
             
             return { screenshot, fromCache: false };
             
         } finally {
-            // Clean up the ongoing request tracking
+            // Clean up the ongoing request tracking and clear timeout
             ongoingRequests.delete(normalizedHeroName);
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+            }
         }
     })();
     
@@ -372,7 +369,7 @@ async function getHeroWithDeduplication(heroName, message) {
     ongoingRequests.set(normalizedHeroName, requestData);
     
     // Set up timeout cleanup
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
         if (ongoingRequests.has(normalizedHeroName)) {
             console.warn(`⏰ Request timeout for ${heroName}, cleaning up`);
             ongoingRequests.delete(normalizedHeroName);
@@ -397,9 +394,6 @@ function cleanupExpiredRequests() {
         }
     }
     
-    if (cleanedCount > 0) {
-        console.log(`🧹 Cleaned up ${cleanedCount} expired ongoing requests`);
-    }
     
     return cleanedCount;
 }
@@ -418,9 +412,6 @@ function performMemoryCleanup() {
 	
 	// Clean expired cache entries
 	const expiredCount = cacheManager.cleanupExpiredEntries();
-	if (expiredCount > 0) {
-		console.log(`Cleaned up ${expiredCount} expired cache entries`);
-	}
 	
 	// Clean expired ongoing requests
 	cleanupExpiredRequests();
@@ -428,7 +419,6 @@ function performMemoryCleanup() {
 	// Force garbage collection if available
 	if (global.gc) {
 		global.gc();
-		console.log('Memory cleanup performed');
 	}
 }
 
@@ -542,11 +532,6 @@ function generateSessionToken() {
 // Generate request ID to appear as different requests
 function generateRequestId() {
 	return 'req_' + Math.random().toString(36).substr(2, 16) + '_' + Date.now();
-}
-
-// Multiple protocol variations 
-function getProtocolVariation() {
-	return getRandomElement(['https:', 'http:']);
 }
 
 // Advanced encoding and parameter manipulation functions
@@ -861,7 +846,6 @@ async function getPopularBuilds(heroName, retryCount = 0) {
 			data = { data: [] };
 		}
 		
-		console.log(`   ⚡ SUCCESS: ${data.data?.length || 0} builds for ${heroName} (Status: ${response.status})`);
 		
 		// Update rate limiter with success
 		rateLimiter.updateApiHealth(200);
@@ -1065,8 +1049,7 @@ const STAT_ICONS = {
 async function loadGameData(retryCount = 0) {
 	const maxRetries = 3;
 	try {
-		console.log('Loading hero data...');
-		const heroResponse = await fetch(HERO_CACHE, {
+			const heroResponse = await fetch(HERO_CACHE, {
 			timeout: 10000,
 			headers: {
 				'User-Agent': 'BriarBot/1.0'
@@ -1075,7 +1058,6 @@ async function loadGameData(retryCount = 0) {
 		if (!heroResponse.ok) throw new Error(`Hero data fetch failed: ${heroResponse.status}`);
 		heroData = await heroResponse.json();
 
-		console.log('Loading artifact data...');
 		const artifactResponse = await fetch(ARTIFACT_CACHE, {
 			timeout: 10000,
 			headers: {
@@ -1089,7 +1071,6 @@ async function loadGameData(retryCount = 0) {
 			artifactsById[artifactData[name].code] = name;
 		}
 
-		console.log('Game data loaded successfully!');
 	} catch (error) {
 		console.error('Error loading game data:', error);
 		if (retryCount < maxRetries) {
@@ -1283,8 +1264,7 @@ async function analyzeHeroData(heroName) {
 		// Use the matched hero name or the original if no match found
 		const actualHeroName = matchedHero ? heroData[matchedHero].name || matchedHero : heroName;
 
-		console.log(`Fetching build data for: ${actualHeroName}`);
-
+	
 		// Use direct API call instead of web scraping
 		const rawBuilds = await getPopularBuilds(actualHeroName);
 		
@@ -1861,18 +1841,12 @@ process.on('warning', (warning) => {
 	console.warn('Node.js Warning:', warning.name, warning.message);
 });
 
-// Memory monitoring
+// Memory monitoring (reduced frequency)
 function logMemoryUsage() {
 	const usage = process.memoryUsage();
-	console.log('Memory Usage:', {
-		rss: Math.round(usage.rss / 1024 / 1024) + 'MB',
-		heapUsed: Math.round(usage.heapUsed / 1024 / 1024) + 'MB',
-		heapTotal: Math.round(usage.heapTotal / 1024 / 1024) + 'MB',
-		external: Math.round(usage.external / 1024 / 1024) + 'MB',
-		activeConnections,
-		queueLength: commandQueue.length,
-		cacheSize: dataCache.size
-	});
+	const rss = Math.round(usage.rss / 1024 / 1024);
+	const heapUsed = Math.round(usage.heapUsed / 1024 / 1024);
+	console.log(`Memory: ${rss}MB RSS, ${heapUsed}MB Heap, Queue: ${commandQueue.length}`);
 }
 
 // Only run Discord bot if this file is executed directly, not when imported
@@ -1883,8 +1857,8 @@ if (require.main === module) {
 		console.log(`HTTP server running on port ${port}`);
 	});
 
-	// Memory monitoring interval
-	setInterval(logMemoryUsage, 300000); // Every 5 minutes
+	// Memory monitoring interval (reduced frequency)
+	setInterval(logMemoryUsage, 1800000); // Every 30 minutes
 
 	client.once('ready', async () => {
 		console.log(`Logged in as ${client.user.tag}!`);

@@ -2,14 +2,6 @@
   "version": "1.0",
   "lastGlobalUpdate": "2025-08-25T07:16:15.137Z",
   "heroes": {
-    "Cerise": {
-      "filename": "cerise",
-      "lastUpdated": "2025-08-23T19:26:55.019Z",
-      "dataFound": true,
-      "fileExists": true,
-      "totalBuilds": 2991,
-      "validData": true
-    },
     "Cermia": {
       "filename": "cermia",
       "lastUpdated": "2025-08-23T19:27:07.549Z",
@@ -136,14 +128,6 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 2985,
-      "validData": true
-    },
-    "Conqueror Lilias": {
-      "filename": "conqueror_lilias",
-      "lastUpdated": "2025-08-23T19:37:42.848Z",
-      "dataFound": true,
-      "fileExists": true,
-      "totalBuilds": 2973,
       "validData": true
     },
     "Corvus": {
@@ -360,14 +344,6 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 2984,
-      "validData": true
-    },
-    "Faithless Lidica": {
-      "filename": "faithless_lidica",
-      "lastUpdated": "2025-08-23T20:07:11.860Z",
-      "dataFound": true,
-      "fileExists": true,
-      "totalBuilds": 2988,
       "validData": true
     },
     "Falconer Kluri": {
@@ -775,15 +751,6 @@
       "validData": true,
       "sessionIndex": 2010
     },
-    "Lidica": {
-      "filename": "lidica",
-      "lastUpdated": "2025-08-23T22:19:40.211Z",
-      "dataFound": true,
-      "fileExists": true,
-      "totalBuilds": 2994,
-      "validData": true,
-      "sessionIndex": 2011
-    },
     "Little Queen Charlotte": {
       "filename": "little_queen_charlotte",
       "lastUpdated": "2025-08-23T22:23:26.673Z",
@@ -991,15 +958,6 @@
       "validData": true,
       "sessionIndex": 2043
     },
-    "Nahkwol": {
-      "filename": "nahkwol",
-      "lastUpdated": "2025-08-23T22:38:28.542Z",
-      "dataFound": true,
-      "fileExists": true,
-      "totalBuilds": 2995,
-      "validData": true,
-      "sessionIndex": 2047
-    },
     "Navy Captain Landy": {
       "filename": "navy_captain_landy",
       "lastUpdated": "2025-08-23T22:41:11.330Z",
@@ -1198,15 +1156,6 @@
       "validData": true,
       "sessionIndex": 3017
     },
-    "Researcher Carrot": {
-      "filename": "researcher_carrot",
-      "lastUpdated": "2025-08-24T00:07:51.251Z",
-      "dataFound": true,
-      "fileExists": true,
-      "totalBuilds": 2991,
-      "validData": true,
-      "sessionIndex": 3018
-    },
     "Revna": {
       "filename": "revna",
       "lastUpdated": "2025-08-24T00:08:33.151Z",
@@ -1242,15 +1191,6 @@
       "totalBuilds": 2979,
       "validData": true,
       "sessionIndex": 3023
-    },
-    "Rin": {
-      "filename": "rin",
-      "lastUpdated": "2025-08-24T00:14:34.297Z",
-      "dataFound": true,
-      "fileExists": true,
-      "totalBuilds": 588,
-      "validData": true,
-      "sessionIndex": 3024
     },
     "Rinak": {
       "filename": "rinak",
@@ -1368,15 +1308,6 @@
       "totalBuilds": 2994,
       "validData": true,
       "sessionIndex": 4007
-    },
-    "Sea Phantom Politis": {
-      "filename": "sea_phantom_politis",
-      "lastUpdated": "2025-08-24T01:51:41.323Z",
-      "dataFound": true,
-      "fileExists": true,
-      "totalBuilds": 2998,
-      "validData": true,
-      "sessionIndex": 4008
     },
     "Serene Purity Adin": {
       "filename": "serene_purity_adin",
@@ -1575,8 +1506,8 @@
       "fileSizeBytes": 860082,
       "totalBuilds": 3000,
       "validData": true,
-      "accessCount": 10,
-      "lastAccessed": "2025-08-25T07:29:57.344Z"
+      "accessCount": 11,
+      "lastAccessed": "2025-08-25T15:37:37.431Z"
     },
     "Seaside Bellona": {
       "filename": "seaside_bellona",
@@ -1586,8 +1517,8 @@
       "fileSizeBytes": 855851,
       "totalBuilds": 3000,
       "validData": true,
-      "accessCount": 9,
-      "lastAccessed": "2025-08-25T07:29:57.346Z"
+      "accessCount": 10,
+      "lastAccessed": "2025-08-25T15:37:37.434Z"
     },
     "Violet": {
       "filename": "violet",
@@ -1597,8 +1528,8 @@
       "fileSizeBytes": 844707,
       "totalBuilds": 3000,
       "validData": true,
-      "accessCount": 3,
-      "lastAccessed": "2025-08-25T07:29:57.341Z"
+      "accessCount": 4,
+      "lastAccessed": "2025-08-25T15:37:37.427Z"
     }
   },
   "totalHeroes": 185,
@@ -1780,7 +1711,7 @@
       "builds": 1
     }
   ],
-  "cacheSize": 185,
+  "cacheSize": 177,
   "totalDiskUsage": 2.44,
   "lastProcessedIndex": 26,
   "rateLimitDetected": true,
