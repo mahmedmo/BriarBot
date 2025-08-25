@@ -30,7 +30,18 @@ const BRIAR_RESPONSES = {
 		'The spirits grow restless with your constant demands. Return in {time} seconds.',
 		'Silence, mortal. You may speak again in {time} seconds.',
 		'My magic requires rest. Come back in {time} seconds.',
-		'Too hasty... the forest spirits need {time} seconds to recover.'
+		'Too hasty... the forest spirits need {time} seconds to recover.',
+		'Do you think the thorns grow faster if you shout at them? Wait {time} seconds.',
+		'Impatience feeds the curse… wait {time} seconds lest it devours you.',
+		'The forest does not dance to your rhythm. Return in {time} seconds.',
+		'My crows tire of your voice. Come back in {time} seconds.',
+		'Keep scratching at the bramble, and you’ll only bleed. Wait {time} seconds.',
+		'Your urgency is a brittle twig—it will snap in {time} seconds.',
+		'The roots cannot grow faster by your command. Wait {time} seconds.',
+		'The thorned path is slow by design… return in {time} seconds.',
+		'I will not wither for your whims. Wait {time} seconds.',
+		'You water weeds with your haste. Wait {time} seconds.',
+		'Patience is the only spell that costs nothing. Wait {time} seconds.'
 	],
 
 	invalidInput: [
@@ -38,7 +49,17 @@ const BRIAR_RESPONSES = {
 		'Such gibberish offends the spirits. **{error}**',
 		'I cannot divine meaning from your rambling. **{error}**',
 		'Speak plainly, fool. **{error}**',
-		'The forest does not understand your nonsense. **{error}**'
+		'The forest does not understand your nonsense. **{error}**',
+		'You mumble like a root-strangled spirit. **{error}**',
+		'Even the dead speak clearer than this. **{error}**',
+		'I won’t untangle your nonsense—try again. **{error}**',
+		'Do you want me to hex your tongue? **{error}**',
+		'The curse twists your words into weeds. **{error}**',
+		'Your voice tangles like vines around a corpse. **{error}**',
+		'The forest spits out such folly. **{error}**',
+		'Were those words or just the wind through hollow bark? **{error}**',
+		'The spirits whisper only mockery at this. **{error}**',
+		'Try again before the roots forget you entirely. **{error}**'
 	],
 
 	characterNotFound: [
@@ -47,22 +68,50 @@ const BRIAR_RESPONSES = {
 		'The spirits know nothing of **{input}**.',
 		'**{input}**? Your knowledge is lacking, mortal.',
 		'**{input}**... such ignorance.',
-		'I see no trace of **{input}** in the threads of fate.'
+		'I see no trace of **{input}** in the threads of fate.',
+		'**{input}**? The forest swallows such names whole.',
+		'**{input}** is a shadow with no corpse to cast it.',
+		'Even my thorns cannot reach someone named **{input}**.',
+		'Perhaps **{input}** wandered too deep, never to return.',
+		'No roots remember **{input}**.',
+		'**{input}** is dust in the wind—insignificant.',
+		'The curse laughs at such a name as **{input}**.',
+		'**{input}**? Nothing but bones gnawed by time.',
+		'I cast the name **{input}** into the bramble—nothing answers.',
+		'Fate does not bother weaving threads for **{input}**.'
 	],
 
 	characterNotFoundWithSuggestions: [
 		'**{input}** does not exist.\n*Perhaps you meant:*\n{suggestions}',
 		'**{input}**... unknown to me.\n*Did you mean:*\n{suggestions}',
 		'I know not of **{input}**.\n*These names whisper to me instead:*\n{suggestions}',
-		'**{input}** eludes me.\n*Consider these alternatives:*\n{suggestions}'
+		'**{input}** eludes me.\n*Consider these alternatives:*\n{suggestions}',
+		'**{input}** is but a dead leaf.\n*Try instead:*\n{suggestions}',
+		'**{input}** has no thread in fate.\n*The forest hums of these:*\n{suggestions}',
+		'The curse recoils from **{input}**.\n*Perhaps you mean:*\n{suggestions}',
+		'**{input}**? Empty soil.\n*But these might bloom:*\n{suggestions}',
+		'**{input}** fell to rot.\n*But these roots still live:*\n{suggestions}',
+		'The spirits do not whisper **{input}**.\n*Yet they murmur of:*\n{suggestions}',
+		'**{input}**? That seed never sprouted.\n*Try these:*\n{suggestions}',
+		'The bramble forgot **{input}**.\n*But it remembers:*\n{suggestions}'
 	],
 
 	alreadyProcessing: [
-		'Your previous command is still being processed. Please wait...',
-		'Patience... I am still weaving your last request.',
+		'A previous command is still being processed. Please wait...',
+		'Patience... I am still weaving the last request.',
 		'The spirits are still working on your previous inquiry.',
 		'One request at a time, mortal. Wait.',
-		'Your last command still echoes through the forest.'
+		'The last command still echoes through the forest.',
+		'The threads are already woven. Tug again and they’ll snap.',
+		'The curse gnaws on your last demand still. Wait.',
+		'My dolls are still working—must I break them for your haste?',
+		'Your request lingers like a bad omen. Let it finish.',
+		'You’ll get your turn, thornling. Wait.',
+		'The bramble does not rush for anyone.',
+		'Twist the thread too soon and you unravel it all.',
+		'The forest groans—stop pulling at its seams.',
+		'You have already stirred the cauldron. Let it cool.',
+		'Try to force it, and you’ll only be pricked.'
 	],
 
 	queueFull: [
@@ -70,7 +119,17 @@ const BRIAR_RESPONSES = {
 		'My power has limits. Return when the forest is calmer.',
 		'Too many voices call at once. Try again shortly.',
 		'The magical threads are tangled. Wait and try again.',
-		'Even I cannot handle such chaos. Return later.'
+		'Even I cannot handle such chaos. Return later.',
+		'The forest is choking with requests—yours will wither for now.',
+		'Even curses have limits… wait for the tangle to ease.',
+		'Your voice is just one of many lost in the thicket.',
+		'Too many fools pulled the vines at once. Wait.',
+		'The curse snarls when overfed. Return later.',
+		'The bramble has no room for one more thorn.',
+		'The roots cannot drink from all cups at once.',
+		'Patience—your turn will grow in the soil of time.',
+		'The grove is too loud. Silence yourself awhile.',
+		'Wait, or be lost among the tangled cries.'
 	],
 
 	queued: [
@@ -78,7 +137,17 @@ const BRIAR_RESPONSES = {
 		'**{character}**... I shall attend to you shortly (position {position}).',
 		'The spirits whisper of **{character}**. You wait at position {position}.',
 		'**{character}** shall be revealed in due time (position {position}).',
-		'Patience... **{character}**\'s secrets await (position {position}).'
+		'Patience... **{character}**\'s secrets await (position {position}).',
+		'The forest remembers **{character}**… you are thorn {position} in line.',
+		'**{character}** is bound for you—eventually (position {position}).',
+		'You are not the only one seeking **{character}**’s secrets (position {position}).',
+		'The vines wind toward **{character}**… you are {position} in the braid.',
+		'Wait, or the forest will wait for you—**{character}** is at position {position}.',
+		'**{character}** lingers in the mist. Your place is {position}.',
+		'The thorns point toward **{character}**, but not yet—position {position}.',
+		'Roots grow slowly… you are {position} before **{character}** blooms.',
+		'**{character}** rests beneath the bark. You are queued at {position}.',
+		'Remain still—**{character}** comes when the forest wills (position {position}).'
 	]
 };
 
@@ -158,10 +227,10 @@ const userRateLimit = new Map();
 const RATE_LIMIT_REQUESTS = 3; // Max 3 requests
 const RATE_LIMIT_WINDOW = 30000; // Per 30 seconds
 
-// Command queue system
+// Command queue system - Sequential processing
 const commandQueue = [];
 const processingCommands = new Set();
-const MAX_CONCURRENT_COMMANDS = 2; // Process max 2 commands simultaneously
+const MAX_CONCURRENT_COMMANDS = 1; // Process 1 command at a time for true sequential behavior
 const QUEUE_MAX_SIZE = 20; // Max queue size to prevent memory issues
 let isProcessingQueue = false;
 
@@ -240,14 +309,16 @@ async function processQueue() {
 
 	while (commandQueue.length > 0 && processingCommands.size < MAX_CONCURRENT_COMMANDS) {
 		const commandData = commandQueue.shift();
-		processCommand(commandData);
+		// Process command and wait for it to complete before continuing
+		await processCommand(commandData);
 	}
 
 	isProcessingQueue = false;
 
 	// Continue processing if there are more commands
 	if (commandQueue.length > 0) {
-		setTimeout(processQueue, 100);
+		// Use setImmediate for better performance and to avoid blocking
+		setImmediate(processQueue);
 	}
 }
 
@@ -292,9 +363,6 @@ async function processCommand(commandData) {
 	} finally {
 		processingCommands.delete(userId);
 		activeConnections--;
-
-		// Continue processing queue
-		setTimeout(processQueue, 100);
 
 		// Periodic memory cleanup
 		if (Date.now() - lastMemoryCleanup > MEMORY_CLEANUP_INTERVAL) {
@@ -1289,32 +1357,6 @@ async function analyzeHeroData(heroName) {
 		// If no match found in heroData, this might be a newer hero not in the cached data
 		// Try the API with the original input name first
 		let rawBuilds = await getPopularBuilds(actualHeroName);
-
-		// If that fails and we didn't find a match, try some common variations
-		if ((!rawBuilds || !rawBuilds.data || rawBuilds.data.length === 0) && !matchedHero) {
-			console.log(`Trying API variations for unmatched hero: ${heroName}`);
-
-			// Try exact input name (in case actualHeroName was modified)
-			if (actualHeroName !== heroName) {
-				console.log(`Trying original input: ${heroName}`);
-				rawBuilds = await getPopularBuilds(heroName);
-			}
-		}
-
-		if (!rawBuilds || !rawBuilds.data || rawBuilds.data.length === 0) {
-			console.log(`No build data found for "${actualHeroName}". Input was "${heroName}". Raw response:`, rawBuilds ? 'Response received but no data' : 'No response received');
-
-			// For specific problematic heroes, let's try some name variations
-			if (!matchedHero && ['conquerer lilias', 'conqueror lilias'].includes(heroName.toLowerCase())) {
-				console.log('Trying "Conqueror Lilias" variation...');
-				const retryBuilds = await getPopularBuilds('Conqueror Lilias');
-				if (retryBuilds && retryBuilds.data && retryBuilds.data.length > 0) {
-					return analyzeHeroData('Conqueror Lilias'); // Recursively call with correct name
-				}
-			}
-
-			return null;
-		}
 
 		// Process the build data
 		const buildData = processBuildData(rawBuilds, heroData, artifactData);

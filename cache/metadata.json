@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "lastGlobalUpdate": "2025-08-25T18:09:02.523Z",
+  "lastGlobalUpdate": "2025-08-25T18:26:46.168Z",
   "heroes": {
     "Abigail": {
       "filename": "abigail",
@@ -139,8 +139,8 @@
       "fileExists": true,
       "totalBuilds": 0,
       "validData": true,
-      "accessCount": null,
-      "lastAccessed": "2025-08-25T18:03:19.803Z"
+      "accessCount": 2,
+      "lastAccessed": "2025-08-25T19:04:25.632Z"
     },
     "Cerise": {
       "filename": "cerise",
@@ -1409,8 +1409,8 @@
       "fileExists": true,
       "totalBuilds": 0,
       "validData": true,
-      "accessCount": null,
-      "lastAccessed": "2025-08-25T18:03:19.805Z"
+      "accessCount": 2,
+      "lastAccessed": "2025-08-25T19:04:25.635Z"
     },
     "Serene Purity Adin": {
       "filename": "serene_purity_adin",
@@ -1563,8 +1563,8 @@
       "fileExists": true,
       "totalBuilds": 0,
       "validData": true,
-      "accessCount": null,
-      "lastAccessed": "2025-08-25T18:03:19.801Z"
+      "accessCount": 2,
+      "lastAccessed": "2025-08-25T19:04:25.627Z"
     },
     "Blooming Lidica": {
       "filename": "blooming_lidica",
@@ -1631,11 +1631,33 @@
       "validData": true,
       "accessCount": 2,
       "lastAccessed": "2025-08-25T18:09:24.682Z"
+    },
+    "Celine": {
+      "filename": "celine",
+      "cacheKey": "dba7b8a8",
+      "lastUpdated": "2025-08-25T18:20:19.682Z",
+      "fileExists": true,
+      "fileSizeBytes": 849046,
+      "totalBuilds": 3000,
+      "validData": true,
+      "accessCount": 1,
+      "lastAccessed": "2025-08-25T18:26:37.403Z"
+    },
+    "Spirit Eye Celine": {
+      "filename": "spirit_eye_celine",
+      "cacheKey": "f3e1ee75",
+      "lastUpdated": "2025-08-25T18:26:46.168Z",
+      "fileExists": true,
+      "fileSizeBytes": 859847,
+      "totalBuilds": 3000,
+      "validData": true,
+      "accessCount": 0,
+      "lastAccessed": "2025-08-25T18:26:46.168Z"
     }
   },
-  "totalHeroes": 200,
-  "successfulHeroes": 200,
+  "totalHeroes": 202,
+  "successfulHeroes": 202,
   "failedHeroes": [],
-  "cacheSize": 200,
-  "totalDiskUsage": 4.88
+  "cacheSize": 202,
+  "totalDiskUsage": 6.51
 }
