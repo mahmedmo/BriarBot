@@ -295,9 +295,9 @@ function addToQueue(commandData) {
 	commandQueue.push(commandData);
 	const position = commandQueue.length;
 
-	if (!isProcessingQueue) {
-		processQueue();
-	}
+	// Always try to start queue processing
+	// processQueue() will handle the case where it's already running
+	setImmediate(processQueue);
 
 	return { success: true, position };
 }
@@ -307,18 +307,19 @@ async function processQueue() {
 
 	isProcessingQueue = true;
 
-	while (commandQueue.length > 0 && processingCommands.size < MAX_CONCURRENT_COMMANDS) {
-		const commandData = commandQueue.shift();
-		// Process command and wait for it to complete before continuing
-		await processCommand(commandData);
-	}
-
-	isProcessingQueue = false;
-
-	// Continue processing if there are more commands
-	if (commandQueue.length > 0) {
-		// Use setImmediate for better performance and to avoid blocking
-		setImmediate(processQueue);
+	try {
+		while (commandQueue.length > 0 && processingCommands.size < MAX_CONCURRENT_COMMANDS) {
+			const commandData = commandQueue.shift();
+			// Process command and wait for it to complete before continuing
+			await processCommand(commandData);
+		}
+	} finally {
+		isProcessingQueue = false;
+		
+		// Continue processing if there are more commands that were added while we were processing
+		if (commandQueue.length > 0) {
+			setImmediate(processQueue);
+		}
 	}
 }
 
