@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Load character names
-const characterDataPath = path.join(__dirname, '..', 'assets', 'character-names.json');
+const characterDataPath = path.join(__dirname, '..', 'assets', 'data', 'character-names.json');
 let characterNames = [];
 
 try {
@@ -74,6 +74,7 @@ const COMMUNITY_ABBREVIATIONS = {
 	'hwa': 'Hwayoung',
 	'dks': 'Dragon King Sharun',
 	'briseria': 'Briar Witch Iseria',
+	'mliseria': 'Briar Witch Iseria',
 	'seaseria': 'Summertime Iseria',
     'ssb': 'Seaside Bellona',
     'sb': 'Seaside Bellona',
@@ -91,7 +92,15 @@ const COMMUNITY_ABBREVIATIONS = {
 	'cavel': 'Commander Pavel',
 	'barunka': 'Boss Arunka',
 	'moona': 'New Moon Luna',
-	'clilias': 'Conquerer Lilias',
+	'clilias': 'Conqueror Lilias',
+	'fluri': 'Falconer Kluri',
+	'flidica': 'Faithless Lidica',
+	'mllidica': 'Faithless Lidica',
+	'blidica': 'Blooming Lidica',
+	'wtene': 'Witch of the Mere Tenebria',
+	'stene': 'Specter Tenebria',
+	'mltenebria': Math.random() < 0.5 ? 'Specter Tenebria' : 'Witch of the Mere Tenebria',
+	'mltene': Math.random() < 0.5 ? 'Specter Tenebria' : 'Witch of the Mere Tenebria',
 };
 
 // Normalize text for better matching
@@ -138,7 +147,16 @@ function findBestCharacterMatch(input) {
         }
     }
     
-	// Second pass: Handle moonlight prefix
+	// Second pass: Check community abbreviations second
+	if (COMMUNITY_ABBREVIATIONS[normalizedInput]) {
+		return {
+			character: COMMUNITY_ABBREVIATIONS[normalizedInput],
+			confidence: getRandomizedConfidence(0.65),
+			matchType: 'abbreviation'
+		};
+	}
+
+	// Third pass: Handle moonlight prefix
 	if (normalizedInput.startsWith("ml") || normalizedInput.startsWith("moonlight")) {
 		const strippedInput = normalizedInput.replace(/^(ml|moonlight)[-\s]?/, "");
 		let bestMatch = null;
@@ -185,15 +203,6 @@ function findBestCharacterMatch(input) {
 		}
 
 		return null;
-	}
-
-	// Third pass: heck community abbreviations second
-	if (COMMUNITY_ABBREVIATIONS[normalizedInput]) {
-		return {
-			character: COMMUNITY_ABBREVIATIONS[normalizedInput],
-			confidence: getRandomizedConfidence(0.65),
-			matchType: 'abbreviation'
-		};
 	}
 
     // Fourth pass: Look for substring matches

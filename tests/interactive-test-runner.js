@@ -215,7 +215,10 @@ class TestRunner {
             
             if (!heroAnalysis) {
                 console.log(colorize('    Failed to fetch hero analysis data', 'red'));
-                testPassed = false;
+                const endTime = Date.now();
+                results.duration = endTime - startTime;
+                this.displayTestResults(results);
+                return false;
             } else {
                 console.log(colorize(`   Analysis complete: ${heroAnalysis.totalBuilds} builds`, 'green'));
                 results.totalBuilds = heroAnalysis.totalBuilds;

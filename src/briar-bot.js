@@ -32,7 +32,7 @@ const BRIAR_RESPONSES = {
 		'My magic requires rest. Come back in {time} seconds.',
 		'Too hasty... the forest spirits need {time} seconds to recover.'
 	],
-	
+
 	invalidInput: [
 		'Your words make no sense... speak clearly, or be silent. **{error}**',
 		'Such gibberish offends the spirits. **{error}**',
@@ -40,7 +40,7 @@ const BRIAR_RESPONSES = {
 		'Speak plainly, fool. **{error}**',
 		'The forest does not understand your nonsense. **{error}**'
 	],
-	
+
 	characterNotFound: [
 		'**{input}**... nothing but silence. Don\'t waste my time.',
 		'**{input}** exists only in your imagination.',
@@ -49,14 +49,14 @@ const BRIAR_RESPONSES = {
 		'**{input}**... such ignorance.',
 		'I see no trace of **{input}** in the threads of fate.'
 	],
-	
+
 	characterNotFoundWithSuggestions: [
 		'**{input}** does not exist.\n*Perhaps you meant:*\n{suggestions}',
 		'**{input}**... unknown to me.\n*Did you mean:*\n{suggestions}',
 		'I know not of **{input}**.\n*These names whisper to me instead:*\n{suggestions}',
 		'**{input}** eludes me.\n*Consider these alternatives:*\n{suggestions}'
 	],
-	
+
 	alreadyProcessing: [
 		'Your previous command is still being processed. Please wait...',
 		'Patience... I am still weaving your last request.',
@@ -64,7 +64,7 @@ const BRIAR_RESPONSES = {
 		'One request at a time, mortal. Wait.',
 		'Your last command still echoes through the forest.'
 	],
-	
+
 	queueFull: [
 		'The spirits are overwhelmed... try again in a moment.',
 		'My power has limits. Return when the forest is calmer.',
@@ -72,7 +72,7 @@ const BRIAR_RESPONSES = {
 		'The magical threads are tangled. Wait and try again.',
 		'Even I cannot handle such chaos. Return later.'
 	],
-	
+
 	queued: [
 		'Your request for **{character}** is queued (position {position}).',
 		'**{character}**... I shall attend to you shortly (position {position}).',
@@ -86,13 +86,13 @@ const BRIAR_RESPONSES = {
 const getRandomResponse = (category, replacements = {}) => {
 	const responses = BRIAR_RESPONSES[category];
 	const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-	
+
 	// Replace placeholders
 	let message = randomResponse;
 	for (const [key, value] of Object.entries(replacements)) {
 		message = message.replace(new RegExp(`{${key}}`, 'g'), value);
 	}
-	
+
 	return message;
 };
 
@@ -101,26 +101,26 @@ let artifactData = {};
 let artifactsById = {};
 
 const cacheManager = new CacheManager({
-    cacheDir: path.join(__dirname, '..', 'cache'),
-    ttl: 30 * 24 * 60 * 60 * 1000, // 30 days in milliseconds
-    maxCacheSize: 500
+	cacheDir: path.join(__dirname, '..', 'cache'),
+	ttl: 30 * 24 * 60 * 60 * 1000, // 30 days in milliseconds
+	maxCacheSize: 500
 });
 
 const rateLimiter = new RateLimiter({
-    maxRetries: 12,
-    baseDelay: 1000,
-    maxDelay: 300000, // 5 minutes max
-    jitterFactor: 0.15,
-    circuitBreakerThreshold: 15,
-    circuitBreakerResetTime: 900000 // 15 minutes
+	maxRetries: 12,
+	baseDelay: 1000,
+	maxDelay: 300000, // 5 minutes max
+	jitterFactor: 0.15,
+	circuitBreakerThreshold: 15,
+	circuitBreakerResetTime: 900000 // 15 minutes
 });
 
 rateLimiter.on('circuitBreakerOpen', (data) => {
-    console.log(`Circuit breaker open: ${data.failures} failures`);
+	console.log(`Circuit breaker open: ${data.failures} failures`);
 });
 
 rateLimiter.on('circuitBreakerClose', () => {
-    console.log('Circuit breaker closed');
+	console.log('Circuit breaker closed');
 });
 
 
@@ -131,12 +131,12 @@ const MAX_CACHE_SIZE = 50;
 function getCachedData(key) {
 	const cached = dataCache.get(key);
 	if (!cached) return null;
-	
+
 	if (Date.now() - cached.timestamp > CACHE_TTL) {
 		dataCache.delete(key);
 		return null;
 	}
-	
+
 	return cached.data;
 }
 
@@ -146,7 +146,7 @@ function setCachedData(key, data) {
 		const firstKey = dataCache.keys().next().value;
 		dataCache.delete(firstKey);
 	}
-	
+
 	dataCache.set(key, {
 		data,
 		timestamp: Date.now()
@@ -180,13 +180,13 @@ function validateAndSanitizeInput(input) {
 	if (input.length > 100) {
 		throw new Error('Input too long. Maximum 100 characters allowed.');
 	}
-	
+
 	// Allow only alphanumeric characters, spaces, hyphens, apostrophes, and common punctuation
 	const allowedPattern = /^[a-zA-Z0-9\s\-'.\+]+$/;
 	if (!allowedPattern.test(input)) {
 		throw new Error('Invalid characters in input. Only letters, numbers, spaces, hyphens, apostrophes, dots, and plus signs are allowed.');
 	}
-	
+
 	// Sanitize by trimming and normalizing spaces
 	return input.trim().replace(/\s+/g, ' ');
 }
@@ -195,24 +195,24 @@ function validateAndSanitizeInput(input) {
 function checkRateLimit(userId) {
 	const now = Date.now();
 	const userLimit = userRateLimit.get(userId);
-	
+
 	if (!userLimit) {
 		userRateLimit.set(userId, { count: 1, lastReset: now });
 		return { allowed: true, remainingRequests: RATE_LIMIT_REQUESTS - 1 };
 	}
-	
+
 	// Reset if window has passed
 	if (now - userLimit.lastReset > RATE_LIMIT_WINDOW) {
 		userRateLimit.set(userId, { count: 1, lastReset: now });
 		return { allowed: true, remainingRequests: RATE_LIMIT_REQUESTS - 1 };
 	}
-	
+
 	// Check if under limit
 	if (userLimit.count < RATE_LIMIT_REQUESTS) {
 		userLimit.count++;
 		return { allowed: true, remainingRequests: RATE_LIMIT_REQUESTS - userLimit.count };
 	}
-	
+
 	const resetTime = Math.ceil((userLimit.lastReset + RATE_LIMIT_WINDOW - now) / 1000);
 	return { allowed: false, resetTime };
 }
@@ -222,29 +222,29 @@ function addToQueue(commandData) {
 	if (commandQueue.length >= QUEUE_MAX_SIZE) {
 		return { success: false, reason: 'queue_full', position: -1 };
 	}
-	
+
 	commandQueue.push(commandData);
 	const position = commandQueue.length;
-	
+
 	if (!isProcessingQueue) {
 		processQueue();
 	}
-	
+
 	return { success: true, position };
 }
 
 async function processQueue() {
 	if (isProcessingQueue || commandQueue.length === 0) return;
-	
+
 	isProcessingQueue = true;
-	
+
 	while (commandQueue.length > 0 && processingCommands.size < MAX_CONCURRENT_COMMANDS) {
 		const commandData = commandQueue.shift();
 		processCommand(commandData);
 	}
-	
+
 	isProcessingQueue = false;
-	
+
 	// Continue processing if there are more commands
 	if (commandQueue.length > 0) {
 		setTimeout(processQueue, 100);
@@ -254,26 +254,26 @@ async function processQueue() {
 async function processCommand(commandData) {
 	const { message, userInput, characterName, confidence, searchResult } = commandData;
 	const userId = message.author.id;
-	
+
 	processingCommands.add(userId);
 	activeConnections++;
-	
+
 	try {
 		let loadingContent = `🌑   Revealing **${characterName}**...`;
 		if (searchResult.matchType !== 'exact' || confidence < 100) {
 			loadingContent = `🌒   A pale echo at a ${confidence}% match... Revealing **${characterName}**...`;
 		}
-		
+
 		const loadingMessage = await message.reply(loadingContent);
-		
+
 		// Use deduplication system to handle the request
 		const result = await getHeroWithDeduplication(characterName, loadingMessage);
-		
+
 		if (result && result.screenshot) {
 			const attachment = new AttachmentBuilder(result.screenshot, {
 				name: `${characterName.replace(/\s+/g, '_')}.png`
 			});
-			
+
 			await loadingMessage.edit({
 				content: `☾   ${characterName}`,
 				files: [attachment]
@@ -281,7 +281,7 @@ async function processCommand(commandData) {
 		} else {
 			await loadingMessage.edit(`❌ I called for **${characterName}**... no one answered.`);
 		}
-		
+
 	} catch (error) {
 		console.error('Error processing command:', error);
 		try {
@@ -292,10 +292,10 @@ async function processCommand(commandData) {
 	} finally {
 		processingCommands.delete(userId);
 		activeConnections--;
-		
+
 		// Continue processing queue
 		setTimeout(processQueue, 100);
-		
+
 		// Periodic memory cleanup
 		if (Date.now() - lastMemoryCleanup > MEMORY_CLEANUP_INTERVAL) {
 			performMemoryCleanup();
@@ -310,101 +310,101 @@ async function processCommand(commandData) {
  * @returns {Promise<Buffer|null>}
  */
 async function getHeroWithDeduplication(heroName, message) {
-    const normalizedHeroName = heroName.toLowerCase().trim();
-    
-    // Check if there's already an ongoing request for this hero
-    if (ongoingRequests.has(normalizedHeroName)) {
-        const existingRequest = ongoingRequests.get(normalizedHeroName);
-        existingRequest.requesters.push(message);
-        
-        try {
-            // Wait for the existing request to complete
-            const result = await existingRequest.promise;
-            return result;
-        } catch (error) {
-            console.error(`❌ Deduplicated request failed for ${heroName}:`, error.message);
-            return null;
-        }
-    }
-    
-    // Set up timeout cleanup first
-    let timeoutId;
-    
-    const requestPromise = (async () => {
-        try {
-            // Check cache first
-            let screenshot = cacheManager.getCachedHeroImage(heroName);
-            
-            if (screenshot) {
-                return { screenshot, fromCache: true };
-            }
-            
-            // Generate new image if not cached
-            const heroAnalysis = await analyzeHeroData(heroName);
-            
-            if (!heroAnalysis) {
-                return null;
-            }
-            
-            screenshot = await generateReportImage(heroAnalysis);
-            
-            // Cache the generated image
-            await cacheManager.cacheHeroImage(heroName, screenshot, heroAnalysis);
-            
-            return { screenshot, fromCache: false };
-            
-        } finally {
-            // Clean up the ongoing request tracking and clear timeout
-            ongoingRequests.delete(normalizedHeroName);
-            if (timeoutId) {
-                clearTimeout(timeoutId);
-            }
-        }
-    })();
-    
-    // Store the request with timeout
-    const requestData = {
-        promise: requestPromise,
-        requesters: [message],
-        startTime: Date.now()
-    };
-    
-    ongoingRequests.set(normalizedHeroName, requestData);
-    
-    // Set up timeout cleanup
-    timeoutId = setTimeout(() => {
-        if (ongoingRequests.has(normalizedHeroName)) {
-            console.warn(`⏰ Request timeout for ${heroName}, cleaning up`);
-            ongoingRequests.delete(normalizedHeroName);
-        }
-    }, REQUEST_TIMEOUT);
-    
-    return requestPromise;
+	const normalizedHeroName = heroName.toLowerCase().trim();
+
+	// Check if there's already an ongoing request for this hero
+	if (ongoingRequests.has(normalizedHeroName)) {
+		const existingRequest = ongoingRequests.get(normalizedHeroName);
+		existingRequest.requesters.push(message);
+
+		try {
+			// Wait for the existing request to complete
+			const result = await existingRequest.promise;
+			return result;
+		} catch (error) {
+			console.error(`❌ Deduplicated request failed for ${heroName}:`, error.message);
+			return null;
+		}
+	}
+
+	// Set up timeout cleanup first
+	let timeoutId;
+
+	const requestPromise = (async () => {
+		try {
+			// Check cache first
+			let screenshot = cacheManager.getCachedHeroImage(heroName);
+
+			if (screenshot) {
+				return { screenshot, fromCache: true };
+			}
+
+			// Generate new image if not cached
+			const heroAnalysis = await analyzeHeroData(heroName);
+
+			if (!heroAnalysis) {
+				return null;
+			}
+
+			screenshot = await generateReportImage(heroAnalysis);
+
+			// Cache the generated image
+			await cacheManager.cacheHeroImage(heroName, screenshot, heroAnalysis);
+
+			return { screenshot, fromCache: false };
+
+		} finally {
+			// Clean up the ongoing request tracking and clear timeout
+			ongoingRequests.delete(normalizedHeroName);
+			if (timeoutId) {
+				clearTimeout(timeoutId);
+			}
+		}
+	})();
+
+	// Store the request with timeout
+	const requestData = {
+		promise: requestPromise,
+		requesters: [message],
+		startTime: Date.now()
+	};
+
+	ongoingRequests.set(normalizedHeroName, requestData);
+
+	// Set up timeout cleanup
+	timeoutId = setTimeout(() => {
+		if (ongoingRequests.has(normalizedHeroName)) {
+			console.warn(`⏰ Request timeout for ${heroName} after ${REQUEST_TIMEOUT / 1000}s, cleaning up`);
+			ongoingRequests.delete(normalizedHeroName);
+		}
+	}, REQUEST_TIMEOUT);
+
+	return requestPromise;
 }
 
 /**
  * Clean up expired ongoing requests
  */
 function cleanupExpiredRequests() {
-    const now = Date.now();
-    let cleanedCount = 0;
-    
-    for (const [heroName, requestData] of ongoingRequests.entries()) {
-        if (now - requestData.startTime > REQUEST_TIMEOUT) {
-            console.warn(`🧹 Cleaning up expired request for ${heroName}`);
-            ongoingRequests.delete(heroName);
-            cleanedCount++;
-        }
-    }
-    
-    
-    return cleanedCount;
+	const now = Date.now();
+	let cleanedCount = 0;
+
+	for (const [heroName, requestData] of ongoingRequests.entries()) {
+		if (now - requestData.startTime > REQUEST_TIMEOUT) {
+			console.warn(`🧹 Cleaning up expired request for ${heroName}`);
+			ongoingRequests.delete(heroName);
+			cleanedCount++;
+		}
+	}
+
+
+	return cleanedCount;
 }
 
 // Memory cleanup function
 function performMemoryCleanup() {
 	lastMemoryCleanup = Date.now();
-	
+
 	// Clean old rate limit entries
 	const now = Date.now();
 	for (const [userId, data] of userRateLimit.entries()) {
@@ -412,13 +412,13 @@ function performMemoryCleanup() {
 			userRateLimit.delete(userId);
 		}
 	}
-	
+
 	// Clean expired cache entries
 	const expiredCount = cacheManager.cleanupExpiredEntries();
-	
+
 	// Clean expired ongoing requests
 	cleanupExpiredRequests();
-	
+
 	// Force garbage collection if available
 	if (global.gc) {
 		global.gc();
@@ -506,7 +506,7 @@ function getRandomElement(arr) {
 }
 
 function generateRandomIP() {
-	return Array.from({length: 4}, () => Math.floor(Math.random() * 256)).join('.');
+	return Array.from({ length: 4 }, () => Math.floor(Math.random() * 256)).join('.');
 }
 
 // Generate realistic IP from CIDR ranges
@@ -519,7 +519,7 @@ function generateRealisticIP(region = 'US') {
 	const hostBits = 32 - maskBits;
 	const maxHosts = Math.pow(2, hostBits) - 2;
 	const randomHost = Math.floor(Math.random() * maxHosts) + 1;
-	
+
 	// Simple CIDR generation (not perfect but good enough for spoofing)
 	const newD = (d + randomHost) % 256;
 	const newC = (c + Math.floor((d + randomHost) / 256)) % 256;
@@ -529,7 +529,7 @@ function generateRealisticIP(region = 'US') {
 // Generate session tokens to appear as different authenticated users
 function generateSessionToken() {
 	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-	return Array.from({length: 32}, () => chars.charAt(Math.floor(Math.random() * chars.length))).join('');
+	return Array.from({ length: 32 }, () => chars.charAt(Math.floor(Math.random() * chars.length))).join('');
 }
 
 // Generate request ID to appear as different requests
@@ -542,7 +542,7 @@ function urlEncodeRandom(str) {
 	// Partially encode the string to create mismatch between rate limiting and processing
 	const chars = str.split('');
 	const encodableChars = /[a-zA-Z0-9]/;
-	
+
 	return chars.map((char, index) => {
 		if (encodableChars.test(char) && Math.random() < 0.3) { // 30% chance to encode
 			return '%' + char.charCodeAt(0).toString(16).padStart(2, '0');
@@ -555,7 +555,7 @@ function addNullByteVariation(str) {
 	// Add null bytes or other special characters to create processing mismatch
 	const variations = ['%00', '%20', '%09', '%0d', '%0a'];
 	const variation = getRandomElement(variations);
-	
+
 	// Add at random position
 	if (Math.random() < 0.5) {
 		return str + variation; // Append
@@ -573,10 +573,10 @@ function addRandomParameters(url) {
 		`cache=${Math.floor(Math.random() * 1000)}`,
 		`v=${Math.floor(Math.random() * 100)}`
 	];
-	
+
 	const numParams = Math.floor(Math.random() * 3) + 1; // 1-3 random params
 	const selectedParams = randomParams.sort(() => 0.5 - Math.random()).slice(0, numParams);
-	
+
 	return url + separator + selectedParams.join('&');
 }
 
@@ -587,21 +587,21 @@ async function getPopularBuilds(heroName, retryCount = 0) {
 		if (!rateLimiter.shouldAttemptRequest()) {
 			return { data: [] };
 		}
-		
-		
+
+
 		// Use intelligent backoff delay if this is a retry
 		if (retryCount > 0) {
 			const delay = rateLimiter.calculateDelay(retryCount - 1);
 			const explanation = rateLimiter.getStrategyExplanation(retryCount - 1, delay);
 			await new Promise(resolve => setTimeout(resolve, delay));
 		}
-		
+
 		requestCounter++;
-		
+
 		// ULTRA TECHNIQUE ROTATION - 50 different combinations for maximum stealth
 		const techniqueSet = requestCounter % 50;
 		const region = getRandomElement(['US', 'EU', 'ASIA', 'OCEANIA', 'AFRICA', 'SOUTH_AMERICA']);
-		
+
 		// Advanced fingerprint randomization
 		const browserFingerprint = {
 			chrome: getRandomElement(['119.0.0.0', '120.0.0.0', '121.0.0.0', '122.0.0.0']),
@@ -609,10 +609,10 @@ async function getPopularBuilds(heroName, retryCount = 0) {
 			safari: getRandomElement(['16.6', '17.0', '17.1', '17.2']),
 			edge: getRandomElement(['119.0.0.0', '120.0.0.0', '121.0.0.0'])
 		};
-		
+
 		// EXTREME URL MANIPULATION
 		let requestUrl = BUILDS_API;
-		
+
 		// Multiple URL variations applied simultaneously
 		if (techniqueSet % 2 === 0) requestUrl = addRandomParameters(requestUrl);
 		if (techniqueSet % 3 === 0) {
@@ -622,12 +622,12 @@ async function getPopularBuilds(heroName, retryCount = 0) {
 		if (techniqueSet % 4 === 0) {
 			// Case manipulation of the entire URL path
 			const urlParts = requestUrl.split('/');
-			urlParts[urlParts.length - 1] = urlParts[urlParts.length - 1].split('').map((char, i) => 
+			urlParts[urlParts.length - 1] = urlParts[urlParts.length - 1].split('').map((char, i) =>
 				i % 2 === 0 ? char.toUpperCase() : char.toLowerCase()
 			).join('');
 			requestUrl = urlParts.join('/');
 		}
-		
+
 		// EXTREME HERO NAME MANIPULATION
 		let processedHeroName = heroName;
 		if (techniqueSet % 5 === 0) processedHeroName = urlEncodeRandom(heroName);
@@ -640,11 +640,11 @@ async function getPopularBuilds(heroName, retryCount = 0) {
 			// Unicode normalization attacks
 			processedHeroName = heroName.normalize('NFD').replace(/[\\u0300-\\u036f]/g, '');
 		}
-		
+
 		// ULTIMATE HEADER ARSENAL - Advanced browser simulation + ML evasion
 		const selectedBrowser = getRandomElement(['chrome', 'firefox', 'safari', 'edge']);
 		const browserVersion = browserFingerprint[selectedBrowser];
-		
+
 		// Generate realistic User-Agent based on selected browser
 		const generateBrowserUA = (browser, version) => {
 			const osVariants = {
@@ -669,11 +669,11 @@ async function getPopularBuilds(heroName, retryCount = 0) {
 			};
 			return getRandomElement(osVariants[browser]);
 		};
-		
+
 		const aggressiveHeaders = {
 			'Content-Type': getRandomElement([
-				'text/plain', 
-				'application/x-www-form-urlencoded', 
+				'text/plain',
+				'application/x-www-form-urlencoded',
 				'text/plain; charset=utf-8',
 				'application/json; charset=utf-8',
 				'multipart/form-data'
@@ -696,8 +696,8 @@ async function getPopularBuilds(heroName, retryCount = 0) {
 			]),
 			'Accept-Encoding': getRandomElement(['gzip, deflate, br', 'gzip, deflate', 'br, gzip, deflate']),
 			'Origin': getRandomElement([
-				'https://fribbels.github.io', 
-				'https://github.com', 
+				'https://fribbels.github.io',
+				'https://github.com',
 				'https://epic7x.com',
 				'https://gamepress.gg',
 				'null'
@@ -714,7 +714,7 @@ async function getPopularBuilds(heroName, retryCount = 0) {
 			'Cache-Control': getRandomElement(['no-cache', 'max-age=0', 'no-store', 'must-revalidate', 'public, max-age=0']),
 			'Pragma': getRandomElement(['no-cache', 'cache']),
 			'DNT': getRandomElement(['1', '0']),
-			
+
 			// Enhanced browser fingerprinting headers
 			'Sec-Fetch-Dest': getRandomElement(['empty', 'document', 'script', 'fetch']),
 			'Sec-Fetch-Mode': getRandomElement(['cors', 'navigate', 'no-cors', 'same-origin']),
@@ -723,7 +723,7 @@ async function getPopularBuilds(heroName, retryCount = 0) {
 			'Sec-Ch-Ua': `"${selectedBrowser}";v="${browserVersion.split('.')[0]}", "Chromium";v="${browserVersion.split('.')[0]}", "Not_A Brand";v="8"`,
 			'Sec-Ch-Ua-Mobile': getRandomElement(['?0', '?1']),
 			'Sec-Ch-Ua-Platform': getRandomElement(['"Windows"', '"macOS"', '"Linux"', '"Android"', '"iOS"']),
-			
+
 			// Session and auth spoofing
 			'X-Requested-With': getRandomElement(['XMLHttpRequest', 'fetch', undefined]),
 			'X-Browser-Version': browserVersion,
@@ -731,29 +731,29 @@ async function getPopularBuilds(heroName, retryCount = 0) {
 			'X-Request-ID': generateRequestId(),
 			'X-Session-Token': generateSessionToken(),
 			'X-CSRF-Token': Math.random().toString(36).substr(2, 32),
-			
+
 			// Timing headers to appear more legitimate
 			'X-Timestamp': Date.now().toString(),
 			'X-Client-Time': new Date().toISOString(),
-			
+
 			// Device fingerprinting
 			'X-Device-ID': Math.random().toString(36).substr(2, 16),
 			'X-Screen-Resolution': getRandomElement(['1920x1080', '1366x768', '1440x900', '2560x1440']),
 			'X-Timezone': getRandomElement(['America/New_York', 'Europe/London', 'Asia/Tokyo', 'America/Los_Angeles']),
 		};
-		
+
 		// EXTREME IP SPOOFING - All possible headers + realistic geographic IPs
 		const ALL_IP_HEADERS = [
-			'X-Forwarded-For', 'X-Real-IP', 'X-Originating-IP', 'Client-IP', 'X-Client-IP', 
+			'X-Forwarded-For', 'X-Real-IP', 'X-Originating-IP', 'Client-IP', 'X-Client-IP',
 			'X-Cluster-Client-IP', 'X-Remote-IP', 'X-Remote-Addr', 'X-ProxyUser-Ip',
 			'CF-Connecting-IP', 'True-Client-IP', 'X-Azure-ClientIP', 'X-Forwarded-Host',
 			'Forwarded', 'Via', 'X-Coming-From', 'X-Sucuri-ClientIP', 'X-Sucuri-Country'
 		];
-		
+
 		// Apply 3-8 random IP headers for maximum confusion
 		const numIpHeaders = Math.floor(Math.random() * 6) + 3; // 3-8 headers
 		const selectedIpHeaders = ALL_IP_HEADERS.sort(() => 0.5 - Math.random()).slice(0, numIpHeaders);
-		
+
 		selectedIpHeaders.forEach((header, index) => {
 			let ip;
 			if (index === 0) {
@@ -766,7 +766,7 @@ async function getPopularBuilds(heroName, retryCount = 0) {
 				// 40% chance of random IP
 				ip = generateRandomIP();
 			}
-			
+
 			// Some headers need special formatting
 			if (header === 'Forwarded') {
 				aggressiveHeaders[header] = `for=${ip};proto=https;by=${generateRandomIP()}`;
@@ -776,14 +776,14 @@ async function getPopularBuilds(heroName, retryCount = 0) {
 				aggressiveHeaders[header] = ip;
 			}
 		});
-		
+
 		// EXTREME HTTP METHOD VARIATIONS
 		const methods = ['POST', 'post', 'Post', 'pOST', 'PoSt', 'poST', 'POst', 'pOsT'];
 		const method = getRandomElement(methods);
-		
+
 		// PROTOCOL CHAOS
 		const httpVersion = getRandomElement(['1.1', '2.0']);
-		
+
 
 		// MAXIMUM AXIOS CONFIGURATION - All options for maximum bypass
 		const axiosConfig = {
@@ -793,28 +793,28 @@ async function getPopularBuilds(heroName, retryCount = 0) {
 			headers: aggressiveHeaders,
 			timeout: 25000, // Higher timeout for stability
 			maxRedirects: 10,
-			
+
 			// Aggressive connection management
-			httpAgent: new (require('http').Agent)({ 
+			httpAgent: new (require('http').Agent)({
 				keepAlive: false,
 				maxSockets: 1,
 				timeout: 25000,
 				freeSocketTimeout: 4000
 			}),
-			httpsAgent: new (require('https').Agent)({ 
+			httpsAgent: new (require('https').Agent)({
 				keepAlive: false,
 				maxSockets: 1,
 				timeout: 25000,
 				freeSocketTimeout: 4000,
 				secureProtocol: 'TLS_method'
 			}),
-			
+
 			// Protocol specific options
-			...(httpVersion === '1.1' && { 
+			...(httpVersion === '1.1' && {
 				httpVersion: '1.1',
-				insecureHTTPParser: true 
+				insecureHTTPParser: true
 			}),
-			
+
 			// Response handling
 			validateStatus: (status) => status >= 200 && status < 500, // Accept more status codes
 			transformResponse: [(data) => {
@@ -848,11 +848,11 @@ async function getPopularBuilds(heroName, retryCount = 0) {
 		} else {
 			data = { data: [] };
 		}
-		
-		
+
+
 		// Update rate limiter with success
 		rateLimiter.updateApiHealth(200);
-		
+
 		return data;
 
 	} catch (error) {
@@ -864,27 +864,27 @@ async function getPopularBuilds(heroName, retryCount = 0) {
 			timeout: error.code === 'ECONNABORTED',
 			retryCount
 		});
-		
+
 		// Update rate limiter with the error status
 		rateLimiter.updateApiHealth(status);
-		
+
 		if (status === 404) {
 			console.warn(`   ⚠️ No build data available for hero: ${heroName}`);
 			return { data: [] };
 		}
-		
+
 		// Use intelligent retry logic for all error types
 		if ((status === 403 || status === 429 || !status) && retryCount < rateLimiter.config.maxRetries) {
 			const errorType = status === 403 ? 'FORBIDDEN' : status === 429 ? 'RATE LIMITED' : 'NETWORK ERROR';
 			console.warn(`   🚫 ${errorType} ${heroName} (attempt ${retryCount + 1}/${rateLimiter.config.maxRetries})`);
-			
+
 			return getPopularBuilds(heroName, retryCount + 1);
 		} else {
 			console.warn(`   💀 MAX RETRIES REACHED for ${heroName} after ${retryCount + 1} attempts`);
-			
+
 			// Log current rate limiter health for debugging
 			const health = rateLimiter.getHealthStats();
-			
+
 			return { data: [] };
 		}
 	}
@@ -893,9 +893,9 @@ async function getPopularBuilds(heroName, retryCount = 0) {
 // Build data processing function from epic7-build-analyzer
 function processBuildData(rawBuilds, heroData, artifactData) {
 	// Enhanced validation for rawBuilds structure
-	if (!rawBuilds || 
-		!rawBuilds.data || 
-		!Array.isArray(rawBuilds.data) || 
+	if (!rawBuilds ||
+		!rawBuilds.data ||
+		!Array.isArray(rawBuilds.data) ||
 		rawBuilds.data.length === 0) {
 		return { builds: [], stats: null };
 	}
@@ -913,7 +913,7 @@ function processBuildData(rawBuilds, heroData, artifactData) {
 		const stats = {
 			rank: index + 1,
 			atk: parseInt(build.atk),
-			def: parseInt(build.def), 
+			def: parseInt(build.def),
 			hp: parseInt(build.hp),
 			spd: parseInt(build.spd),
 			chc: parseInt(build.chc), // crit chance
@@ -931,7 +931,7 @@ function processBuildData(rawBuilds, heroData, artifactData) {
 
 	// Sort by gear score descending
 	builds.sort((a, b) => b.gs - a.gs);
-	
+
 	// Update ranks after sorting
 	builds.forEach((build, index) => {
 		build.rank = index + 1;
@@ -947,9 +947,9 @@ function calculateAggregateStats(builds) {
 	if (builds.length === 0) return null;
 
 	const statKeys = ['atk', 'def', 'hp', 'spd', 'chc', 'chd', 'eff', 'efr', 'gs'];
-	
+
 	const stats = {};
-	
+
 	for (const key of statKeys) {
 		const values = builds.map(build => build[key]).filter(val => !isNaN(val));
 		if (values.length > 0) {
@@ -972,8 +972,8 @@ function calculateAggregateStats(builds) {
 function calculateMedian(values) {
 	const sorted = [...values].sort((a, b) => a - b);
 	const mid = Math.floor(sorted.length / 2);
-	return sorted.length % 2 === 0 ? 
-		Math.round((sorted[mid - 1] + sorted[mid]) / 2) : 
+	return sorted.length % 2 === 0 ?
+		Math.round((sorted[mid - 1] + sorted[mid]) / 2) :
 		sorted[mid];
 }
 
@@ -998,7 +998,7 @@ function analyzeSetPopularity(builds) {
 
 function analyzeArtifactPopularity(builds) {
 	const artifactCounts = {};
-	
+
 	// Filter out builds with Unknown artifacts for accurate statistics
 	const validBuilds = builds.filter(build => build.artifactName && build.artifactName !== 'Unknown');
 	const total = validBuilds.length;
@@ -1059,14 +1059,18 @@ const STAT_ICONS = {
 async function loadGameData(retryCount = 0) {
 	const maxRetries = 3;
 	try {
-			const heroResponse = await fetch(HERO_CACHE, {
+		const heroResponse = await fetch(HERO_CACHE, {
 			timeout: 10000,
 			headers: {
 				'User-Agent': 'BriarBot/1.0'
 			}
 		});
 		if (!heroResponse.ok) throw new Error(`Hero data fetch failed: ${heroResponse.status}`);
-		heroData = await heroResponse.json();
+		const fetchedHeroData = await heroResponse.json();
+		
+		// Clear existing data and populate with new data
+		Object.keys(heroData).forEach(key => delete heroData[key]);
+		Object.assign(heroData, fetchedHeroData);
 
 		const artifactResponse = await fetch(ARTIFACT_CACHE, {
 			timeout: 10000,
@@ -1075,8 +1079,14 @@ async function loadGameData(retryCount = 0) {
 			}
 		});
 		if (!artifactResponse.ok) throw new Error(`Artifact data fetch failed: ${artifactResponse.status}`);
-		artifactData = await artifactResponse.json();
+		const fetchedArtifactData = await artifactResponse.json();
+		
+		// Clear existing data and populate with new data
+		Object.keys(artifactData).forEach(key => delete artifactData[key]);
+		Object.assign(artifactData, fetchedArtifactData);
 
+		// Clear and rebuild artifactsById mapping
+		Object.keys(artifactsById).forEach(key => delete artifactsById[key]);
 		for (const name of Object.keys(artifactData)) {
 			artifactsById[artifactData[name].code] = name;
 		}
@@ -1262,7 +1272,7 @@ async function analyzeHeroData(heroName) {
 		console.log(`Cache hit for ${heroName}`);
 		return cachedResult;
 	}
-	
+
 	try {
 		// Find the correct hero name (case insensitive)
 		const heroKeys = Object.keys(heroData);
@@ -1274,18 +1284,41 @@ async function analyzeHeroData(heroName) {
 		// Use the matched hero name or the original if no match found
 		const actualHeroName = matchedHero ? heroData[matchedHero].name || matchedHero : heroName;
 
-	
-		// Use direct API call instead of web scraping
-		const rawBuilds = await getPopularBuilds(actualHeroName);
-		
+		console.log(`Hero name mapping: "${heroName}" -> "${actualHeroName}" (matched: ${!!matchedHero})`);
+
+		// If no match found in heroData, this might be a newer hero not in the cached data
+		// Try the API with the original input name first
+		let rawBuilds = await getPopularBuilds(actualHeroName);
+
+		// If that fails and we didn't find a match, try some common variations
+		if ((!rawBuilds || !rawBuilds.data || rawBuilds.data.length === 0) && !matchedHero) {
+			console.log(`Trying API variations for unmatched hero: ${heroName}`);
+
+			// Try exact input name (in case actualHeroName was modified)
+			if (actualHeroName !== heroName) {
+				console.log(`Trying original input: ${heroName}`);
+				rawBuilds = await getPopularBuilds(heroName);
+			}
+		}
+
 		if (!rawBuilds || !rawBuilds.data || rawBuilds.data.length === 0) {
-			console.log(`No build data found for ${actualHeroName}. Raw response:`, rawBuilds ? 'Response received but no data' : 'No response received');
+			console.log(`No build data found for "${actualHeroName}". Input was "${heroName}". Raw response:`, rawBuilds ? 'Response received but no data' : 'No response received');
+
+			// For specific problematic heroes, let's try some name variations
+			if (!matchedHero && ['conquerer lilias', 'conqueror lilias'].includes(heroName.toLowerCase())) {
+				console.log('Trying "Conqueror Lilias" variation...');
+				const retryBuilds = await getPopularBuilds('Conqueror Lilias');
+				if (retryBuilds && retryBuilds.data && retryBuilds.data.length > 0) {
+					return analyzeHeroData('Conqueror Lilias'); // Recursively call with correct name
+				}
+			}
+
 			return null;
 		}
 
 		// Process the build data
 		const buildData = processBuildData(rawBuilds, heroData, artifactData);
-		
+
 		const result = {
 			heroName: actualHeroName,
 			totalBuilds: rawBuilds.data.length,
@@ -1310,10 +1343,10 @@ async function analyzeHeroData(heroName) {
 				gs: buildData.stats.gs?.avg || 0
 			}
 		};
-		
+
 		// Cache the result
 		setCachedData(cacheKey, result);
-		
+
 		return result;
 
 	} catch (error) {
@@ -1695,6 +1728,8 @@ async function generateHTML(data) {
     <div class="section">
         <div class="section-title">Popular Artifacts</div>
         ${await Promise.all(data.topArtifacts.map(async (artifact) => {
+		if (artifact.name.toLowerCase() == "succubus mirror") artifact.name = "Nostalgic Music Box";
+		if (artifact.name.toLowerCase() == "elegiac candles") artifact.name = "Elegiac Candle";
 		const artifactImageUrl = await getArtifactImage(artifact.name);
 		return `
                 <div class="artifact-row">
@@ -1759,10 +1794,10 @@ async function generateReportImage(data) {
 	const puppeteer = require('puppeteer');
 	let browser;
 	let page;
-	
+
 	try {
 		const isProduction = process.env.NODE_ENV === 'production';
-		
+
 		const config = {
 			headless: true,
 			timeout: 60000,
@@ -1791,7 +1826,7 @@ async function generateReportImage(data) {
 				'--disable-notifications'
 			]
 		};
-		
+
 		if (isProduction) {
 			config.executablePath = process.env.PUPPETEER_EXECUTABLE_PATH || undefined;
 		}
@@ -1799,16 +1834,16 @@ async function generateReportImage(data) {
 		browser = await puppeteer.launch(config);
 
 		page = await browser.newPage();
-		
+
 		// Optimize page settings for VM performance
 		await page.setCacheEnabled(false);
 		await page.setOfflineMode(false);
-		
-		await page.setContent(html, { 
+
+		await page.setContent(html, {
 			waitUntil: 'domcontentloaded',
 			timeout: 30000
 		});
-		
+
 		await page.setViewport({
 			width: 600,
 			height: 975,
@@ -1874,7 +1909,7 @@ if (require.main === module) {
 		console.log(`Logged in as ${client.user.tag}!`);
 		await loadGameData();
 		logMemoryUsage();
-		
+
 	});
 
 	client.on('messageCreate', async (message) => {
@@ -1890,7 +1925,7 @@ if (require.main === module) {
 			}
 
 			const rawInput = message.content.slice(1);
-			
+
 			// Input validation and sanitization
 			let userInput;
 			try {
@@ -1908,9 +1943,9 @@ if (require.main === module) {
 				const suggestions = getCharacterSuggestions(userInput, 3);
 				if (suggestions.length > 0) {
 					const suggestionsText = suggestions.map(s => `• ${s}`).join('\n');
-					const suggestionMessage = getRandomResponse('characterNotFoundWithSuggestions', { 
-						input: userInput, 
-						suggestions: suggestionsText 
+					const suggestionMessage = getRandomResponse('characterNotFoundWithSuggestions', {
+						input: userInput,
+						suggestions: suggestionsText
 					});
 					await message.reply(`❌ ${suggestionMessage}`);
 				} else {
@@ -1949,9 +1984,9 @@ if (require.main === module) {
 
 			// Notify user of queue position if not being processed immediately
 			if (queueResult.position > MAX_CONCURRENT_COMMANDS) {
-				const queuedMessage = getRandomResponse('queued', { 
-					character: characterName, 
-					position: queueResult.position - MAX_CONCURRENT_COMMANDS 
+				const queuedMessage = getRandomResponse('queued', {
+					character: characterName,
+					position: queueResult.position - MAX_CONCURRENT_COMMANDS
 				});
 				await message.reply(`䷄ ${queuedMessage}`);
 			}

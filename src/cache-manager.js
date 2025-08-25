@@ -273,22 +273,78 @@ class CacheManager {
      * Validate cache integrity and remove invalid entries
      */
     validateCacheIntegrity() {
-        let invalidCount = 0;
-        
-        Object.keys(this.metadata.heroes).forEach(heroName => {
-            const heroMetadata = this.metadata.heroes[heroName];
-            const filePath = path.join(this.heroImagesDir, `${heroMetadata.filename}.png`);
+        try {
+            let invalidCount = 0;
+            let orphanedFiles = [];
             
-            if (!fs.existsSync(filePath)) {
-                console.warn(`Missing file for ${heroName}, removing from metadata`);
-                delete this.metadata.heroes[heroName];
-                invalidCount++;
-            }
-        });
+            // Check for files referenced in metadata that don't exist
+            Object.keys(this.metadata.heroes).forEach(heroName => {
+                const heroMetadata = this.metadata.heroes[heroName];
+                const filePath = path.join(this.heroImagesDir, `${heroMetadata.filename}.png`);
+                
+                if (!fs.existsSync(filePath)) {
+                    console.warn(`Missing file for ${heroName}, removing from metadata`);
+                    delete this.metadata.heroes[heroName];
+                    invalidCount++;
+                }
+            });
 
-        if (invalidCount > 0) {
-            console.log(`Removed ${invalidCount} invalid cache entries`);
-            this.saveMetadata();
+            // Check for orphaned files not in metadata
+            if (fs.existsSync(this.heroImagesDir)) {
+                const files = fs.readdirSync(this.heroImagesDir);
+                const pngFiles = files.filter(file => file.endsWith('.png'));
+                const metadataFilenames = new Set(
+                    Object.values(this.metadata.heroes).map(h => h.filename + '.png')
+                );
+                
+                orphanedFiles = pngFiles.filter(file => !metadataFilenames.has(file));
+            }
+            
+            // If we have significant corruption (many orphaned files), rebuild metadata
+            const totalCachedFiles = fs.existsSync(this.heroImagesDir) ? 
+                fs.readdirSync(this.heroImagesDir).filter(f => f.endsWith('.png')).length : 0;
+            const orphanedRatio = orphanedFiles.length / Math.max(totalCachedFiles, 1);
+            
+            if (orphanedRatio > 0.3 || orphanedFiles.length > 10) {
+                console.warn(`High corruption detected: ${orphanedFiles.length} orphaned files out of ${totalCachedFiles} total. Rebuilding metadata...`);
+                return this.rebuildMetadata();
+            }
+            
+            // Add orphaned files to metadata if reasonable number
+            if (orphanedFiles.length > 0 && orphanedFiles.length <= 10) {
+                console.log(`Adding ${orphanedFiles.length} orphaned files to metadata`);
+                orphanedFiles.forEach(file => {
+                    const filename = path.basename(file, '.png');
+                    const heroName = filename
+                        .split('_')
+                        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                        .join(' ');
+                    
+                    const filePath = path.join(this.heroImagesDir, file);
+                    const stats = fs.statSync(filePath);
+                    
+                    this.metadata.heroes[heroName] = {
+                        filename: filename,
+                        lastUpdated: stats.mtime.toISOString(),
+                        dataFound: true,
+                        fileExists: true,
+                        totalBuilds: 0,
+                        validData: true
+                    };
+                });
+                invalidCount += orphanedFiles.length;
+            }
+
+            if (invalidCount > 0) {
+                console.log(`Updated ${invalidCount} cache entries during integrity check`);
+                this.saveMetadata();
+            }
+            
+            return true;
+        } catch (error) {
+            console.error('Error during cache integrity validation:', error);
+            console.log('Attempting to rebuild metadata as fallback...');
+            return this.rebuildMetadata();
         }
     }
 
@@ -335,6 +391,66 @@ class CacheManager {
      */
     getMetadata() {
         return { ...this.metadata };
+    }
+
+    /**
+     * Rebuild metadata from existing cache files
+     * @returns {boolean}
+     */
+    rebuildMetadata() {
+        try {
+            console.log('Rebuilding cache metadata from existing files...');
+            
+            // Reset metadata structure
+            this.metadata = {
+                version: '2.0',
+                lastGlobalUpdate: new Date().toISOString(),
+                heroes: {},
+                totalHeroes: 0,
+                successfulHeroes: 0,
+                failedHeroes: [],
+                cacheSize: 0,
+                totalDiskUsage: 0
+            };
+
+            // Scan existing cache files
+            if (fs.existsSync(this.heroImagesDir)) {
+                const files = fs.readdirSync(this.heroImagesDir);
+                const pngFiles = files.filter(file => file.endsWith('.png'));
+                
+                for (const file of pngFiles) {
+                    const filename = path.basename(file, '.png');
+                    const filePath = path.join(this.heroImagesDir, file);
+                    const stats = fs.statSync(filePath);
+                    
+                    // Convert filename back to hero name (best effort)
+                    const heroName = filename
+                        .split('_')
+                        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                        .join(' ');
+                    
+                    // Add to metadata
+                    this.metadata.heroes[heroName] = {
+                        filename: filename,
+                        lastUpdated: stats.mtime.toISOString(),
+                        dataFound: true,
+                        fileExists: true,
+                        totalBuilds: 0, // Unknown from file alone
+                        validData: true
+                    };
+                }
+                
+                this.metadata.totalHeroes = pngFiles.length;
+                this.metadata.successfulHeroes = pngFiles.length;
+                console.log(`Rebuilt metadata for ${pngFiles.length} cached heroes`);
+            }
+
+            this.saveMetadata();
+            return true;
+        } catch (error) {
+            console.error('Failed to rebuild metadata:', error);
+            return false;
+        }
     }
 
     /**

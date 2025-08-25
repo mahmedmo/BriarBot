@@ -1,13 +1,161 @@
 {
-  "version": "1.0",
-  "lastGlobalUpdate": "2025-08-25T07:16:15.137Z",
+  "version": "2.0",
+  "lastGlobalUpdate": "2025-08-25T18:09:02.523Z",
   "heroes": {
+    "Abigail": {
+      "filename": "abigail",
+      "lastUpdated": "2025-08-23T18:55:37.088Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-08-25T18:04:12.135Z"
+    },
+    "Abyssal Yufine": {
+      "filename": "abyssal_yufine",
+      "lastUpdated": "2025-08-23T18:55:47.450Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
+      "validData": true
+    },
+    "Achates": {
+      "filename": "achates",
+      "lastUpdated": "2025-08-23T18:55:57.765Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
+      "validData": true
+    },
+    "Adin": {
+      "filename": "adin",
+      "lastUpdated": "2025-08-23T18:56:05.565Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
+      "validData": true
+    },
+    "Adlay": {
+      "filename": "adlay",
+      "lastUpdated": "2025-08-23T18:56:13.054Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
+      "validData": true
+    },
+    "Adventurer Ras": {
+      "filename": "adventurer_ras",
+      "lastUpdated": "2025-08-23T18:56:23.360Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
+      "validData": true
+    },
+    "Ae Giselle": {
+      "filename": "ae_giselle",
+      "lastUpdated": "2025-08-23T18:56:33.682Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
+      "validData": true
+    },
+    "Ae Karina": {
+      "filename": "ae_karina",
+      "lastUpdated": "2025-08-23T18:56:43.998Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
+      "validData": true
+    },
+    "Ae Ningning": {
+      "filename": "ae_ningning",
+      "lastUpdated": "2025-08-23T18:56:54.298Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
+      "validData": true
+    },
+    "Ae Winter": {
+      "filename": "ae_winter",
+      "lastUpdated": "2025-08-23T18:57:04.526Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
+      "validData": true
+    },
+    "Afternoon Soak Flan": {
+      "filename": "afternoon_soak_flan",
+      "lastUpdated": "2025-08-23T18:57:14.868Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
+      "validData": true
+    },
+    "Ainos": {
+      "filename": "ainos",
+      "lastUpdated": "2025-08-23T19:37:14.681Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
+      "validData": true
+    },
+    "Ainos 2 0": {
+      "filename": "ainos_2_0",
+      "lastUpdated": "2025-08-23T18:57:32.542Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
+      "validData": true
+    },
+    "Ains": {
+      "filename": "ains",
+      "lastUpdated": "2025-08-24T07:38:36.537Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
+      "validData": true
+    },
+    "Aither": {
+      "filename": "aither",
+      "lastUpdated": "2025-08-24T07:38:36.675Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
+      "validData": true
+    },
+    "Alexa": {
+      "filename": "alexa",
+      "lastUpdated": "2025-08-24T07:39:13.344Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
+      "validData": true
+    },
+    "Arbiter Vildred": {
+      "filename": "arbiter_vildred",
+      "lastUpdated": "2025-08-25T02:49:15.539Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-08-25T18:03:19.803Z"
+    },
+    "Cerise": {
+      "filename": "cerise",
+      "lastUpdated": "2025-08-25T17:35:57.322Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
+      "validData": true
+    },
     "Cermia": {
       "filename": "cermia",
       "lastUpdated": "2025-08-23T19:27:07.549Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2894,
+      "totalBuilds": 0,
       "validData": true
     },
     "Challenger Dominiel": {
@@ -15,7 +163,7 @@
       "lastUpdated": "2025-08-23T19:27:19.834Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2987,
+      "totalBuilds": 0,
       "validData": true
     },
     "Champion Zerato": {
@@ -23,39 +171,39 @@
       "lastUpdated": "2025-08-23T19:27:32.305Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2998,
+      "totalBuilds": 0,
       "validData": true
     },
     "Chaos Inquisitor": {
       "filename": "chaos_inquisitor",
-      "lastUpdated": "2025-08-23T19:27:42.079Z",
+      "lastUpdated": "2025-08-23T19:27:42.080Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 498,
+      "totalBuilds": 0,
       "validData": true
     },
     "Chaos Sect Axe": {
       "filename": "chaos_sect_axe",
-      "lastUpdated": "2025-08-23T19:28:03.988Z",
+      "lastUpdated": "2025-08-23T19:28:03.987Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 1044,
+      "totalBuilds": 0,
       "validData": true
     },
     "Charles": {
       "filename": "charles",
-      "lastUpdated": "2025-08-23T19:28:16.267Z",
+      "lastUpdated": "2025-08-23T19:28:16.266Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2870,
+      "totalBuilds": 0,
       "validData": true
     },
     "Charlotte": {
       "filename": "charlotte",
-      "lastUpdated": "2025-08-23T19:28:28.614Z",
+      "lastUpdated": "2025-08-23T19:28:28.613Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2925,
+      "totalBuilds": 0,
       "validData": true
     },
     "Chloe": {
@@ -63,39 +211,39 @@
       "lastUpdated": "2025-08-23T19:28:40.918Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2925,
+      "totalBuilds": 0,
       "validData": true
     },
     "Choux": {
       "filename": "choux",
-      "lastUpdated": "2025-08-23T19:28:53.230Z",
+      "lastUpdated": "2025-08-23T19:28:53.229Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2988,
+      "totalBuilds": 0,
       "validData": true
     },
     "Christy": {
       "filename": "christy",
-      "lastUpdated": "2025-08-23T19:29:13.990Z",
+      "lastUpdated": "2025-08-23T19:29:13.989Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 1822,
+      "totalBuilds": 0,
       "validData": true
     },
-    "Church of Ilryos Axe": {
+    "Church Of Ilryos Axe": {
       "filename": "church_of_ilryos_axe",
       "lastUpdated": "2025-08-23T19:29:23.461Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 19,
+      "totalBuilds": 0,
       "validData": true
     },
     "Closer Charles": {
       "filename": "closer_charles",
-      "lastUpdated": "2025-08-23T19:36:33.568Z",
+      "lastUpdated": "2025-08-23T19:36:33.569Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2968,
+      "totalBuilds": 0,
       "validData": true
     },
     "Coli": {
@@ -103,31 +251,39 @@
       "lastUpdated": "2025-08-23T19:36:43.319Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 310,
+      "totalBuilds": 0,
       "validData": true
     },
     "Command Model Laika": {
       "filename": "command_model_laika",
-      "lastUpdated": "2025-08-23T19:36:55.863Z",
+      "lastUpdated": "2025-08-23T19:36:55.862Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2987,
+      "totalBuilds": 0,
       "validData": true
     },
     "Commander Lorina": {
       "filename": "commander_lorina",
-      "lastUpdated": "2025-08-23T19:37:08.191Z",
+      "lastUpdated": "2025-08-23T19:37:08.190Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2838,
+      "totalBuilds": 0,
       "validData": true
     },
     "Commander Pavel": {
       "filename": "commander_pavel",
-      "lastUpdated": "2025-08-23T19:37:20.500Z",
+      "lastUpdated": "2025-08-23T19:37:20.501Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2985,
+      "totalBuilds": 0,
+      "validData": true
+    },
+    "Conqueror Lilias": {
+      "filename": "conqueror_lilias",
+      "lastUpdated": "2025-08-25T17:35:08.780Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
       "validData": true
     },
     "Corvus": {
@@ -135,7 +291,7 @@
       "lastUpdated": "2025-08-23T19:37:52.453Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 200,
+      "totalBuilds": 0,
       "validData": true
     },
     "Crescent Moon Rin": {
@@ -143,7 +299,7 @@
       "lastUpdated": "2025-08-23T19:38:04.501Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 1315,
+      "totalBuilds": 0,
       "validData": true
     },
     "Crimson Armin": {
@@ -151,15 +307,15 @@
       "lastUpdated": "2025-08-23T19:38:16.692Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2992,
+      "totalBuilds": 0,
       "validData": true
     },
     "Crozet": {
       "filename": "crozet",
-      "lastUpdated": "2025-08-23T19:38:26.383Z",
+      "lastUpdated": "2025-08-23T19:38:26.360Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 471,
+      "totalBuilds": 0,
       "validData": true
     },
     "Dark Corvus": {
@@ -167,15 +323,15 @@
       "lastUpdated": "2025-08-23T19:38:48.643Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2961,
+      "totalBuilds": 0,
       "validData": true
     },
     "Death Dealer Ray": {
       "filename": "death_dealer_ray",
-      "lastUpdated": "2025-08-23T19:39:00.926Z",
+      "lastUpdated": "2025-08-23T19:39:00.925Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2997,
+      "totalBuilds": 0,
       "validData": true
     },
     "Diene": {
@@ -183,15 +339,17 @@
       "lastUpdated": "2025-08-23T19:49:01.072Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2989,
-      "validData": true
+      "totalBuilds": 0,
+      "validData": true,
+      "accessCount": 1,
+      "lastAccessed": "2025-08-25T17:52:45.830Z"
     },
     "Dingo": {
       "filename": "dingo",
       "lastUpdated": "2025-08-23T19:49:10.749Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 278,
+      "totalBuilds": 0,
       "validData": true
     },
     "Disciplinary Prefect Aria": {
@@ -199,15 +357,15 @@
       "lastUpdated": "2025-08-23T19:49:23.462Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2432,
+      "totalBuilds": 0,
       "validData": true
     },
     "Dizzy": {
       "filename": "dizzy",
-      "lastUpdated": "2025-08-23T19:49:35.818Z",
+      "lastUpdated": "2025-08-23T19:49:35.819Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2976,
+      "totalBuilds": 0,
       "validData": true
     },
     "Doll Maker Pearlhorizon": {
@@ -215,7 +373,7 @@
       "lastUpdated": "2025-08-23T19:49:45.485Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 353,
+      "totalBuilds": 0,
       "validData": true
     },
     "Dominiel": {
@@ -223,15 +381,15 @@
       "lastUpdated": "2025-08-23T19:50:05.253Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 616,
+      "totalBuilds": 0,
       "validData": true
     },
     "Doris": {
       "filename": "doris",
-      "lastUpdated": "2025-08-23T19:50:14.478Z",
+      "lastUpdated": "2025-08-23T19:50:14.479Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 38,
+      "totalBuilds": 0,
       "validData": true
     },
     "Dragon Bride Senya": {
@@ -239,7 +397,7 @@
       "lastUpdated": "2025-08-23T19:50:26.925Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2998,
+      "totalBuilds": 0,
       "validData": true
     },
     "Dragon King Sharun": {
@@ -247,15 +405,15 @@
       "lastUpdated": "2025-08-23T19:50:39.466Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2988,
+      "totalBuilds": 0,
       "validData": true
     },
     "Eaton": {
       "filename": "eaton",
-      "lastUpdated": "2025-08-23T19:50:51.750Z",
+      "lastUpdated": "2025-08-23T19:50:51.751Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2074,
+      "totalBuilds": 0,
       "validData": true
     },
     "Eda": {
@@ -263,7 +421,7 @@
       "lastUpdated": "2025-08-23T19:51:14.111Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2991,
+      "totalBuilds": 0,
       "validData": true
     },
     "Edward Elric": {
@@ -271,7 +429,7 @@
       "lastUpdated": "2025-08-23T19:51:26.503Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2998,
+      "totalBuilds": 0,
       "validData": true
     },
     "Elson": {
@@ -279,55 +437,55 @@
       "lastUpdated": "2025-08-23T20:05:16.302Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 106,
+      "totalBuilds": 0,
       "validData": true
     },
     "Elvira": {
       "filename": "elvira",
-      "lastUpdated": "2025-08-23T20:05:28.822Z",
+      "lastUpdated": "2025-08-23T20:05:28.823Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2996,
+      "totalBuilds": 0,
       "validData": true
     },
     "Emilia": {
       "filename": "emilia",
-      "lastUpdated": "2025-08-23T20:05:41.050Z",
+      "lastUpdated": "2025-08-23T20:05:41.049Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2991,
+      "totalBuilds": 0,
       "validData": true
     },
     "Empyrean Ilynav": {
       "filename": "empyrean_ilynav",
-      "lastUpdated": "2025-08-23T20:05:53.373Z",
+      "lastUpdated": "2025-08-23T20:05:53.372Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2998,
+      "totalBuilds": 0,
       "validData": true
     },
     "Enott": {
       "filename": "enott",
-      "lastUpdated": "2025-08-23T20:06:02.682Z",
+      "lastUpdated": "2025-08-23T20:06:02.683Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 110,
+      "totalBuilds": 0,
       "validData": true
     },
     "Ervalen": {
       "filename": "ervalen",
-      "lastUpdated": "2025-08-23T20:06:25.033Z",
+      "lastUpdated": "2025-08-23T20:06:25.032Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2481,
+      "totalBuilds": 0,
       "validData": true
     },
     "Eternal Wanderer Ludwig": {
       "filename": "eternal_wanderer_ludwig",
-      "lastUpdated": "2025-08-23T20:06:37.359Z",
+      "lastUpdated": "2025-08-23T20:06:37.360Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2999,
+      "totalBuilds": 0,
       "validData": true
     },
     "Ezra": {
@@ -335,7 +493,7 @@
       "lastUpdated": "2025-08-23T20:06:47.176Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 702,
+      "totalBuilds": 0,
       "validData": true
     },
     "Fairytale Tenebria": {
@@ -343,7 +501,7 @@
       "lastUpdated": "2025-08-23T20:06:59.557Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2984,
+      "totalBuilds": 0,
       "validData": true
     },
     "Falconer Kluri": {
@@ -351,7 +509,7 @@
       "lastUpdated": "2025-08-23T20:07:34.331Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2984,
+      "totalBuilds": 0,
       "validData": true
     },
     "Fallen Cecilia": {
@@ -359,7 +517,7 @@
       "lastUpdated": "2025-08-23T20:07:46.600Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2995,
+      "totalBuilds": 0,
       "validData": true
     },
     "Fighter Maya": {
@@ -367,15 +525,15 @@
       "lastUpdated": "2025-08-23T20:13:57.203Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2987,
+      "totalBuilds": 0,
       "validData": true
     },
     "Flan": {
       "filename": "flan",
-      "lastUpdated": "2025-08-23T20:14:09.575Z",
+      "lastUpdated": "2025-08-23T20:14:09.576Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2991,
+      "totalBuilds": 0,
       "validData": true
     },
     "Free Spirit Tieria": {
@@ -383,7 +541,7 @@
       "lastUpdated": "2025-08-23T20:14:21.931Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2953,
+      "totalBuilds": 0,
       "validData": true
     },
     "Frida": {
@@ -391,7 +549,7 @@
       "lastUpdated": "2025-08-23T20:14:34.530Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2998,
+      "totalBuilds": 0,
       "validData": true
     },
     "Fumyr": {
@@ -399,15 +557,15 @@
       "lastUpdated": "2025-08-23T20:14:46.876Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2978,
+      "totalBuilds": 0,
       "validData": true
     },
     "Furious": {
       "filename": "furious",
-      "lastUpdated": "2025-08-23T20:15:09.159Z",
+      "lastUpdated": "2025-08-23T20:15:09.158Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2998,
+      "totalBuilds": 0,
       "validData": true
     },
     "General Purrgis": {
@@ -415,15 +573,15 @@
       "lastUpdated": "2025-08-23T20:15:21.563Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2985,
+      "totalBuilds": 0,
       "validData": true
     },
     "Glenn": {
       "filename": "glenn",
-      "lastUpdated": "2025-08-23T20:15:30.832Z",
+      "lastUpdated": "2025-08-23T20:15:30.831Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 80,
+      "totalBuilds": 0,
       "validData": true
     },
     "Gloomyrain": {
@@ -431,15 +589,15 @@
       "lastUpdated": "2025-08-23T20:15:42.771Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 892,
+      "totalBuilds": 0,
       "validData": true
     },
     "Godmother": {
       "filename": "godmother",
-      "lastUpdated": "2025-08-23T20:15:52.281Z",
+      "lastUpdated": "2025-08-23T20:15:52.282Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 114,
+      "totalBuilds": 0,
       "validData": true
     },
     "Great Chief Khawana": {
@@ -447,7 +605,7 @@
       "lastUpdated": "2025-08-23T20:16:14.523Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 1776,
+      "totalBuilds": 0,
       "validData": true
     },
     "Guard Captain Krau": {
@@ -455,7 +613,7 @@
       "lastUpdated": "2025-08-23T20:16:26.738Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 255,
+      "totalBuilds": 0,
       "validData": true
     },
     "Holiday Yufine": {
@@ -463,7 +621,7 @@
       "lastUpdated": "2025-08-23T20:22:53.862Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2995,
+      "totalBuilds": 0,
       "validData": true
     },
     "Holy Flame Adin": {
@@ -471,15 +629,15 @@
       "lastUpdated": "2025-08-23T20:23:03.310Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 147,
+      "totalBuilds": 0,
       "validData": true
     },
     "Hurado": {
       "filename": "hurado",
-      "lastUpdated": "2025-08-23T20:23:12.962Z",
+      "lastUpdated": "2025-08-23T20:23:12.961Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 204,
+      "totalBuilds": 0,
       "validData": true
     },
     "Hwayoung": {
@@ -487,7 +645,7 @@
       "lastUpdated": "2025-08-23T20:23:25.313Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2975,
+      "totalBuilds": 0,
       "validData": true
     },
     "Ian": {
@@ -495,7 +653,7 @@
       "lastUpdated": "2025-08-23T20:23:37.387Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 1350,
+      "totalBuilds": 0,
       "validData": true
     },
     "Ilynav": {
@@ -503,7 +661,7 @@
       "lastUpdated": "2025-08-23T20:23:59.788Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2991,
+      "totalBuilds": 0,
       "validData": true
     },
     "Immortal Wukong": {
@@ -511,7 +669,7 @@
       "lastUpdated": "2025-08-23T20:24:12.325Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2977,
+      "totalBuilds": 0,
       "validData": true
     },
     "Inferno Khawazu": {
@@ -519,15 +677,15 @@
       "lastUpdated": "2025-08-23T20:24:24.741Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2982,
+      "totalBuilds": 0,
       "validData": true
     },
     "Infinite Horizon Achates": {
       "filename": "infinite_horizon_achates",
-      "lastUpdated": "2025-08-23T20:24:37.293Z",
+      "lastUpdated": "2025-08-23T20:24:37.292Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2991,
+      "totalBuilds": 0,
       "validData": true
     },
     "Inheritor Amiki": {
@@ -535,15 +693,15 @@
       "lastUpdated": "2025-08-23T20:24:49.676Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2999,
+      "totalBuilds": 0,
       "validData": true
     },
     "Iseria": {
       "filename": "iseria",
-      "lastUpdated": "2025-08-23T20:25:12.195Z",
+      "lastUpdated": "2025-08-23T20:25:12.194Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2983,
+      "totalBuilds": 0,
       "validData": true
     },
     "Januta": {
@@ -551,15 +709,15 @@
       "lastUpdated": "2025-08-23T20:25:29.940Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 316,
+      "totalBuilds": 0,
       "validData": true
     },
     "Jecht": {
       "filename": "jecht",
-      "lastUpdated": "2025-08-23T20:25:39.530Z",
+      "lastUpdated": "2025-08-23T20:25:39.529Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 179,
+      "totalBuilds": 0,
       "validData": true
     },
     "Judith": {
@@ -567,1153 +725,917 @@
       "lastUpdated": "2025-08-23T22:02:10.316Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 149,
-      "validData": true,
-      "sessionIndex": 1001
+      "totalBuilds": 0,
+      "validData": true
     },
     "Juni": {
       "filename": "juni",
       "lastUpdated": "2025-08-23T22:02:23.418Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 187,
-      "validData": true,
-      "sessionIndex": 1002
+      "totalBuilds": 0,
+      "validData": true
     },
     "Kane": {
       "filename": "kane",
       "lastUpdated": "2025-08-23T22:02:37.753Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2970,
-      "validData": true,
-      "sessionIndex": 1003
+      "totalBuilds": 0,
+      "validData": true
     },
     "Karin": {
       "filename": "karin",
-      "lastUpdated": "2025-08-23T22:02:51.563Z",
+      "lastUpdated": "2025-08-23T22:02:51.562Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2990,
-      "validData": true,
-      "sessionIndex": 1004
+      "totalBuilds": 0,
+      "validData": true
     },
     "Kawerik": {
       "filename": "kawerik",
-      "lastUpdated": "2025-08-23T22:03:07.776Z",
+      "lastUpdated": "2025-08-23T22:03:07.775Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2977,
-      "validData": true,
-      "sessionIndex": 1005
+      "totalBuilds": 0,
+      "validData": true
     },
     "Kayron": {
       "filename": "kayron",
       "lastUpdated": "2025-08-23T22:03:23.801Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2985,
-      "validData": true,
-      "sessionIndex": 1006
+      "totalBuilds": 0,
+      "validData": true
     },
     "Ken": {
       "filename": "ken",
       "lastUpdated": "2025-08-23T22:03:40.174Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2948,
-      "validData": true,
-      "sessionIndex": 1007
+      "totalBuilds": 0,
+      "validData": true
     },
     "Khawana": {
       "filename": "khawana",
       "lastUpdated": "2025-08-23T22:03:50.927Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 215,
-      "validData": true,
-      "sessionIndex": 1008
+      "totalBuilds": 0,
+      "validData": true
     },
     "Khawazu": {
       "filename": "khawazu",
-      "lastUpdated": "2025-08-23T22:04:04.594Z",
+      "lastUpdated": "2025-08-23T22:04:04.593Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 616,
-      "validData": true,
-      "sessionIndex": 1009
+      "totalBuilds": 0,
+      "validData": true
     },
-    "Kikirat v2": {
+    "Kikirat V2": {
       "filename": "kikirat_v2",
       "lastUpdated": "2025-08-23T22:04:19.032Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 365,
-      "validData": true,
-      "sessionIndex": 1010
+      "totalBuilds": 0,
+      "validData": true
     },
     "Kiris": {
       "filename": "kiris",
-      "lastUpdated": "2025-08-23T22:04:34.114Z",
+      "lastUpdated": "2025-08-23T22:04:34.113Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2983,
-      "validData": true,
-      "sessionIndex": 1011
+      "totalBuilds": 0,
+      "validData": true
     },
     "Kluri": {
       "filename": "kluri",
-      "lastUpdated": "2025-08-23T22:16:51.271Z",
+      "lastUpdated": "2025-08-23T22:16:51.269Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 50,
-      "validData": true,
-      "sessionIndex": 2001
+      "totalBuilds": 0,
+      "validData": true
     },
     "Krau": {
       "filename": "krau",
       "lastUpdated": "2025-08-23T22:17:05.902Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2996,
-      "validData": true,
-      "sessionIndex": 2002
+      "totalBuilds": 0,
+      "validData": true
     },
     "Laia": {
       "filename": "laia",
-      "lastUpdated": "2025-08-23T22:17:22.165Z",
+      "lastUpdated": "2025-08-23T22:17:22.166Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2980,
-      "validData": true,
-      "sessionIndex": 2003
+      "totalBuilds": 0,
+      "validData": true
     },
     "Landy": {
       "filename": "landy",
-      "lastUpdated": "2025-08-23T22:17:37.059Z",
+      "lastUpdated": "2025-08-23T22:17:37.058Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2989,
-      "validData": true,
-      "sessionIndex": 2004
+      "totalBuilds": 0,
+      "validData": true
     },
     "Last Piece Karin": {
       "filename": "last_piece_karin",
       "lastUpdated": "2025-08-23T22:17:55.081Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2994,
-      "validData": true,
-      "sessionIndex": 2005
+      "totalBuilds": 0,
+      "validData": true
     },
     "Last Rider Krau": {
       "filename": "last_rider_krau",
       "lastUpdated": "2025-08-23T22:18:13.456Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2999,
-      "validData": true,
-      "sessionIndex": 2006
+      "totalBuilds": 0,
+      "validData": true
     },
     "Leah": {
       "filename": "leah",
-      "lastUpdated": "2025-08-23T22:18:30.192Z",
+      "lastUpdated": "2025-08-23T22:18:30.191Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 1102,
-      "validData": true,
-      "sessionIndex": 2007
+      "totalBuilds": 0,
+      "validData": true
     },
     "Lena": {
       "filename": "lena",
-      "lastUpdated": "2025-08-23T22:18:48.831Z",
+      "lastUpdated": "2025-08-23T22:18:48.832Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 625,
-      "validData": true,
-      "sessionIndex": 2008
+      "totalBuilds": 0,
+      "validData": true
     },
     "Leo": {
       "filename": "leo",
-      "lastUpdated": "2025-08-23T22:19:05.240Z",
+      "lastUpdated": "2025-08-23T22:19:05.238Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2996,
-      "validData": true,
-      "sessionIndex": 2009
+      "totalBuilds": 0,
+      "validData": true
     },
     "Lethe": {
       "filename": "lethe",
-      "lastUpdated": "2025-08-23T22:19:24.289Z",
+      "lastUpdated": "2025-08-23T22:19:24.287Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2992,
+      "totalBuilds": 0,
+      "validData": true
+    },
+    "Lidica": {
+      "filename": "lidica",
+      "lastUpdated": "2025-08-25T17:33:53.372Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
       "validData": true,
-      "sessionIndex": 2010
+      "accessCount": null,
+      "lastAccessed": "2025-08-25T17:45:05.754Z"
     },
     "Little Queen Charlotte": {
       "filename": "little_queen_charlotte",
       "lastUpdated": "2025-08-23T22:23:26.673Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2954,
-      "validData": true,
-      "sessionIndex": 2016
+      "totalBuilds": 0,
+      "validData": true
     },
     "Lone Crescent Bellona": {
       "filename": "lone_crescent_bellona",
       "lastUpdated": "2025-08-23T22:23:43.566Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2991,
-      "validData": true,
-      "sessionIndex": 2017
+      "totalBuilds": 0,
+      "validData": true
     },
     "Lone Wolf Peira": {
       "filename": "lone_wolf_peira",
-      "lastUpdated": "2025-08-23T22:24:00.362Z",
+      "lastUpdated": "2025-08-23T22:24:00.361Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2989,
-      "validData": true,
-      "sessionIndex": 2018
+      "totalBuilds": 0,
+      "validData": true
     },
     "Lots": {
       "filename": "lots",
       "lastUpdated": "2025-08-23T22:25:06.254Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 1586,
-      "validData": true,
-      "sessionIndex": 2020
+      "totalBuilds": 0,
+      "validData": true
     },
     "Lua": {
       "filename": "lua",
-      "lastUpdated": "2025-08-23T22:25:26.082Z",
+      "lastUpdated": "2025-08-23T22:25:26.080Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2995,
-      "validData": true,
-      "sessionIndex": 2021
+      "totalBuilds": 0,
+      "validData": true
     },
     "Lucy": {
       "filename": "lucy",
-      "lastUpdated": "2025-08-23T22:25:44.468Z",
+      "lastUpdated": "2025-08-23T22:25:44.467Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 358,
-      "validData": true,
-      "sessionIndex": 2022
+      "totalBuilds": 0,
+      "validData": true
     },
     "Ludwig": {
       "filename": "ludwig",
-      "lastUpdated": "2025-08-23T22:26:02.670Z",
+      "lastUpdated": "2025-08-23T22:26:02.669Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2974,
-      "validData": true,
-      "sessionIndex": 2023
+      "totalBuilds": 0,
+      "validData": true
     },
     "Luluca": {
       "filename": "luluca",
-      "lastUpdated": "2025-08-23T22:26:17.103Z",
+      "lastUpdated": "2025-08-23T22:26:17.102Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2973,
-      "validData": true,
-      "sessionIndex": 2024
+      "totalBuilds": 0,
+      "validData": true
     },
     "Luna": {
       "filename": "luna",
       "lastUpdated": "2025-08-23T22:26:35.025Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2930,
-      "validData": true,
-      "sessionIndex": 2025
+      "totalBuilds": 0,
+      "validData": true
     },
     "Magic Scholar Doris": {
       "filename": "magic_scholar_doris",
-      "lastUpdated": "2025-08-23T22:26:54.065Z",
+      "lastUpdated": "2025-08-23T22:26:54.064Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2994,
-      "validData": true,
-      "sessionIndex": 2026
+      "totalBuilds": 0,
+      "validData": true
     },
     "Maid Chloe": {
       "filename": "maid_chloe",
-      "lastUpdated": "2025-08-23T22:27:12.731Z",
+      "lastUpdated": "2025-08-23T22:27:12.729Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2971,
-      "validData": true,
-      "sessionIndex": 2027
+      "totalBuilds": 0,
+      "validData": true
     },
     "Mediator Kawerik": {
       "filename": "mediator_kawerik",
-      "lastUpdated": "2025-08-23T22:30:06.863Z",
+      "lastUpdated": "2025-08-23T22:30:06.855Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2993,
-      "validData": true,
-      "sessionIndex": 2031
+      "totalBuilds": 0,
+      "validData": true
     },
     "Melany": {
       "filename": "melany",
-      "lastUpdated": "2025-08-23T22:30:23.723Z",
+      "lastUpdated": "2025-08-23T22:30:23.722Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 166,
-      "validData": true,
-      "sessionIndex": 2032
+      "totalBuilds": 0,
+      "validData": true
     },
     "Melissa": {
       "filename": "melissa",
-      "lastUpdated": "2025-08-23T22:30:40.196Z",
+      "lastUpdated": "2025-08-23T22:30:40.195Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2980,
-      "validData": true,
-      "sessionIndex": 2033
+      "totalBuilds": 0,
+      "validData": true
     },
     "Mercedes": {
       "filename": "mercedes",
-      "lastUpdated": "2025-08-23T22:30:58.341Z",
+      "lastUpdated": "2025-08-23T22:30:58.340Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2997,
-      "validData": true,
-      "sessionIndex": 2034
+      "totalBuilds": 0,
+      "validData": true
     },
     "Mercenary Helga": {
       "filename": "mercenary_helga",
       "lastUpdated": "2025-08-23T22:31:15.161Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2942,
-      "validData": true,
-      "sessionIndex": 2035
+      "totalBuilds": 0,
+      "validData": true
     },
     "Midnight Gala Lilias": {
       "filename": "midnight_gala_lilias",
       "lastUpdated": "2025-08-23T22:31:30.478Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2978,
-      "validData": true,
-      "sessionIndex": 2036
+      "totalBuilds": 0,
+      "validData": true
     },
     "Milim": {
       "filename": "milim",
-      "lastUpdated": "2025-08-23T22:31:48.211Z",
+      "lastUpdated": "2025-08-23T22:31:48.209Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2996,
-      "validData": true,
-      "sessionIndex": 2037
+      "totalBuilds": 0,
+      "validData": true
     },
     "Mirsa": {
       "filename": "mirsa",
       "lastUpdated": "2025-08-23T22:32:04.266Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 1137,
-      "validData": true,
-      "sessionIndex": 2038
+      "totalBuilds": 0,
+      "validData": true
     },
     "Mistychain": {
       "filename": "mistychain",
-      "lastUpdated": "2025-08-23T22:32:24.321Z",
+      "lastUpdated": "2025-08-23T22:32:24.320Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 210,
-      "validData": true,
-      "sessionIndex": 2039
+      "totalBuilds": 0,
+      "validData": true
     },
     "Moon Bunny Dominiel": {
       "filename": "moon_bunny_dominiel",
       "lastUpdated": "2025-08-23T22:33:31.880Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2998,
-      "validData": true,
-      "sessionIndex": 2041
+      "totalBuilds": 0,
+      "validData": true
     },
     "Mort": {
       "filename": "mort",
-      "lastUpdated": "2025-08-23T22:33:50.776Z",
+      "lastUpdated": "2025-08-23T22:33:50.770Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2996,
-      "validData": true,
-      "sessionIndex": 2042
+      "totalBuilds": 0,
+      "validData": true
     },
     "Mucacha": {
       "filename": "mucacha",
       "lastUpdated": "2025-08-23T22:34:08.667Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 197,
-      "validData": true,
-      "sessionIndex": 2043
+      "totalBuilds": 0,
+      "validData": true
+    },
+    "Nahkwol": {
+      "filename": "nahkwol",
+      "lastUpdated": "2025-08-25T17:31:50.182Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
+      "validData": true
     },
     "Navy Captain Landy": {
       "filename": "navy_captain_landy",
-      "lastUpdated": "2025-08-23T22:41:11.330Z",
+      "lastUpdated": "2025-08-23T22:41:11.331Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2999,
-      "validData": true,
-      "sessionIndex": 2048
+      "totalBuilds": 0,
+      "validData": true
     },
     "Nemunas": {
       "filename": "nemunas",
-      "lastUpdated": "2025-08-23T22:43:20.246Z",
+      "lastUpdated": "2025-08-23T22:43:20.245Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 126,
-      "validData": true,
-      "sessionIndex": 2049
+      "totalBuilds": 0,
+      "validData": true
     },
     "New Kid Adin": {
       "filename": "new_kid_adin",
-      "lastUpdated": "2025-08-23T22:43:51.645Z",
+      "lastUpdated": "2025-08-23T22:43:51.644Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2977,
-      "validData": true,
-      "sessionIndex": 2050
+      "totalBuilds": 0,
+      "validData": true
     },
     "New Moon Luna": {
       "filename": "new_moon_luna",
-      "lastUpdated": "2025-08-23T22:46:38.291Z",
+      "lastUpdated": "2025-08-23T22:46:38.285Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 3001,
-      "validData": true,
-      "sessionIndex": 2051
+      "totalBuilds": 0,
+      "validData": true
     },
     "Ocean Breeze Luluca": {
       "filename": "ocean_breeze_luluca",
-      "lastUpdated": "2025-08-23T22:48:22.842Z",
+      "lastUpdated": "2025-08-23T22:48:22.841Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2995,
-      "validData": true,
-      "sessionIndex": 2052
+      "totalBuilds": 0,
+      "validData": true
     },
     "Orte": {
       "filename": "orte",
       "lastUpdated": "2025-08-23T22:59:20.839Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 156,
-      "validData": true,
-      "sessionIndex": 2054
+      "totalBuilds": 0,
+      "validData": true
     },
     "Otillie": {
       "filename": "otillie",
       "lastUpdated": "2025-08-23T23:08:27.398Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 131,
-      "validData": true,
-      "sessionIndex": 2055
+      "totalBuilds": 0,
+      "validData": true
     },
     "Pavel": {
       "filename": "pavel",
-      "lastUpdated": "2025-08-23T23:11:04.865Z",
+      "lastUpdated": "2025-08-23T23:11:04.861Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2986,
-      "validData": true,
-      "sessionIndex": 2056
+      "totalBuilds": 0,
+      "validData": true
     },
     "Peacemaker Furious": {
       "filename": "peacemaker_furious",
       "lastUpdated": "2025-08-23T23:15:13.109Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 751,
-      "validData": true,
-      "sessionIndex": 2057
+      "totalBuilds": 0,
+      "validData": true
     },
     "Peira": {
       "filename": "peira",
-      "lastUpdated": "2025-08-23T23:55:36.914Z",
+      "lastUpdated": "2025-08-23T23:55:36.912Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2992,
-      "validData": true,
-      "sessionIndex": 3001
+      "totalBuilds": 0,
+      "validData": true
     },
     "Penelope": {
       "filename": "penelope",
       "lastUpdated": "2025-08-23T23:55:54.692Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 1271,
-      "validData": true,
-      "sessionIndex": 3002
+      "totalBuilds": 0,
+      "validData": true
     },
     "Pernilla": {
       "filename": "pernilla",
       "lastUpdated": "2025-08-23T23:56:10.888Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 268,
-      "validData": true,
-      "sessionIndex": 3003
+      "totalBuilds": 0,
+      "validData": true
     },
     "Pirate Captain Flan": {
       "filename": "pirate_captain_flan",
-      "lastUpdated": "2025-08-23T23:56:27.921Z",
+      "lastUpdated": "2025-08-23T23:56:27.920Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2996,
-      "validData": true,
-      "sessionIndex": 3004
+      "totalBuilds": 0,
+      "validData": true
     },
     "Politis": {
       "filename": "politis",
       "lastUpdated": "2025-08-23T23:56:45.585Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2999,
-      "validData": true,
-      "sessionIndex": 3005
+      "totalBuilds": 0,
+      "validData": true
     },
     "Purrgis": {
       "filename": "purrgis",
-      "lastUpdated": "2025-08-23T23:57:06.421Z",
+      "lastUpdated": "2025-08-23T23:57:06.420Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 312,
-      "validData": true,
-      "sessionIndex": 3006
+      "totalBuilds": 0,
+      "validData": true
     },
     "Ragnvald": {
       "filename": "ragnvald",
       "lastUpdated": "2025-08-23T23:58:01.470Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 541,
-      "validData": true,
-      "sessionIndex": 3008
+      "totalBuilds": 0,
+      "validData": true
     },
     "Ram": {
       "filename": "ram",
-      "lastUpdated": "2025-08-23T23:58:21.085Z",
+      "lastUpdated": "2025-08-23T23:58:21.084Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2969,
-      "validData": true,
-      "sessionIndex": 3009
+      "totalBuilds": 0,
+      "validData": true
     },
     "Ran": {
       "filename": "ran",
-      "lastUpdated": "2025-08-23T23:58:37.532Z",
+      "lastUpdated": "2025-08-23T23:58:37.531Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2994,
-      "validData": true,
-      "sessionIndex": 3010
+      "totalBuilds": 0,
+      "validData": true
     },
     "Ravi": {
       "filename": "ravi",
-      "lastUpdated": "2025-08-23T23:59:49.952Z",
+      "lastUpdated": "2025-08-23T23:59:49.953Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2988,
-      "validData": true,
-      "sessionIndex": 3012
+      "totalBuilds": 0,
+      "validData": true
     },
     "Remnant Violet": {
       "filename": "remnant_violet",
-      "lastUpdated": "2025-08-24T00:05:11.450Z",
+      "lastUpdated": "2025-08-24T00:05:11.447Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2996,
-      "validData": true,
-      "sessionIndex": 3015
+      "totalBuilds": 0,
+      "validData": true
     },
     "Requiem Roana": {
       "filename": "requiem_roana",
       "lastUpdated": "2025-08-24T00:06:11.812Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2994,
-      "validData": true,
-      "sessionIndex": 3016
+      "totalBuilds": 0,
+      "validData": true
     },
     "Requiemroar": {
       "filename": "requiemroar",
       "lastUpdated": "2025-08-24T00:06:58.558Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 269,
-      "validData": true,
-      "sessionIndex": 3017
+      "totalBuilds": 0,
+      "validData": true
     },
     "Revna": {
       "filename": "revna",
       "lastUpdated": "2025-08-24T00:08:33.151Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 128,
-      "validData": true,
-      "sessionIndex": 3019
+      "totalBuilds": 0,
+      "validData": true
     },
     "Righteous Thief Roozid": {
       "filename": "righteous_thief_roozid",
-      "lastUpdated": "2025-08-24T00:09:19.670Z",
+      "lastUpdated": "2025-08-24T00:09:19.671Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2109,
-      "validData": true,
-      "sessionIndex": 3020
+      "totalBuilds": 0,
+      "validData": true
     },
     "Rima": {
       "filename": "rima",
       "lastUpdated": "2025-08-24T00:11:49.690Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 117,
-      "validData": true,
-      "sessionIndex": 3022
+      "totalBuilds": 0,
+      "validData": true
     },
     "Rimuru": {
       "filename": "rimuru",
       "lastUpdated": "2025-08-24T00:12:55.867Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2979,
-      "validData": true,
-      "sessionIndex": 3023
+      "totalBuilds": 0,
+      "validData": true
     },
     "Rinak": {
       "filename": "rinak",
       "lastUpdated": "2025-08-24T00:16:22.767Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2988,
-      "validData": true,
-      "sessionIndex": 3025
+      "totalBuilds": 0,
+      "validData": true
     },
     "Riza Hawkeye": {
       "filename": "riza_hawkeye",
-      "lastUpdated": "2025-08-24T00:29:07.133Z",
+      "lastUpdated": "2025-08-24T00:29:07.132Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 1410,
-      "validData": true,
-      "sessionIndex": 3026
+      "totalBuilds": 0,
+      "validData": true
     },
     "Roaming Warrior Leo": {
       "filename": "roaming_warrior_leo",
-      "lastUpdated": "2025-08-24T00:32:10.547Z",
+      "lastUpdated": "2025-08-24T00:32:10.542Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 299,
-      "validData": true,
-      "sessionIndex": 3027
+      "totalBuilds": 0,
+      "validData": true
     },
     "Roana": {
       "filename": "roana",
-      "lastUpdated": "2025-08-24T00:43:12.550Z",
+      "lastUpdated": "2025-08-24T00:43:12.549Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2998,
-      "validData": true,
-      "sessionIndex": 3028
+      "totalBuilds": 0,
+      "validData": true
     },
     "Robin": {
       "filename": "robin",
-      "lastUpdated": "2025-08-24T00:44:10.085Z",
+      "lastUpdated": "2025-08-24T00:44:10.081Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2856,
-      "validData": true,
-      "sessionIndex": 3029
+      "totalBuilds": 0,
+      "validData": true
     },
     "Romann": {
       "filename": "romann",
       "lastUpdated": "2025-08-24T00:45:02.056Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 177,
-      "validData": true,
-      "sessionIndex": 3030
+      "totalBuilds": 0,
+      "validData": true
     },
     "Rose": {
       "filename": "rose",
       "lastUpdated": "2025-08-24T01:12:39.907Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2997,
-      "validData": true,
-      "sessionIndex": 4001
+      "totalBuilds": 0,
+      "validData": true
     },
     "Roy Mustang": {
       "filename": "roy_mustang",
-      "lastUpdated": "2025-08-24T01:17:08.528Z",
+      "lastUpdated": "2025-08-24T01:17:08.529Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2993,
-      "validData": true,
-      "sessionIndex": 4002
+      "totalBuilds": 0,
+      "validData": true
     },
-    "Ruele of Light": {
+    "Ruele Of Light": {
       "filename": "ruele_of_light",
       "lastUpdated": "2025-08-24T01:20:30.515Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2990,
-      "validData": true,
-      "sessionIndex": 4003
+      "totalBuilds": 0,
+      "validData": true
     },
-    "Sage Baal & Sezan": {
+    "Sage Baal Sezan": {
       "filename": "sage_baal_sezan",
       "lastUpdated": "2025-08-24T01:35:12.071Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2989,
-      "validData": true,
-      "sessionIndex": 4004
+      "totalBuilds": 0,
+      "validData": true
     },
     "Savior Adin": {
       "filename": "savior_adin",
       "lastUpdated": "2025-08-24T01:41:25.142Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2999,
-      "validData": true,
-      "sessionIndex": 4005
+      "totalBuilds": 0,
+      "validData": true
     },
     "Schniel": {
       "filename": "schniel",
       "lastUpdated": "2025-08-24T01:42:52.193Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2969,
-      "validData": true,
-      "sessionIndex": 4006
+      "totalBuilds": 0,
+      "validData": true
     },
     "Schuri": {
       "filename": "schuri",
       "lastUpdated": "2025-08-24T01:47:01.876Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2994,
+      "totalBuilds": 0,
+      "validData": true
+    },
+    "Seaside Bellona": {
+      "filename": "seaside_bellona",
+      "lastUpdated": "2025-08-25T06:55:59.489Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
       "validData": true,
-      "sessionIndex": 4007
+      "accessCount": null,
+      "lastAccessed": "2025-08-25T18:03:19.805Z"
     },
     "Serene Purity Adin": {
       "filename": "serene_purity_adin",
       "lastUpdated": "2025-08-24T02:58:59.014Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 660,
-      "validData": true,
-      "sessionIndex": 4011
+      "totalBuilds": 0,
+      "validData": true
     },
     "Serila": {
       "filename": "serila",
-      "lastUpdated": "2025-08-24T03:06:36.841Z",
+      "lastUpdated": "2025-08-24T03:06:36.834Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2057,
-      "validData": true,
-      "sessionIndex": 4012
+      "totalBuilds": 0,
+      "validData": true
     },
     "Sez": {
       "filename": "sez",
-      "lastUpdated": "2025-08-24T03:15:16.908Z",
+      "lastUpdated": "2025-08-24T03:15:16.906Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2930,
-      "validData": true,
-      "sessionIndex": 4013
+      "totalBuilds": 0,
+      "validData": true
     },
     "Shadow Knight Pyllis": {
       "filename": "shadow_knight_pyllis",
       "lastUpdated": "2025-08-24T03:35:28.265Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2995,
-      "validData": true,
-      "sessionIndex": 5001
+      "totalBuilds": 0,
+      "validData": true
     },
     "Shadow Rose": {
       "filename": "shadow_rose",
       "lastUpdated": "2025-08-24T03:52:44.798Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 1453,
-      "validData": true,
-      "sessionIndex": 5002
+      "totalBuilds": 0,
+      "validData": true
     },
     "Shalltear": {
       "filename": "shalltear",
-      "lastUpdated": "2025-08-24T03:58:28.128Z",
+      "lastUpdated": "2025-08-24T03:58:28.127Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2991,
-      "validData": true,
-      "sessionIndex": 5003
+      "totalBuilds": 0,
+      "validData": true
     },
     "Sharun": {
       "filename": "sharun",
-      "lastUpdated": "2025-08-24T04:05:16.604Z",
+      "lastUpdated": "2025-08-24T04:05:16.601Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2981,
-      "validData": true,
-      "sessionIndex": 5004
+      "totalBuilds": 0,
+      "validData": true
     },
     "Shepherd Jena": {
       "filename": "shepherd_jena",
-      "lastUpdated": "2025-08-24T04:14:41.185Z",
+      "lastUpdated": "2025-08-24T04:14:41.180Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 632,
-      "validData": true,
-      "sessionIndex": 5005
+      "totalBuilds": 0,
+      "validData": true
     },
     "Shooting Star Achates": {
       "filename": "shooting_star_achates",
       "lastUpdated": "2025-08-24T04:23:52.600Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2882,
-      "validData": true,
-      "sessionIndex": 5006
+      "totalBuilds": 0,
+      "validData": true
     },
     "Shuna": {
       "filename": "shuna",
-      "lastUpdated": "2025-08-24T04:39:41.576Z",
+      "lastUpdated": "2025-08-24T04:39:41.566Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2984,
-      "validData": true,
-      "sessionIndex": 5007
+      "totalBuilds": 0,
+      "validData": true
     },
     "Silk": {
       "filename": "silk",
-      "lastUpdated": "2025-08-24T05:00:08.735Z",
+      "lastUpdated": "2025-08-24T05:00:08.733Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 300,
-      "validData": true,
-      "sessionIndex": 5009
+      "totalBuilds": 0,
+      "validData": true
     },
     "Silver Blade Aramintha": {
       "filename": "silver_blade_aramintha",
-      "lastUpdated": "2025-08-24T05:14:05.984Z",
+      "lastUpdated": "2025-08-24T05:14:05.983Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2991,
-      "validData": true,
-      "sessionIndex": 5010
+      "totalBuilds": 0,
+      "validData": true
     },
     "Silvertide Christy": {
       "filename": "silvertide_christy",
-      "lastUpdated": "2025-08-24T05:18:10.812Z",
+      "lastUpdated": "2025-08-24T05:18:10.784Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2999,
-      "validData": true,
-      "sessionIndex": 5011
+      "totalBuilds": 0,
+      "validData": true
     },
     "Sinful Angelica": {
       "filename": "sinful_angelica",
       "lastUpdated": "2025-08-24T05:42:32.187Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2995,
-      "validData": true,
-      "sessionIndex": 5012
+      "totalBuilds": 0,
+      "validData": true
     },
     "Sol": {
       "filename": "sol",
-      "lastUpdated": "2025-08-24T05:47:00.335Z",
+      "lastUpdated": "2025-08-24T05:47:00.325Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2965,
-      "validData": true,
-      "sessionIndex": 5013
+      "totalBuilds": 0,
+      "validData": true
     },
-    "Solitaria of the Snow": {
+    "Solitaria Of The Snow": {
       "filename": "solitaria_of_the_snow",
-      "lastUpdated": "2025-08-24T06:23:39.861Z",
+      "lastUpdated": "2025-08-24T06:23:39.854Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2998,
-      "validData": true,
-      "sessionIndex": 5014
+      "totalBuilds": 0,
+      "validData": true
     },
     "Sonia": {
       "filename": "sonia",
-      "lastUpdated": "2025-08-24T06:39:20.002Z",
+      "lastUpdated": "2025-08-24T06:39:19.994Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 381,
-      "validData": true,
-      "sessionIndex": 5015
+      "totalBuilds": 0,
+      "validData": true
     },
     "Specimen Sez": {
       "filename": "specimen_sez",
-      "lastUpdated": "2025-08-24T06:50:38.012Z",
+      "lastUpdated": "2025-08-24T06:50:38.010Z",
       "dataFound": true,
       "fileExists": true,
-      "totalBuilds": 2976,
-      "validData": true,
-      "sessionIndex": 5016
-    },
-    "Ains": {
-      "filename": "ains",
-      "lastUpdated": "2025-08-24T07:38:36.536Z",
-      "dataFound": true,
-      "fileExists": true,
-      "totalBuilds": 111,
-      "validData": true,
-      "sessionIndex": 6000
-    },
-    "Aither": {
-      "filename": "aither",
-      "lastUpdated": "2025-08-24T07:38:36.691Z",
-      "dataFound": true,
-      "fileExists": true,
-      "totalBuilds": 180,
-      "validData": true,
-      "sessionIndex": 6002
-    },
-    "Alexa": {
-      "filename": "alexa",
-      "lastUpdated": "2025-08-24T07:39:13.345Z",
-      "dataFound": true,
-      "fileExists": true,
-      "totalBuilds": 495,
-      "validData": true,
-      "sessionIndex": 7005
-    },
-    "Arbiter Vildred": {
-      "filename": "arbiter_vildred",
-      "cacheKey": "f71d035c",
-      "lastUpdated": "2025-08-25T02:49:15.538Z",
-      "fileExists": true,
-      "fileSizeBytes": 860082,
-      "totalBuilds": 3000,
-      "validData": true,
-      "accessCount": 11,
-      "lastAccessed": "2025-08-25T15:37:37.431Z"
-    },
-    "Seaside Bellona": {
-      "filename": "seaside_bellona",
-      "cacheKey": "a9571f11",
-      "lastUpdated": "2025-08-25T06:55:59.488Z",
-      "fileExists": true,
-      "fileSizeBytes": 855851,
-      "totalBuilds": 3000,
-      "validData": true,
-      "accessCount": 10,
-      "lastAccessed": "2025-08-25T15:37:37.434Z"
+      "totalBuilds": 0,
+      "validData": true
     },
     "Violet": {
       "filename": "violet",
-      "cacheKey": "d1d813a4",
-      "lastUpdated": "2025-08-25T07:16:15.137Z",
+      "lastUpdated": "2025-08-25T07:16:15.138Z",
+      "dataFound": true,
       "fileExists": true,
-      "fileSizeBytes": 844707,
+      "totalBuilds": 0,
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-08-25T18:03:19.801Z"
+    },
+    "Blooming Lidica": {
+      "filename": "blooming_lidica",
+      "cacheKey": "14064d46",
+      "lastUpdated": "2025-08-25T17:48:06.598Z",
+      "fileExists": true,
+      "fileSizeBytes": 848012,
       "totalBuilds": 3000,
       "validData": true,
-      "accessCount": 4,
-      "lastAccessed": "2025-08-25T15:37:37.427Z"
+      "accessCount": 3,
+      "lastAccessed": "2025-08-25T17:52:07.685Z"
+    },
+    "Witch of the Mere Tenebria": {
+      "filename": "witch_of_the_mere_tenebria",
+      "cacheKey": "3bb80992",
+      "lastUpdated": "2025-08-25T17:52:25.173Z",
+      "fileExists": true,
+      "fileSizeBytes": 868167,
+      "totalBuilds": 3000,
+      "validData": true,
+      "accessCount": 6,
+      "lastAccessed": "2025-08-25T18:07:53.971Z"
+    },
+    "Faithless Lidica": {
+      "filename": "faithless_lidica",
+      "cacheKey": "bdad5b4b",
+      "lastUpdated": "2025-08-25T17:53:42.739Z",
+      "fileExists": true,
+      "fileSizeBytes": 850349,
+      "totalBuilds": 3000,
+      "validData": true,
+      "accessCount": 1,
+      "lastAccessed": "2025-08-25T17:53:45.501Z"
+    },
+    "Zahhak": {
+      "filename": "zahhak",
+      "cacheKey": "72d40835",
+      "lastUpdated": "2025-08-25T18:04:06.895Z",
+      "fileExists": true,
+      "fileSizeBytes": 841201,
+      "totalBuilds": 3000,
+      "validData": true,
+      "accessCount": 0,
+      "lastAccessed": "2025-08-25T18:04:06.895Z"
+    },
+    "Ainz Ooal Gown": {
+      "filename": "ainz_ooal_gown",
+      "cacheKey": "b0faf17b",
+      "lastUpdated": "2025-08-25T18:04:27.439Z",
+      "fileExists": true,
+      "fileSizeBytes": 856340,
+      "totalBuilds": 3000,
+      "validData": true,
+      "accessCount": 0,
+      "lastAccessed": "2025-08-25T18:04:27.439Z"
+    },
+    "Specter Tenebria": {
+      "filename": "specter_tenebria",
+      "cacheKey": "34c9f970",
+      "lastUpdated": "2025-08-25T18:09:02.523Z",
+      "fileExists": true,
+      "fileSizeBytes": 856447,
+      "totalBuilds": 3000,
+      "validData": true,
+      "accessCount": 2,
+      "lastAccessed": "2025-08-25T18:09:24.682Z"
     }
   },
-  "totalHeroes": 185,
-  "successfulHeroes": 185,
-  "failedHeroes": [
-    {
-      "hero": "Cidd",
-      "error": "Invalid data - possible rate limit",
-      "timestamp": "2025-08-23T19:29:30.825Z",
-      "rateLimited": true,
-      "builds": 1
-    },
-    {
-      "hero": "Clarissa",
-      "error": "Invalid data - possible rate limit",
-      "timestamp": "2025-08-23T19:29:38.162Z",
-      "rateLimited": true,
-      "builds": 1
-    },
-    {
-      "hero": "Claudia",
-      "error": "Invalid data - possible rate limit",
-      "timestamp": "2025-08-23T19:29:45.504Z",
-      "rateLimited": true,
-      "builds": 1
-    },
-    {
-      "hero": "Desert Jewel Basar",
-      "error": "Invalid data - possible rate limit",
-      "timestamp": "2025-08-23T19:39:08.454Z",
-      "rateLimited": true,
-      "builds": 1
-    },
-    {
-      "hero": "Designer Lilibet",
-      "error": "Invalid data - possible rate limit",
-      "timestamp": "2025-08-23T19:39:15.965Z",
-      "rateLimited": true,
-      "builds": 1
-    },
-    {
-      "hero": "Destina",
-      "error": "Invalid data - possible rate limit",
-      "timestamp": "2025-08-23T19:39:23.291Z",
-      "rateLimited": true,
-      "builds": 1
-    },
-    {
-      "hero": "Elena",
-      "error": "Invalid data - possible rate limit",
-      "timestamp": "2025-08-23T19:51:33.907Z",
-      "rateLimited": true,
-      "builds": 1
-    },
-    {
-      "hero": "Eligos",
-      "error": "Invalid data - possible rate limit",
-      "timestamp": "2025-08-23T19:51:41.258Z",
-      "rateLimited": true,
-      "builds": 1
-    },
-    {
-      "hero": "Elphelt",
-      "error": "Invalid data - possible rate limit",
-      "timestamp": "2025-08-23T19:51:48.617Z",
-      "rateLimited": true,
-      "builds": 1
-    },
-    {
-      "hero": "Fenne",
-      "error": "Invalid data - possible rate limit",
-      "timestamp": "2025-08-23T20:07:53.981Z",
-      "rateLimited": true,
-      "builds": 1
-    },
-    {
-      "hero": "Fenris",
-      "error": "Invalid data - possible rate limit",
-      "timestamp": "2025-08-23T20:08:01.336Z",
-      "rateLimited": true,
-      "builds": 1
-    },
-    {
-      "hero": "Festive Eda",
-      "error": "Invalid data - possible rate limit",
-      "timestamp": "2025-08-23T20:08:08.756Z",
-      "rateLimited": true,
-      "builds": 1
-    },
-    {
-      "hero": "Guider Aither",
-      "error": "Invalid data - possible rate limit",
-      "timestamp": "2025-08-23T20:16:34.083Z",
-      "rateLimited": true,
-      "builds": 1
-    },
-    {
-      "hero": "Gunther",
-      "error": "Invalid data - possible rate limit",
-      "timestamp": "2025-08-23T20:16:41.539Z",
-      "rateLimited": true,
-      "builds": 1
-    },
-    {
-      "hero": "Harsetti",
-      "error": "Invalid data - possible rate limit",
-      "timestamp": "2025-08-23T20:16:48.842Z",
-      "rateLimited": true,
-      "builds": 1
-    },
-    {
-      "hero": "Haste",
-      "error": "Invalid data - possible rate limit",
-      "timestamp": "2025-08-23T20:17:52.230Z",
-      "rateLimited": true,
-      "builds": 1
-    },
-    {
-      "hero": "Hataan",
-      "error": "Invalid data - possible rate limit",
-      "timestamp": "2025-08-23T20:17:59.533Z",
-      "rateLimited": true,
-      "builds": 1
-    },
-    {
-      "hero": "Hazel",
-      "error": "Invalid data - possible rate limit",
-      "timestamp": "2025-08-23T20:18:06.931Z",
-      "rateLimited": true,
-      "builds": 1
-    },
-    {
-      "hero": "Helen",
-      "error": "Invalid data - possible rate limit",
-      "timestamp": "2025-08-23T20:19:14.207Z",
-      "rateLimited": true,
-      "builds": 1
-    },
-    {
-      "hero": "Helga",
-      "error": "Invalid data - possible rate limit",
-      "timestamp": "2025-08-23T20:19:21.533Z",
-      "rateLimited": true,
-      "builds": 1
-    },
-    {
-      "hero": "Hellion Lua",
-      "error": "Invalid data - possible rate limit",
-      "timestamp": "2025-08-23T20:19:28.846Z",
-      "rateLimited": true,
-      "builds": 1
-    },
-    {
-      "hero": "Jack-O'",
-      "error": "Invalid data - possible rate limit",
-      "timestamp": "2025-08-23T20:25:20.214Z",
-      "rateLimited": true,
-      "builds": 1
-    },
-    {
-      "hero": "Jena",
-      "error": "Invalid data - possible rate limit",
-      "timestamp": "2025-08-23T20:25:46.909Z",
-      "rateLimited": true,
-      "builds": 1
-    },
-    {
-      "hero": "Jenua",
-      "error": "Invalid data - possible rate limit",
-      "timestamp": "2025-08-23T20:26:04.310Z",
-      "rateLimited": true,
-      "builds": 1
-    },
-    {
-      "hero": "Judge Kise",
-      "error": "Invalid data - possible rate limit",
-      "timestamp": "2025-08-23T20:26:11.667Z",
-      "rateLimited": true,
-      "builds": 1
-    }
-  ],
-  "cacheSize": 177,
-  "totalDiskUsage": 2.44,
-  "lastProcessedIndex": 26,
-  "rateLimitDetected": true,
-  "sessionCount": 6
+  "totalHeroes": 200,
+  "successfulHeroes": 200,
+  "failedHeroes": [],
+  "cacheSize": 200,
+  "totalDiskUsage": 4.88
 }
