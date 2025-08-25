@@ -2018,10 +2018,10 @@ if (require.main === module) {
 			}
 
 			// Notify user of queue position if not being processed immediately
-			if (queueResult.position > MAX_CONCURRENT_COMMANDS) {
+			if (processingCommands.size >= MAX_CONCURRENT_COMMANDS) {
 				const queuedMessage = getRandomResponse('queued', {
 					character: characterName,
-					position: queueResult.position - MAX_CONCURRENT_COMMANDS
+					position: queueResult.position
 				});
 				await message.reply(`䷄ ${queuedMessage}`);
 			}
