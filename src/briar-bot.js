@@ -1773,8 +1773,8 @@ async function generateReportImage(data) {
 		
 		const config = {
 			headless: 'new',
-			timeout: 30000,
-			protocolTimeout: 30000,
+			timeout: 60000,
+			protocolTimeout: 60000,
 			args: [
 				'--no-sandbox',
 				'--disable-setuid-sandbox',
@@ -1788,7 +1788,19 @@ async function generateReportImage(data) {
 				'--disable-renderer-backgrounding',
 				'--disable-backgrounding-occluded-windows',
 				'--disable-ipc-flooding-protection',
-				'--memory-pressure-off'
+				'--memory-pressure-off',
+				'--no-first-run',
+				'--disable-extensions',
+				'--disable-default-apps',
+				'--disable-component-extensions-with-background-pages',
+				'--disable-background-networking',
+				'--disable-sync',
+				'--metrics-recording-only',
+				'--no-default-browser-check',
+				'--mute-audio',
+				'--hide-scrollbars',
+				'--disable-features=TranslateUI',
+				'--disable-domain-reliability'
 			]
 		};
 		

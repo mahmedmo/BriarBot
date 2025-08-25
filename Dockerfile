@@ -80,7 +80,8 @@ RUN apk add --no-cache \
     ttf-freefont \
     ttf-dejavu \
     fontconfig \
-    tini
+    tini \
+    su-exec
 
 # Create non-root user
 RUN addgroup -g 1001 -S briarbot && \
@@ -105,6 +106,10 @@ RUN mkdir -p /app/cache/heroes && \
 # Copy dependencies from builder stage
 COPY --from=dependencies /app/node_modules ./node_modules
 
+# Copy entrypoint script
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
 # Copy application files
 COPY --chown=briarbot:briarbot src/ ./src/
 COPY --chown=briarbot:briarbot assets/ ./assets/
@@ -113,9 +118,6 @@ COPY --chown=briarbot:briarbot package*.json ./
 # Create volume mount points
 VOLUME ["/app/cache"]
 
-# Switch to non-root user
-USER briarbot
-
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
     CMD node -e "console.log('Health check passed')" || exit 1
@@ -123,8 +125,8 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
 # Expose port (if needed for health checks)
 EXPOSE 3000
 
-# Use tini for proper signal handling
-ENTRYPOINT ["/sbin/tini", "--"]
+# Use custom entrypoint for permission handling and tini for signal handling
+ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/entrypoint.sh"]
 
 # Default command - run directly with node
 CMD ["node", "src/briar-bot.js"]

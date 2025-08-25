@@ -10,7 +10,8 @@
       "Bash(chmod:*)",
       "Bash(npm test)",
       "Bash(rm:*)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(docker build:*)"
     ],
     "deny": [],
     "ask": []

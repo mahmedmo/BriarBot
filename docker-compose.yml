@@ -41,7 +41,6 @@ services:
       start_period: 120s
     
     # Security
-    user: "1001:1001"
     cap_drop:
       - ALL
     cap_add:
