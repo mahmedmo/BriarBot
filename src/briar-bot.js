@@ -396,10 +396,17 @@ async function getHeroWithDeduplication(heroName, message) {
 		}
 	}
 
-	// Set up timeout cleanup first
 	let timeoutId;
 
 	const requestPromise = (async () => {
+		// Set up timeout cleanup when processing actually starts
+		timeoutId = setTimeout(() => {
+			if (ongoingRequests.has(normalizedHeroName)) {
+				console.warn(`⏰ Request timeout for ${heroName} after ${REQUEST_TIMEOUT / 1000}s, cleaning up`);
+				ongoingRequests.delete(normalizedHeroName);
+			}
+		}, REQUEST_TIMEOUT);
+
 		try {
 			// Check cache first
 			let screenshot = cacheManager.getCachedHeroImage(heroName);
@@ -431,7 +438,7 @@ async function getHeroWithDeduplication(heroName, message) {
 		}
 	})();
 
-	// Store the request with timeout
+	// Store the request 
 	const requestData = {
 		promise: requestPromise,
 		requesters: [message],
@@ -439,14 +446,6 @@ async function getHeroWithDeduplication(heroName, message) {
 	};
 
 	ongoingRequests.set(normalizedHeroName, requestData);
-
-	// Set up timeout cleanup
-	timeoutId = setTimeout(() => {
-		if (ongoingRequests.has(normalizedHeroName)) {
-			console.warn(`⏰ Request timeout for ${heroName} after ${REQUEST_TIMEOUT / 1000}s, cleaning up`);
-			ongoingRequests.delete(normalizedHeroName);
-		}
-	}, REQUEST_TIMEOUT);
 
 	return requestPromise;
 }
