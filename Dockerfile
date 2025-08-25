@@ -108,9 +108,7 @@ COPY --from=dependencies /app/node_modules ./node_modules
 # Copy application files
 COPY --chown=briarbot:briarbot src/ ./src/
 COPY --chown=briarbot:briarbot data/ ./data/
-COPY --chown=briarbot:briarbot scripts/ ./scripts/
 COPY --chown=briarbot:briarbot package*.json ./
-COPY --chown=briarbot:briarbot ecosystem.config.js ./
 
 # Create volume mount points
 VOLUME ["/app/cache"]
@@ -128,5 +126,5 @@ EXPOSE 3000
 # Use tini for proper signal handling
 ENTRYPOINT ["/sbin/tini", "--"]
 
-# Default command - run with PM2
-CMD ["npx", "pm2-runtime", "start", "ecosystem.config.js"]
+# Default command - run directly with node
+CMD ["node", "src/briar-bot.js"]
