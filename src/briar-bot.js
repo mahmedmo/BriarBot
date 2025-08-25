@@ -1772,16 +1772,23 @@ async function generateReportImage(data) {
 		const isProduction = process.env.NODE_ENV === 'production';
 		
 		const config = {
-			headless: true,
-			timeout: 15000,
-			protocolTimeout: 10000,
+			headless: 'new',
+			timeout: 30000,
+			protocolTimeout: 30000,
 			args: [
 				'--no-sandbox',
 				'--disable-setuid-sandbox',
 				'--disable-dev-shm-usage',
 				'--disable-gpu',
 				'--disable-javascript',
-				'--single-process'
+				'--single-process',
+				'--disable-web-security',
+				'--disable-features=VizDisplayCompositor',
+				'--disable-background-timer-throttling',
+				'--disable-renderer-backgrounding',
+				'--disable-backgrounding-occluded-windows',
+				'--disable-ipc-flooding-protection',
+				'--memory-pressure-off'
 			]
 		};
 		
