@@ -107,6 +107,7 @@ COPY --from=dependencies /app/node_modules ./node_modules
 
 # Copy application files
 COPY --chown=briarbot:briarbot src/ ./src/
+COPY --chown=briarbot:briarbot assets/ ./assets/
 COPY --chown=briarbot:briarbot package*.json ./
 
 # Create volume mount points
