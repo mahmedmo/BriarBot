@@ -2000,13 +2000,6 @@ if (require.main === module) {
 			const characterName = searchResult.character;
 			const confidence = (searchResult.confidence * 100).toFixed(1);
 
-			// Check if user is already being processed
-			if (processingCommands.has(message.author.id)) {
-				const processingMessage = getRandomResponse('alreadyProcessing');
-				await message.reply(`𝌗 ${processingMessage}`);
-				return;
-			}
-
 			// Add to queue
 			const queueResult = addToQueue({
 				message,
