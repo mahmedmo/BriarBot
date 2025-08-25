@@ -1971,10 +1971,10 @@ if (require.main === module) {
 						input: userInput,
 						suggestions: suggestionsText
 					});
-					await message.reply(`${suggestionMessage}`);
+					await message.reply(suggestionMessage);
 				} else {
 					const notFoundMessage = getRandomResponse('characterNotFound', { input: userInput });
-					await message.reply(`${notFoundMessage}`);
+					await message.reply(notFoundMessage);
 				}
 				return;
 			}
@@ -2005,7 +2005,7 @@ if (require.main === module) {
 					character: characterName,
 					position: queueResult.position
 				});
-				await message.reply(`䷄ ${queuedMessage}`);
+				await message.reply(queuedMessage);
 			}
 		}
 	});
