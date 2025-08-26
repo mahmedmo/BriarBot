@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "lastGlobalUpdate": "2025-08-25T18:26:46.168Z",
+  "lastGlobalUpdate": "2025-08-26T01:36:00.216Z",
   "heroes": {
     "Abigail": {
       "filename": "abigail",
@@ -630,7 +630,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-08-25T20:09:39.634Z"
     },
     "Hurado": {
       "filename": "hurado",
@@ -1088,7 +1090,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-08-25T23:37:50.418Z"
     },
     "Navy Captain Landy": {
       "filename": "navy_captain_landy",
@@ -1120,7 +1124,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-08-26T01:30:26.248Z"
     },
     "Ocean Breeze Luluca": {
       "filename": "ocean_breeze_luluca",
@@ -1640,8 +1646,8 @@
       "fileSizeBytes": 849046,
       "totalBuilds": 3000,
       "validData": true,
-      "accessCount": 1,
-      "lastAccessed": "2025-08-25T18:26:37.403Z"
+      "accessCount": 2,
+      "lastAccessed": "2025-08-25T20:09:41.159Z"
     },
     "Spirit Eye Celine": {
       "filename": "spirit_eye_celine",
@@ -1653,11 +1659,104 @@
       "validData": true,
       "accessCount": 0,
       "lastAccessed": "2025-08-25T18:26:46.168Z"
+    },
+    "Amiki": {
+      "filename": "amiki",
+      "lastUpdated": "2025-08-25T15:14:26.556Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
+      "validData": true
+    },
+    "Briar Witch Iseria": {
+      "filename": "briar_witch_iseria",
+      "lastUpdated": "2025-08-25T19:08:26.649Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-08-26T01:30:51.014Z"
+    },
+    "Captain Rikoris": {
+      "filename": "captain_rikoris",
+      "lastUpdated": "2025-08-25T19:27:00.645Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
+      "validData": true
+    },
+    "Judge Kise": {
+      "filename": "judge_kise",
+      "lastUpdated": "2025-08-25T19:44:22.455Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
+      "validData": true
+    },
+    "Lilias": {
+      "filename": "lilias",
+      "lastUpdated": "2025-08-25T15:53:22.084Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
+      "validData": true
+    },
+    "Lionheart Cermia": {
+      "filename": "lionheart_cermia",
+      "lastUpdated": "2025-08-25T19:18:18.229Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
+      "validData": true
+    },
+    "Rin": {
+      "filename": "rin",
+      "lastUpdated": "2025-08-25T18:13:24.907Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
+      "validData": true
+    },
+    "Sea Phantom Politis": {
+      "filename": "sea_phantom_politis",
+      "lastUpdated": "2025-08-25T18:14:00.020Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
+      "validData": true
+    },
+    "Watcher Schuri": {
+      "filename": "watcher_schuri",
+      "lastUpdated": "2025-08-25T19:09:34.714Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
+      "validData": true
+    },
+    "Westwind Executioner Schuri": {
+      "filename": "westwind_executioner_schuri",
+      "lastUpdated": "2025-08-25T19:38:18.732Z",
+      "dataFound": true,
+      "fileExists": true,
+      "totalBuilds": 0,
+      "validData": true
+    },
+    "Blood Blade Karin": {
+      "filename": "blood_blade_karin",
+      "cacheKey": "54c6a886",
+      "lastUpdated": "2025-08-26T01:36:00.216Z",
+      "fileExists": true,
+      "fileSizeBytes": 856361,
+      "totalBuilds": 3000,
+      "validData": true,
+      "accessCount": 1,
+      "lastAccessed": "2025-08-26T01:36:12.218Z"
     }
   },
-  "totalHeroes": 202,
-  "successfulHeroes": 202,
+  "totalHeroes": 213,
+  "successfulHeroes": 213,
   "failedHeroes": [],
-  "cacheSize": 202,
-  "totalDiskUsage": 6.51
+  "cacheSize": 213,
+  "totalDiskUsage": 7.33
 }
