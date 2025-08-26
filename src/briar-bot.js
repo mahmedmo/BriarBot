@@ -1340,6 +1340,13 @@ async function analyzeHeroData(heroName) {
 		// Try the API with the original input name first
 		let rawBuilds = await getPopularBuilds(actualHeroName);
 
+		// If we got empty data but successfully mapped a hero, try again (could be rate limiter being overly cautious)
+		if ((!rawBuilds.data || rawBuilds.data.length === 0) && matchedHero) {
+			console.log(`Retrying for ${actualHeroName} - valid hero mapping but got empty data`);
+			await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds
+			rawBuilds = await getPopularBuilds(actualHeroName);
+		}
+
 		// Process the build data
 		const buildData = processBuildData(rawBuilds, heroData, artifactData);
 
