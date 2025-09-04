@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "lastGlobalUpdate": "2025-08-26T01:36:00.216Z",
+  "lastGlobalUpdate": "2025-09-04T02:31:06.142Z",
   "heroes": {
     "Abigail": {
       "filename": "abigail",
@@ -9,8 +9,8 @@
       "fileExists": true,
       "totalBuilds": 0,
       "validData": true,
-      "accessCount": null,
-      "lastAccessed": "2025-08-25T18:04:12.135Z"
+      "accessCount": 1,
+      "lastAccessed": "2025-08-31T14:37:54.710Z"
     },
     "Abyssal Yufine": {
       "filename": "abyssal_yufine",
@@ -50,7 +50,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-09-04T16:19:30.563Z"
     },
     "Ae Giselle": {
       "filename": "ae_giselle",
@@ -114,7 +116,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-08-28T03:36:04.546Z"
     },
     "Aither": {
       "filename": "aither",
@@ -139,8 +143,8 @@
       "fileExists": true,
       "totalBuilds": 0,
       "validData": true,
-      "accessCount": 7,
-      "lastAccessed": "2025-08-26T01:55:19.913Z"
+      "accessCount": 9,
+      "lastAccessed": "2025-09-03T00:21:48.047Z"
     },
     "Cerise": {
       "filename": "cerise",
@@ -196,7 +200,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-09-03T00:20:54.912Z"
     },
     "Charlotte": {
       "filename": "charlotte",
@@ -268,7 +274,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-08-28T03:34:30.816Z"
     },
     "Commander Pavel": {
       "filename": "commander_pavel",
@@ -276,7 +284,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-08-31T03:16:30.964Z"
     },
     "Conqueror Lilias": {
       "filename": "conqueror_lilias",
@@ -284,7 +294,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-08-28T03:35:41.812Z"
     },
     "Corvus": {
       "filename": "corvus",
@@ -308,7 +320,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-08-30T00:48:50.256Z"
     },
     "Crozet": {
       "filename": "crozet",
@@ -332,7 +346,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-08-30T15:55:08.431Z"
     },
     "Diene": {
       "filename": "diene",
@@ -406,7 +422,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-09-03T04:59:55.768Z"
     },
     "Eaton": {
       "filename": "eaton",
@@ -422,7 +440,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-08-31T03:32:41.188Z"
     },
     "Edward Elric": {
       "filename": "edward_elric",
@@ -430,7 +450,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-08-28T03:36:50.840Z"
     },
     "Elson": {
       "filename": "elson",
@@ -446,7 +468,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-09-03T11:30:53.162Z"
     },
     "Emilia": {
       "filename": "emilia",
@@ -462,7 +486,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-09-02T16:43:54.062Z"
     },
     "Enott": {
       "filename": "enott",
@@ -550,7 +576,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-08-27T01:08:50.373Z"
     },
     "Fumyr": {
       "filename": "fumyr",
@@ -672,7 +700,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-09-02T22:14:34.049Z"
     },
     "Inferno Khawazu": {
       "filename": "inferno_khawazu",
@@ -688,7 +718,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-09-01T02:09:37.604Z"
     },
     "Inheritor Amiki": {
       "filename": "inheritor_amiki",
@@ -696,7 +728,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-09-03T05:51:36.918Z"
     },
     "Iseria": {
       "filename": "iseria",
@@ -760,7 +794,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-09-04T16:18:58.331Z"
     },
     "Kayron": {
       "filename": "kayron",
@@ -768,7 +804,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-09-04T00:43:50.248Z"
     },
     "Ken": {
       "filename": "ken",
@@ -888,7 +926,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-08-31T03:31:30.446Z"
     },
     "Lidica": {
       "filename": "lidica",
@@ -922,7 +962,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-08-27T01:07:41.946Z"
     },
     "Lots": {
       "filename": "lots",
@@ -994,7 +1036,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-08-30T05:18:52.098Z"
     },
     "Melany": {
       "filename": "melany",
@@ -1010,7 +1054,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-09-03T01:43:20.838Z"
     },
     "Mercedes": {
       "filename": "mercedes",
@@ -1018,7 +1064,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-09-03T19:08:11.794Z"
     },
     "Mercenary Helga": {
       "filename": "mercenary_helga",
@@ -1100,7 +1148,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-09-03T04:11:31.734Z"
     },
     "Nemunas": {
       "filename": "nemunas",
@@ -1116,7 +1166,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-09-03T16:46:58.754Z"
     },
     "New Moon Luna": {
       "filename": "new_moon_luna",
@@ -1125,8 +1177,8 @@
       "fileExists": true,
       "totalBuilds": 0,
       "validData": true,
-      "accessCount": null,
-      "lastAccessed": "2025-08-26T01:30:26.248Z"
+      "accessCount": 1,
+      "lastAccessed": "2025-09-01T07:00:07.326Z"
     },
     "Ocean Breeze Luluca": {
       "filename": "ocean_breeze_luluca",
@@ -1238,7 +1290,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-09-02T15:11:17.155Z"
     },
     "Ravi": {
       "filename": "ravi",
@@ -1254,7 +1308,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-09-03T04:52:05.144Z"
     },
     "Requiem Roana": {
       "filename": "requiem_roana",
@@ -1310,7 +1366,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-08-27T01:06:46.649Z"
     },
     "Riza Hawkeye": {
       "filename": "riza_hawkeye",
@@ -1334,7 +1392,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-08-31T15:42:16.187Z"
     },
     "Robin": {
       "filename": "robin",
@@ -1366,7 +1426,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-08-28T03:37:03.750Z"
     },
     "Ruele Of Light": {
       "filename": "ruele_of_light",
@@ -1415,8 +1477,8 @@
       "fileExists": true,
       "totalBuilds": 0,
       "validData": true,
-      "accessCount": 7,
-      "lastAccessed": "2025-08-26T01:55:19.916Z"
+      "accessCount": 6,
+      "lastAccessed": "2025-08-25T20:01:44.886Z"
     },
     "Serene Purity Adin": {
       "filename": "serene_purity_adin",
@@ -1512,7 +1574,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-08-29T17:22:02.801Z"
     },
     "Silvertide Christy": {
       "filename": "silvertide_christy",
@@ -1528,7 +1592,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-09-01T02:10:06.981Z"
     },
     "Sol": {
       "filename": "sol",
@@ -1560,7 +1626,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-09-04T00:27:04.599Z"
     },
     "Violet": {
       "filename": "violet",
@@ -1569,8 +1637,8 @@
       "fileExists": true,
       "totalBuilds": 0,
       "validData": true,
-      "accessCount": 7,
-      "lastAccessed": "2025-08-26T01:55:19.905Z"
+      "accessCount": 6,
+      "lastAccessed": "2025-08-25T20:01:44.880Z"
     },
     "Blooming Lidica": {
       "filename": "blooming_lidica",
@@ -1591,8 +1659,8 @@
       "fileSizeBytes": 868167,
       "totalBuilds": 3000,
       "validData": true,
-      "accessCount": 6,
-      "lastAccessed": "2025-08-25T18:07:53.971Z"
+      "accessCount": 7,
+      "lastAccessed": "2025-08-27T01:11:30.003Z"
     },
     "Faithless Lidica": {
       "filename": "faithless_lidica",
@@ -1613,8 +1681,8 @@
       "fileSizeBytes": 841201,
       "totalBuilds": 3000,
       "validData": true,
-      "accessCount": 0,
-      "lastAccessed": "2025-08-25T18:04:06.895Z"
+      "accessCount": 1,
+      "lastAccessed": "2025-08-28T03:34:48.236Z"
     },
     "Ainz Ooal Gown": {
       "filename": "ainz_ooal_gown",
@@ -1624,8 +1692,8 @@
       "fileSizeBytes": 856340,
       "totalBuilds": 3000,
       "validData": true,
-      "accessCount": 0,
-      "lastAccessed": "2025-08-25T18:04:27.439Z"
+      "accessCount": 1,
+      "lastAccessed": "2025-08-28T03:36:30.664Z"
     },
     "Specter Tenebria": {
       "filename": "specter_tenebria",
@@ -1635,8 +1703,8 @@
       "fileSizeBytes": 856447,
       "totalBuilds": 3000,
       "validData": true,
-      "accessCount": 2,
-      "lastAccessed": "2025-08-25T18:09:24.682Z"
+      "accessCount": 3,
+      "lastAccessed": "2025-08-27T01:12:23.860Z"
     },
     "Celine": {
       "filename": "celine",
@@ -1646,8 +1714,8 @@
       "fileSizeBytes": 849046,
       "totalBuilds": 3000,
       "validData": true,
-      "accessCount": 2,
-      "lastAccessed": "2025-08-25T20:09:41.159Z"
+      "accessCount": 3,
+      "lastAccessed": "2025-08-26T14:00:11.436Z"
     },
     "Spirit Eye Celine": {
       "filename": "spirit_eye_celine",
@@ -1675,8 +1743,8 @@
       "fileExists": true,
       "totalBuilds": 0,
       "validData": true,
-      "accessCount": null,
-      "lastAccessed": "2025-08-26T01:30:51.014Z"
+      "accessCount": 3,
+      "lastAccessed": "2025-08-28T03:35:00.425Z"
     },
     "Captain Rikoris": {
       "filename": "captain_rikoris",
@@ -1724,7 +1792,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-08-27T01:08:13.487Z"
     },
     "Watcher Schuri": {
       "filename": "watcher_schuri",
@@ -1750,13 +1820,222 @@
       "fileSizeBytes": 856361,
       "totalBuilds": 3000,
       "validData": true,
+      "accessCount": 3,
+      "lastAccessed": "2025-08-28T03:35:12.513Z"
+    },
+    "Bystander Hwayoung": {
+      "filename": "bystander_hwayoung",
+      "cacheKey": "02848ec0",
+      "lastUpdated": "2025-08-26T05:28:21.061Z",
+      "fileExists": true,
+      "fileSizeBytes": 849180,
+      "totalBuilds": 3000,
+      "validData": true,
       "accessCount": 1,
-      "lastAccessed": "2025-08-26T01:36:12.218Z"
+      "lastAccessed": "2025-09-01T04:20:19.519Z"
+    },
+    "Helen": {
+      "filename": "helen",
+      "cacheKey": "7a2eb41a",
+      "lastUpdated": "2025-08-26T05:28:37.547Z",
+      "fileExists": true,
+      "fileSizeBytes": 813770,
+      "totalBuilds": 209,
+      "validData": true,
+      "accessCount": 0,
+      "lastAccessed": "2025-08-26T05:28:37.547Z"
+    },
+    "Amid": {
+      "filename": "amid",
+      "cacheKey": "4e925228",
+      "lastUpdated": "2025-08-27T01:06:26.814Z",
+      "fileExists": true,
+      "fileSizeBytes": 823254,
+      "totalBuilds": 3000,
+      "validData": true,
+      "accessCount": 0,
+      "lastAccessed": "2025-08-27T01:06:26.814Z"
+    },
+    "Tieria": {
+      "filename": "tieria",
+      "cacheKey": "2d728ee8",
+      "lastUpdated": "2025-08-27T01:07:40.818Z",
+      "fileExists": true,
+      "fileSizeBytes": 831173,
+      "totalBuilds": 1830,
+      "validData": true,
+      "accessCount": 0,
+      "lastAccessed": "2025-08-27T01:07:40.818Z"
+    },
+    "Brieg": {
+      "filename": "brieg",
+      "cacheKey": "5d522693",
+      "lastUpdated": "2025-08-27T01:20:07.120Z",
+      "fileExists": true,
+      "fileSizeBytes": 832126,
+      "totalBuilds": 3000,
+      "validData": true,
+      "accessCount": 0,
+      "lastAccessed": "2025-08-27T01:20:07.120Z"
+    },
+    "Zio": {
+      "filename": "zio",
+      "cacheKey": "2eceb979",
+      "lastUpdated": "2025-08-27T13:39:42.511Z",
+      "fileExists": true,
+      "fileSizeBytes": 813778,
+      "totalBuilds": 3000,
+      "validData": true,
+      "accessCount": 1,
+      "lastAccessed": "2025-09-02T23:08:27.959Z"
+    },
+    "Desert Jewel Basar": {
+      "filename": "desert_jewel_basar",
+      "cacheKey": "4896faae",
+      "lastUpdated": "2025-08-27T18:29:39.510Z",
+      "fileExists": true,
+      "fileSizeBytes": 841778,
+      "totalBuilds": 3000,
+      "validData": true,
+      "accessCount": 0,
+      "lastAccessed": "2025-08-27T18:29:39.510Z"
+    },
+    "Yulha": {
+      "filename": "yulha",
+      "cacheKey": "56b5f11f",
+      "lastUpdated": "2025-08-30T01:13:44.870Z",
+      "fileExists": true,
+      "fileSizeBytes": 814009,
+      "totalBuilds": 3000,
+      "validData": true,
+      "accessCount": 0,
+      "lastAccessed": "2025-08-30T01:13:44.870Z"
+    },
+    "Cecilia": {
+      "filename": "cecilia",
+      "cacheKey": "d432eb18",
+      "lastUpdated": "2025-08-31T06:29:00.878Z",
+      "fileExists": true,
+      "fileSizeBytes": 824591,
+      "totalBuilds": 3000,
+      "validData": true,
+      "accessCount": 0,
+      "lastAccessed": "2025-08-31T06:29:00.878Z"
+    },
+    "Summertime Iseria": {
+      "filename": "summertime_iseria",
+      "cacheKey": "06708197",
+      "lastUpdated": "2025-08-31T14:12:53.006Z",
+      "fileExists": true,
+      "fileSizeBytes": 841889,
+      "totalBuilds": 3000,
+      "validData": true,
+      "accessCount": 0,
+      "lastAccessed": "2025-08-31T14:12:53.006Z"
+    },
+    "Festive Eda": {
+      "filename": "festive_eda",
+      "cacheKey": "d4cce731",
+      "lastUpdated": "2025-08-31T14:14:31.491Z",
+      "fileExists": true,
+      "fileSizeBytes": 837434,
+      "totalBuilds": 3000,
+      "validData": true,
+      "accessCount": 0,
+      "lastAccessed": "2025-08-31T14:14:31.491Z"
+    },
+    "Vildred": {
+      "filename": "vildred",
+      "cacheKey": "5f5a6dd3",
+      "lastUpdated": "2025-09-01T01:54:39.879Z",
+      "fileExists": true,
+      "fileSizeBytes": 832462,
+      "totalBuilds": 3000,
+      "validData": true,
+      "accessCount": 0,
+      "lastAccessed": "2025-09-01T01:54:39.879Z"
+    },
+    "Fenne": {
+      "filename": "fenne",
+      "cacheKey": "dc03487f",
+      "lastUpdated": "2025-09-01T17:03:22.771Z",
+      "fileExists": true,
+      "fileSizeBytes": 843374,
+      "totalBuilds": 3000,
+      "validData": true,
+      "accessCount": 0,
+      "lastAccessed": "2025-09-01T17:03:22.771Z"
+    },
+    "Tamarinne": {
+      "filename": "tamarinne",
+      "cacheKey": "dd2ec4b7",
+      "lastUpdated": "2025-09-01T18:57:55.159Z",
+      "fileExists": true,
+      "fileSizeBytes": 832653,
+      "totalBuilds": 3000,
+      "validData": true,
+      "accessCount": 0,
+      "lastAccessed": "2025-09-01T18:57:55.159Z"
+    },
+    "Belian": {
+      "filename": "belian",
+      "cacheKey": "b6f82753",
+      "lastUpdated": "2025-09-03T04:14:04.590Z",
+      "fileExists": true,
+      "fileSizeBytes": 820400,
+      "totalBuilds": 3000,
+      "validData": true,
+      "accessCount": 0,
+      "lastAccessed": "2025-09-03T04:14:04.590Z"
+    },
+    "Harsetti": {
+      "filename": "harsetti",
+      "cacheKey": "20c10d18",
+      "lastUpdated": "2025-09-03T05:13:11.689Z",
+      "fileExists": true,
+      "fileSizeBytes": 831090,
+      "totalBuilds": 3000,
+      "validData": true,
+      "accessCount": 0,
+      "lastAccessed": "2025-09-03T05:13:11.689Z"
+    },
+    "Aria": {
+      "filename": "aria",
+      "cacheKey": "aafa7ed7",
+      "lastUpdated": "2025-09-03T11:35:37.217Z",
+      "fileExists": true,
+      "fileSizeBytes": 831869,
+      "totalBuilds": 3000,
+      "validData": true,
+      "accessCount": 0,
+      "lastAccessed": "2025-09-03T11:35:37.217Z"
+    },
+    "Twisted Eidolon Kayron": {
+      "filename": "twisted_eidolon_kayron",
+      "cacheKey": "ca118f87",
+      "lastUpdated": "2025-09-04T00:58:53.923Z",
+      "fileExists": true,
+      "fileSizeBytes": 853870,
+      "totalBuilds": 3000,
+      "validData": true,
+      "accessCount": 0,
+      "lastAccessed": "2025-09-04T00:58:53.923Z"
+    },
+    "Aram": {
+      "filename": "aram",
+      "cacheKey": "59b82aa4",
+      "lastUpdated": "2025-09-04T02:31:06.142Z",
+      "fileExists": true,
+      "fileSizeBytes": 824119,
+      "totalBuilds": 3000,
+      "validData": true,
+      "accessCount": 0,
+      "lastAccessed": "2025-09-04T02:31:06.142Z"
     }
   },
-  "totalHeroes": 213,
-  "successfulHeroes": 213,
+  "totalHeroes": 232,
+  "successfulHeroes": 232,
   "failedHeroes": [],
-  "cacheSize": 213,
-  "totalDiskUsage": 7.33
+  "cacheSize": 232,
+  "totalDiskUsage": 22.39
 }
