@@ -101,6 +101,16 @@ const COMMUNITY_ABBREVIATIONS = {
 	'stene': 'Specter Tenebria',
 	'mltenebria': Math.random() < 0.5 ? 'Specter Tenebria' : 'Witch of the Mere Tenebria',
 	'mltene': Math.random() < 0.5 ? 'Specter Tenebria' : 'Witch of the Mere Tenebria',
+	'2beru': 'Lady of the Scales',
+	'lady': 'Lady of the Scales',
+	'lmeru': 'Lady of the Scales',
+	'light meru': 'Lady of the Scales',
+	'dark meru': 'Archdemon\'s Shadow',
+	'ameru': 'Archdemon\'s Shadow',
+	'techron': 'Twisted Eidolon Kayron',
+	'spez': 'Specimen Sez',
+	'djb': 'Desert Jewel Basar',
+	'ddr': 'Death Dealer Ray',
 };
 
 // Normalize text for better matching
