@@ -111,6 +111,11 @@ const COMMUNITY_ABBREVIATIONS = {
 	'spez': 'Specimen Sez',
 	'djb': 'Desert Jewel Basar',
 	'ddr': 'Death Dealer Ray',
+	'grass': 'Genesis Ras',
+	'gras': 'Genesis Ras',
+	'mlras': 'Genesis Ras',
+	'mlluluca': 'Top Model Luluca',
+	'tomoca': 'Top Model Luluca',
 };
 
 // Normalize text for better matching
