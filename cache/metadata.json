@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "lastGlobalUpdate": "2025-09-13T02:45:06.353Z",
+  "lastGlobalUpdate": "2025-09-15T23:49:16.038Z",
   "heroes": {
     "Abigail": {
       "filename": "abigail",
@@ -143,8 +143,8 @@
       "fileExists": true,
       "totalBuilds": 0,
       "validData": true,
-      "accessCount": 12,
-      "lastAccessed": "2025-09-12T05:39:19.545Z"
+      "accessCount": 13,
+      "lastAccessed": "2025-09-17T20:03:28.345Z"
     },
     "Cerise": {
       "filename": "cerise",
@@ -347,8 +347,8 @@
       "fileExists": true,
       "totalBuilds": 0,
       "validData": true,
-      "accessCount": null,
-      "lastAccessed": "2025-08-30T15:55:08.431Z"
+      "accessCount": 1,
+      "lastAccessed": "2025-09-18T20:51:08.897Z"
     },
     "Diene": {
       "filename": "diene",
@@ -487,8 +487,8 @@
       "fileExists": true,
       "totalBuilds": 0,
       "validData": true,
-      "accessCount": 1,
-      "lastAccessed": "2025-09-11T14:35:56.641Z"
+      "accessCount": 2,
+      "lastAccessed": "2025-09-18T20:47:34.473Z"
     },
     "Enott": {
       "filename": "enott",
@@ -547,8 +547,8 @@
       "fileExists": true,
       "totalBuilds": 0,
       "validData": true,
-      "accessCount": null,
-      "lastAccessed": "2025-09-09T22:00:20.107Z"
+      "accessCount": 1,
+      "lastAccessed": "2025-09-17T22:15:42.014Z"
     },
     "Fighter Maya": {
       "filename": "fighter_maya",
@@ -725,8 +725,8 @@
       "fileExists": true,
       "totalBuilds": 0,
       "validData": true,
-      "accessCount": null,
-      "lastAccessed": "2025-09-01T02:09:37.604Z"
+      "accessCount": 1,
+      "lastAccessed": "2025-09-21T04:49:51.787Z"
     },
     "Inheritor Amiki": {
       "filename": "inheritor_amiki",
@@ -947,8 +947,8 @@
       "fileExists": true,
       "totalBuilds": 0,
       "validData": true,
-      "accessCount": null,
-      "lastAccessed": "2025-08-25T17:45:05.754Z"
+      "accessCount": 1,
+      "lastAccessed": "2025-09-18T01:31:20.803Z"
     },
     "Little Queen Charlotte": {
       "filename": "little_queen_charlotte",
@@ -1140,7 +1140,9 @@
       "dataFound": true,
       "fileExists": true,
       "totalBuilds": 0,
-      "validData": true
+      "validData": true,
+      "accessCount": null,
+      "lastAccessed": "2025-09-17T20:15:54.238Z"
     },
     "Mucacha": {
       "filename": "mucacha",
@@ -1861,8 +1863,8 @@
       "fileSizeBytes": 849180,
       "totalBuilds": 3000,
       "validData": true,
-      "accessCount": 5,
-      "lastAccessed": "2025-09-15T04:40:07.245Z"
+      "accessCount": 6,
+      "lastAccessed": "2025-09-20T01:41:14.604Z"
     },
     "Helen": {
       "filename": "helen",
@@ -1982,8 +1984,8 @@
       "fileSizeBytes": 832462,
       "totalBuilds": 3000,
       "validData": true,
-      "accessCount": 0,
-      "lastAccessed": "2025-09-01T01:54:39.879Z"
+      "accessCount": 1,
+      "lastAccessed": "2025-09-20T17:16:58.337Z"
     },
     "Fenne": {
       "filename": "fenne",
@@ -1993,8 +1995,8 @@
       "fileSizeBytes": 843374,
       "totalBuilds": 3000,
       "validData": true,
-      "accessCount": 3,
-      "lastAccessed": "2025-09-14T21:38:53.679Z"
+      "accessCount": 4,
+      "lastAccessed": "2025-09-16T17:36:08.134Z"
     },
     "Tamarinne": {
       "filename": "tamarinne",
@@ -2015,8 +2017,8 @@
       "fileSizeBytes": 820400,
       "totalBuilds": 3000,
       "validData": true,
-      "accessCount": 5,
-      "lastAccessed": "2025-09-15T04:58:55.862Z"
+      "accessCount": 6,
+      "lastAccessed": "2025-09-17T03:57:12.261Z"
     },
     "Harsetti": {
       "filename": "harsetti",
@@ -2070,8 +2072,8 @@
       "fileSizeBytes": 848482,
       "totalBuilds": 1172,
       "validData": true,
-      "accessCount": 2,
-      "lastAccessed": "2025-09-12T03:27:12.506Z"
+      "accessCount": 3,
+      "lastAccessed": "2025-09-17T20:37:08.941Z"
     },
     "Setsuka": {
       "filename": "setsuka",
@@ -2081,8 +2083,8 @@
       "fileSizeBytes": 834726,
       "totalBuilds": 151,
       "validData": true,
-      "accessCount": 5,
-      "lastAccessed": "2025-09-12T06:10:18.536Z"
+      "accessCount": 7,
+      "lastAccessed": "2025-09-20T00:17:53.196Z"
     },
     "Jenua": {
       "filename": "jenua",
@@ -2136,8 +2138,8 @@
       "fileSizeBytes": 828620,
       "totalBuilds": 3000,
       "validData": true,
-      "accessCount": 1,
-      "lastAccessed": "2025-09-09T01:46:31.479Z"
+      "accessCount": 2,
+      "lastAccessed": "2025-09-20T00:41:11.872Z"
     },
     "Astromancer Elena": {
       "filename": "astromancer_elena",
@@ -2204,11 +2206,33 @@
       "validData": true,
       "accessCount": 0,
       "lastAccessed": "2025-09-13T02:45:06.353Z"
+    },
+    "Ras": {
+      "filename": "ras",
+      "cacheKey": "1c280670",
+      "lastUpdated": "2025-09-15T23:47:12.263Z",
+      "fileExists": true,
+      "fileSizeBytes": 812435,
+      "totalBuilds": 11,
+      "validData": true,
+      "accessCount": 0,
+      "lastAccessed": "2025-09-15T23:47:12.263Z"
+    },
+    "Genesis Ras": {
+      "filename": "genesis_ras",
+      "cacheKey": "6ce35361",
+      "lastUpdated": "2025-09-15T23:49:16.038Z",
+      "fileExists": true,
+      "fileSizeBytes": 845316,
+      "totalBuilds": 381,
+      "validData": true,
+      "accessCount": 4,
+      "lastAccessed": "2025-09-21T04:22:03.770Z"
     }
   },
-  "totalHeroes": 245,
-  "successfulHeroes": 245,
+  "totalHeroes": 247,
+  "successfulHeroes": 247,
   "failedHeroes": [],
-  "cacheSize": 245,
-  "totalDiskUsage": 32.81
+  "cacheSize": 247,
+  "totalDiskUsage": 34.39
 }
