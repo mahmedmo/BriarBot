@@ -434,7 +434,7 @@ async function getHeroWithDeduplication(heroName, message) {
 				// Return a special indicator for "character exists but no data"
 				return {
 					noData: true,
-					message: `🌫️   **${heroName}** lingers in the shadows... not enough data has been gathered yet.`
+					message: `🕸️   **${heroName}** lingers in the shadows... not enough data has been gathered yet.`
 				};
 			}
 
