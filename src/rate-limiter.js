@@ -11,8 +11,9 @@ class RateLimiter extends EventEmitter {
             maxDelay: options.maxDelay || 300000, // 5 minutes
             jitterFactor: options.jitterFactor || 0.1,
             backoffMultiplier: options.backoffMultiplier || 2,
-            circuitBreakerThreshold: options.circuitBreakerThreshold || 10,
-            circuitBreakerResetTime: options.circuitBreakerResetTime || 600000, // 10 minutes
+            circuitBreakerThreshold: options.circuitBreakerThreshold || 25, // Increased from 10
+            circuitBreakerResetTime: options.circuitBreakerResetTime || 300000, // 5 minutes instead of 10
+            circuitBreakerProbeChance: options.circuitBreakerProbeChance || 0.3, // 30% probe chance
             successRateThreshold: options.successRateThreshold || 0.1 // 10% success rate to maintain aggressive mode
         };
         
@@ -31,8 +32,11 @@ class RateLimiter extends EventEmitter {
         // Circuit breaker state
         this.circuitBreaker = {
             isOpen: false,
+            isHalfOpen: false,
             openedAt: null,
-            failureCount: 0
+            failureCount: 0,
+            halfOpenSuccesses: 0,
+            halfOpenAttempts: 0
         };
         
         // Adaptive strategies based on response patterns
@@ -129,66 +133,106 @@ class RateLimiter extends EventEmitter {
     updateApiHealth(statusCode) {
         const now = Date.now();
         this.apiHealth.totalRequests++;
-        
+
         // Reset window if needed
         if (now - this.apiHealth.windowStart > this.apiHealth.windowSize) {
             this.apiHealth.windowStart = now;
             this.apiHealth.requestsThisWindow = 0;
         }
         this.apiHealth.requestsThisWindow++;
-        
+
         if (statusCode === 200 || statusCode === null) {
             this.apiHealth.successfulRequests++;
             this.apiHealth.lastSuccessTime = now;
             this.apiHealth.consecutive403s = 0;
             this.apiHealth.consecutive429s = 0;
-            this.circuitBreaker.failureCount = 0;
-        } else if (statusCode === 403) {
-            this.apiHealth.consecutive403s++;
+
+            // Handle half-open state
+            if (this.circuitBreaker.isHalfOpen) {
+                this.circuitBreaker.halfOpenSuccesses++;
+                this.circuitBreaker.halfOpenAttempts++;
+
+                // If we get 3 successes in half-open, close the circuit
+                if (this.circuitBreaker.halfOpenSuccesses >= 3) {
+                    this.circuitBreaker.isOpen = false;
+                    this.circuitBreaker.isHalfOpen = false;
+                    this.circuitBreaker.failureCount = 0;
+                    this.circuitBreaker.halfOpenSuccesses = 0;
+                    this.circuitBreaker.halfOpenAttempts = 0;
+
+                    this.emit('circuitBreakerClose', {
+                        timestamp: now,
+                        reason: 'half-open-success'
+                    });
+                }
+            } else {
+                this.circuitBreaker.failureCount = 0;
+            }
+        } else if (statusCode === 403 || statusCode === 429) {
+            // Only count rate limit errors (403/429) as real failures
+            if (statusCode === 403) {
+                this.apiHealth.consecutive403s++;
+            } else if (statusCode === 429) {
+                this.apiHealth.consecutive429s++;
+            }
+
             this.circuitBreaker.failureCount++;
-        } else if (statusCode === 429) {
-            this.apiHealth.consecutive429s++;
-            this.circuitBreaker.failureCount++;
+
+            // If in half-open and we fail, go back to open
+            if (this.circuitBreaker.isHalfOpen) {
+                this.circuitBreaker.isHalfOpen = false;
+                this.circuitBreaker.isOpen = true;
+                this.circuitBreaker.openedAt = now;
+                this.circuitBreaker.halfOpenSuccesses = 0;
+                this.circuitBreaker.halfOpenAttempts = 0;
+
+                this.emit('circuitBreakerOpen', {
+                    failures: this.circuitBreaker.failureCount,
+                    timestamp: now,
+                    reason: 'half-open-failure'
+                });
+            }
         }
-        
+        // Don't count network errors (ECONNRESET, ETIMEDOUT, etc.) as circuit breaker failures
+
         // Check circuit breaker
         this.checkCircuitBreaker();
-        
+
         // Adapt strategy based on health
         this.adaptStrategy();
     }
     
     /**
-     * Check if circuit breaker should be opened/closed
+     * Check if circuit breaker should be opened/closed/half-opened
      */
     checkCircuitBreaker() {
         const now = Date.now();
-        
+
         // Check if we should open the circuit breaker
-        if (!this.circuitBreaker.isOpen && 
+        if (!this.circuitBreaker.isOpen && !this.circuitBreaker.isHalfOpen &&
             this.circuitBreaker.failureCount >= this.config.circuitBreakerThreshold) {
             this.circuitBreaker.isOpen = true;
             this.circuitBreaker.openedAt = now;
             this.currentStrategy = this.strategies.CIRCUIT_BREAKER;
-            
+
             this.emit('circuitBreakerOpen', {
                 failures: this.circuitBreaker.failureCount,
-                timestamp: now
+                timestamp: now,
+                reason: 'threshold-exceeded'
             });
-            
         }
-        
-        // Check if we should close the circuit breaker
-        if (this.circuitBreaker.isOpen && 
+
+        // Check if we should enter half-open state (after reset time)
+        if (this.circuitBreaker.isOpen && !this.circuitBreaker.isHalfOpen &&
             now - this.circuitBreaker.openedAt > this.config.circuitBreakerResetTime) {
+            this.circuitBreaker.isHalfOpen = true;
             this.circuitBreaker.isOpen = false;
-            this.circuitBreaker.openedAt = null;
-            this.circuitBreaker.failureCount = 0;
-            
-            this.emit('circuitBreakerClose', {
+            this.circuitBreaker.halfOpenSuccesses = 0;
+            this.circuitBreaker.halfOpenAttempts = 0;
+
+            this.emit('circuitBreakerHalfOpen', {
                 timestamp: now
             });
-            
         }
     }
     
@@ -233,9 +277,9 @@ class RateLimiter extends EventEmitter {
      * @returns {Object}
      */
     getHealthStats() {
-        const successRate = this.apiHealth.totalRequests > 0 ? 
+        const successRate = this.apiHealth.totalRequests > 0 ?
             (this.apiHealth.successfulRequests / this.apiHealth.totalRequests * 100).toFixed(1) : '0';
-        
+
         return {
             strategy: this.currentStrategy,
             successRate: `${successRate}%`,
@@ -246,6 +290,8 @@ class RateLimiter extends EventEmitter {
             lastSuccessTime: new Date(this.apiHealth.lastSuccessTime).toISOString(),
             timeSinceLastSuccess: Date.now() - this.apiHealth.lastSuccessTime,
             circuitBreakerOpen: this.circuitBreaker.isOpen,
+            circuitBreakerHalfOpen: this.circuitBreaker.isHalfOpen,
+            circuitBreakerFailureCount: this.circuitBreaker.failureCount,
             requestsThisWindow: this.apiHealth.requestsThisWindow,
             windowStart: new Date(this.apiHealth.windowStart).toISOString()
         };
@@ -253,14 +299,27 @@ class RateLimiter extends EventEmitter {
     
     /**
      * Should we attempt a request given current state?
-     * @returns {boolean}
+     * @returns {Object} { allowed: boolean, reason: string }
      */
     shouldAttemptRequest() {
         if (this.circuitBreaker.isOpen) {
             // Allow occasional probe requests when circuit breaker is open
-            return Math.random() < 0.1; // 10% chance
+            const allowed = Math.random() < this.config.circuitBreakerProbeChance;
+            return {
+                allowed,
+                reason: allowed ? 'circuit-breaker-probe' : 'circuit-breaker-open'
+            };
         }
-        return true;
+
+        if (this.circuitBreaker.isHalfOpen) {
+            // In half-open state, allow some requests to test if API is healthy
+            return {
+                allowed: true,
+                reason: 'circuit-breaker-half-open'
+            };
+        }
+
+        return { allowed: true, reason: 'healthy' };
     }
     
     /**
@@ -303,15 +362,18 @@ class RateLimiter extends EventEmitter {
             requestsThisWindow: 0,
             windowSize: 60000
         };
-        
+
         this.circuitBreaker = {
             isOpen: false,
+            isHalfOpen: false,
             openedAt: null,
-            failureCount: 0
+            failureCount: 0,
+            halfOpenSuccesses: 0,
+            halfOpenAttempts: 0
         };
-        
+
         this.currentStrategy = this.strategies.MODERATE;
-        
+
         this.emit('reset', { timestamp: Date.now() });
     }
 }

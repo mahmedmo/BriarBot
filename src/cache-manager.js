@@ -164,7 +164,7 @@ class CacheManager {
 
     /**
      * Retrieve cached hero image
-     * @param {string} heroName 
+     * @param {string} heroName
      * @returns {Buffer|null}
      */
     getCachedHeroImage(heroName) {
@@ -187,6 +187,44 @@ class CacheManager {
             return imageBuffer;
         } catch (error) {
             console.error(`Failed to read cached image for ${heroName}:`, error);
+            return null;
+        }
+    }
+
+    /**
+     * Retrieve stale cached hero image (even if expired)
+     * @param {string} heroName
+     * @returns {Object|null} { imageBuffer: Buffer, age: number, isStale: boolean }
+     */
+    getStaleCachedHeroImage(heroName) {
+        try {
+            const filename = this.generateFilename(heroName);
+            const filePath = path.join(this.heroImagesDir, `${filename}.png`);
+            const heroMetadata = this.metadata.heroes[heroName];
+
+            if (!heroMetadata || !fs.existsSync(filePath)) {
+                return null;
+            }
+
+            const imageBuffer = fs.readFileSync(filePath);
+            const lastUpdated = new Date(heroMetadata.lastUpdated);
+            const now = new Date();
+            const age = now - lastUpdated;
+            const isStale = age > this.defaultTTL;
+
+            // Update access metadata
+            heroMetadata.accessCount = (heroMetadata.accessCount || 0) + 1;
+            heroMetadata.lastAccessed = new Date().toISOString();
+            this.saveMetadata();
+
+            return {
+                imageBuffer,
+                age,
+                isStale,
+                lastUpdated: heroMetadata.lastUpdated
+            };
+        } catch (error) {
+            console.error(`Failed to read stale cache for ${heroName}:`, error);
             return null;
         }
     }

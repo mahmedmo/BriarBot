@@ -162,16 +162,21 @@ const rateLimiter = new RateLimiter({
 	baseDelay: 1000,
 	maxDelay: 300000, // 5 minutes max
 	jitterFactor: 0.15,
-	circuitBreakerThreshold: 15,
-	circuitBreakerResetTime: 900000 // 15 minutes
+	circuitBreakerThreshold: 25, // More forgiving threshold
+	circuitBreakerResetTime: 300000, // 5 minutes instead of 15
+	circuitBreakerProbeChance: 0.3 // 30% probe chance when open
 });
 
 rateLimiter.on('circuitBreakerOpen', (data) => {
-	console.log(`Circuit breaker open: ${data.failures} failures`);
+	console.log(`🔴 Circuit breaker OPEN: ${data.failures} failures (${data.reason})`);
 });
 
-rateLimiter.on('circuitBreakerClose', () => {
-	console.log('Circuit breaker closed');
+rateLimiter.on('circuitBreakerHalfOpen', (data) => {
+	console.log(`🟡 Circuit breaker HALF-OPEN: Testing API health`);
+});
+
+rateLimiter.on('circuitBreakerClose', (data) => {
+	console.log(`🟢 Circuit breaker CLOSED: API recovered (${data.reason || 'timeout'})`);
 });
 
 
@@ -328,8 +333,17 @@ async function processCommand(commandData) {
 				name: `${characterName.replace(/\s+/g, '_')}.png`
 			});
 
+			// Create appropriate message based on cache status
+			let displayMessage = `☾   ${characterName}`;
+
+			if (result.isStale) {
+				displayMessage = `☾   ${characterName}\n⚠️ *Showing older data (${result.daysOld} day${result.daysOld > 1 ? 's' : ''} old) - API currently unavailable*`;
+			} else if (result.fromCache) {
+				displayMessage = `☾   ${characterName} (cached)`;
+			}
+
 			await loadingMessage.edit({
-				content: `☾   ${characterName}`,
+				content: displayMessage,
 				files: [attachment]
 			});
 		} else {
@@ -390,17 +404,35 @@ async function getHeroWithDeduplication(heroName, message) {
 		}, REQUEST_TIMEOUT);
 
 		try {
-			// Check cache first
+			// Check fresh cache first
 			let screenshot = cacheManager.getCachedHeroImage(heroName);
 
 			if (screenshot) {
-				return { screenshot, fromCache: true };
+				console.log(`✅ Fresh cache hit for ${heroName}`);
+				return { screenshot, fromCache: true, isStale: false };
 			}
 
 			// Generate new image if not cached
 			const heroAnalysis = await analyzeHeroData(heroName);
 
+			// If API failed or was blocked, try stale cache as fallback
 			if (!heroAnalysis) {
+				console.log(`⚠️  API failed for ${heroName}, checking for stale cache...`);
+				const staleCache = cacheManager.getStaleCachedHeroImage(heroName);
+
+				if (staleCache && staleCache.imageBuffer) {
+					const daysOld = Math.floor(staleCache.age / (1000 * 60 * 60 * 24));
+					console.log(`📦 Using stale cache for ${heroName} (${daysOld} days old)`);
+					return {
+						screenshot: staleCache.imageBuffer,
+						fromCache: true,
+						isStale: true,
+						age: staleCache.age,
+						daysOld
+					};
+				}
+
+				console.error(`❌ No data available for ${heroName} (no fresh data, no stale cache)`);
 				return null;
 			}
 
@@ -409,7 +441,7 @@ async function getHeroWithDeduplication(heroName, message) {
 			// Cache the generated image
 			await cacheManager.cacheHeroImage(heroName, screenshot, heroAnalysis);
 
-			return { screenshot, fromCache: false };
+			return { screenshot, fromCache: false, isStale: false };
 
 		} finally {
 			// Clean up the ongoing request tracking and clear timeout
@@ -634,8 +666,18 @@ function addRandomParameters(url) {
 async function getPopularBuilds(heroName, retryCount = 0) {
 	try {
 		// Check if we should attempt the request
-		if (!rateLimiter.shouldAttemptRequest()) {
-			return { data: [] };
+		const requestCheck = rateLimiter.shouldAttemptRequest();
+		if (!requestCheck.allowed) {
+			console.log(`⚠️  Circuit breaker blocked request for ${heroName}: ${requestCheck.reason}`);
+			return {
+				data: [],
+				blocked: true,
+				reason: requestCheck.reason
+			};
+		}
+
+		if (requestCheck.reason !== 'healthy') {
+			console.log(`ℹ️  Request for ${heroName} allowed: ${requestCheck.reason}`);
 		}
 
 
@@ -1086,6 +1128,8 @@ const SET_ASSETS = {
 	"set_rage": path.join(__dirname, '..', 'assets', 'setrage.png'),
 	"set_res": path.join(__dirname, '..', 'assets', 'setresist.png'),
 	"set_revenge": path.join(__dirname, '..', 'assets', 'setrevenge.png'),
+	"set_reversal": path.join(__dirname, '..', 'assets', 'setreversal.png'),
+	"set_riposte": path.join(__dirname, '..', 'assets', 'setriposte.png'),
 	"set_scar": path.join(__dirname, '..', 'assets', 'setinjury.png'),
 	"set_speed": path.join(__dirname, '..', 'assets', 'setspeed.png'),
 	"set_vampire": path.join(__dirname, '..', 'assets', 'setlifesteal.png'),
@@ -1154,7 +1198,7 @@ async function loadGameData(retryCount = 0) {
 
 
 function convertToFullSets(sets) {
-	const fourPieceSets = ["set_att", "set_counter", "set_cri_dmg", "set_rage", "set_revenge", "set_scar", "set_speed", "set_vampire", "set_shield"];
+	const fourPieceSets = ["set_att", "set_counter", "set_cri_dmg", "set_rage", "set_revenge", "set_reversal", "set_riposte", "set_scar", "set_speed", "set_vampire", "set_shield"];
 	const result = {};
 
 	for (const [setName, count] of Object.entries(sets)) {
@@ -1187,6 +1231,8 @@ const SET_NAMES = {
 	"set_rage": "Rage",
 	"set_res": "Resist",
 	"set_revenge": "Revenge",
+	"set_reversal": "Reversal",
+	"set_riposte": "Riposte",
 	"set_scar": "Injury",
 	"set_vampire": "Lifesteal",
 	"set_shield": "Protection",
@@ -1203,7 +1249,7 @@ const TWO_PIECE_SETS = new Set([
 
 const FOUR_PIECE_SETS = new Set([
 	"set_speed", "set_att", "set_shield", "set_cri_dmg", "set_counter",
-	"set_vampire", "set_rage", "set_revenge", "set_scar"
+	"set_vampire", "set_rage", "set_revenge", "set_reversal", "set_riposte", "set_scar"
 ]);
 
 // Function to create a broken set icon using the asset
@@ -1314,12 +1360,12 @@ function generateSetHTML(sets) {
 	return '<span class="broken-sets">Broken</span>';
 }
 
-async function analyzeHeroData(heroName) {
+async function analyzeHeroData(heroName, retryCount = 0) {
 	// Check cache first
 	const cacheKey = `hero_${heroName.toLowerCase()}`;
 	const cachedResult = getCachedData(cacheKey);
 	if (cachedResult) {
-		console.log(`Cache hit for ${heroName}`);
+		console.log(`📋 Memory cache hit for ${heroName}`);
 		return cachedResult;
 	}
 
@@ -1334,17 +1380,24 @@ async function analyzeHeroData(heroName) {
 		// Use the matched hero name or the original if no match found
 		const actualHeroName = matchedHero ? heroData[matchedHero].name || matchedHero : heroName;
 
-		console.log(`Hero name mapping: "${heroName}" -> "${actualHeroName}" (matched: ${!!matchedHero})`);
+		console.log(`🔍 Hero name mapping: "${heroName}" -> "${actualHeroName}" (matched: ${!!matchedHero})`);
 
-		// If no match found in heroData, this might be a newer hero not in the cached data
-		// Try the API with the original input name first
+		// Try the API with the mapped name
 		let rawBuilds = await getPopularBuilds(actualHeroName);
 
-		// If we got empty data but successfully mapped a hero, try again (could be rate limiter being overly cautious)
-		if ((!rawBuilds.data || rawBuilds.data.length === 0) && matchedHero) {
-			console.log(`Retrying for ${actualHeroName} - valid hero mapping but got empty data`);
+		// Handle circuit breaker blocking with retry
+		if (rawBuilds.blocked && retryCount < 2) {
+			const waitTime = retryCount === 0 ? 2000 : 5000; // 2s first retry, 5s second retry
+			console.log(`🔄 Circuit breaker blocked, retrying in ${waitTime / 1000}s (attempt ${retryCount + 1}/2)...`);
+			await new Promise(resolve => setTimeout(resolve, waitTime));
+			return analyzeHeroData(heroName, retryCount + 1);
+		}
+
+		// If we got empty data but successfully mapped a hero, try once more
+		if ((!rawBuilds.data || rawBuilds.data.length === 0) && matchedHero && retryCount === 0) {
+			console.log(`🔄 Retrying for ${actualHeroName} - valid hero mapping but got empty data`);
 			await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds
-			rawBuilds = await getPopularBuilds(actualHeroName);
+			return analyzeHeroData(heroName, retryCount + 1);
 		}
 
 		// Process the build data
@@ -1945,6 +1998,55 @@ if (require.main === module) {
 
 	client.on('messageCreate', async (message) => {
 		if (message.author.bot) return;
+
+		// Admin command: !botstatus
+		if (message.content.toLowerCase() === '!botstatus') {
+			const health = rateLimiter.getHealthStats();
+			const cacheStats = cacheManager.getCacheStats();
+
+			const statusEmbed = {
+				title: '🤖 Briar Bot Status',
+				color: health.circuitBreakerOpen ? 0xFF0000 : health.circuitBreakerHalfOpen ? 0xFFAA00 : 0x00FF00,
+				fields: [
+					{
+						name: '📊 API Health',
+						value: `**Strategy:** ${health.strategy}\n**Success Rate:** ${health.successRate}\n**Total Requests:** ${health.totalRequests}\n**Successful:** ${health.successfulRequests}`,
+						inline: true
+					},
+					{
+						name: '🔌 Circuit Breaker',
+						value: `**Status:** ${health.circuitBreakerOpen ? '🔴 OPEN' : health.circuitBreakerHalfOpen ? '🟡 HALF-OPEN' : '🟢 CLOSED'}\n**Failures:** ${health.circuitBreakerFailureCount}\n**403s:** ${health.consecutive403s}\n**429s:** ${health.consecutive429s}`,
+						inline: true
+					},
+					{
+						name: '💾 Cache Stats',
+						value: `**Images Cached:** ${cacheStats.totalImages}\n**Valid Images:** ${cacheStats.validImages}\n**Total Size:** ${cacheStats.totalSizeMB} MB\n**Cache Hits:** ${cacheStats.cacheHitsSinceStart}`,
+						inline: true
+					},
+					{
+						name: '⏱️ Timing',
+						value: `**Last Success:** <t:${Math.floor(new Date(health.lastSuccessTime).getTime() / 1000)}:R>\n**Time Since:** ${Math.floor(health.timeSinceLastSuccess / 1000)}s`,
+						inline: false
+					},
+					{
+						name: '🔄 Queue Status',
+						value: `**Queue Length:** ${commandQueue.length}\n**Processing:** ${processingCommands.size}\n**Active Connections:** ${activeConnections}`,
+						inline: false
+					}
+				],
+				timestamp: new Date().toISOString()
+			};
+
+			await message.reply({ embeds: [statusEmbed] });
+			return;
+		}
+
+		// Admin command: !resetcircuit (for emergencies)
+		if (message.content.toLowerCase() === '!resetcircuit') {
+			rateLimiter.reset();
+			await message.reply('🔄 Circuit breaker has been reset. API requests will resume normally.');
+			return;
+		}
 
 		if (message.content.startsWith('!') && message.content.length > 1) {
 			// Enhanced rate limiting check
