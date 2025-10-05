@@ -690,8 +690,7 @@ async function getPopularBuilds(heroName, retryCount = 0) {
 
 		requestCounter++;
 
-		// ULTRA TECHNIQUE ROTATION - 50 different combinations for maximum stealth
-		const techniqueSet = requestCounter % 50;
+		// Vary browser fingerprints for natural traffic patterns
 		const region = getRandomElement(['US', 'EU', 'ASIA', 'OCEANIA', 'AFRICA', 'SOUTH_AMERICA']);
 
 		// Advanced fingerprint randomization
@@ -702,36 +701,11 @@ async function getPopularBuilds(heroName, retryCount = 0) {
 			edge: getRandomElement(['119.0.0.0', '120.0.0.0', '121.0.0.0'])
 		};
 
-		// EXTREME URL MANIPULATION
+		// Clean, reliable URL - no manipulation needed
 		let requestUrl = BUILDS_API;
 
-		// Multiple URL variations applied simultaneously
-		if (techniqueSet % 2 === 0) requestUrl = addRandomParameters(requestUrl);
-		if (techniqueSet % 3 === 0) {
-			const alterations = ['/.', '/..', '/./', '/../', '/./..', '/../.', '/...', '////'];
-			requestUrl = requestUrl + getRandomElement(alterations);
-		}
-		if (techniqueSet % 4 === 0) {
-			// Case manipulation of the entire URL path
-			const urlParts = requestUrl.split('/');
-			urlParts[urlParts.length - 1] = urlParts[urlParts.length - 1].split('').map((char, i) =>
-				i % 2 === 0 ? char.toUpperCase() : char.toLowerCase()
-			).join('');
-			requestUrl = urlParts.join('/');
-		}
-
-		// EXTREME HERO NAME MANIPULATION
+		// Clean hero name - no corruption
 		let processedHeroName = heroName;
-		if (techniqueSet % 5 === 0) processedHeroName = urlEncodeRandom(heroName);
-		if (techniqueSet % 6 === 0) processedHeroName = addNullByteVariation(processedHeroName);
-		if (techniqueSet % 7 === 0) {
-			// Double encoding
-			processedHeroName = encodeURIComponent(processedHeroName);
-		}
-		if (techniqueSet % 8 === 0) {
-			// Unicode normalization attacks
-			processedHeroName = heroName.normalize('NFD').replace(/[\\u0300-\\u036f]/g, '');
-		}
 
 		// ULTIMATE HEADER ARSENAL - Advanced browser simulation + ML evasion
 		const selectedBrowser = getRandomElement(['chrome', 'firefox', 'safari', 'edge']);
@@ -869,46 +843,33 @@ async function getPopularBuilds(heroName, retryCount = 0) {
 			}
 		});
 
-		// EXTREME HTTP METHOD VARIATIONS
-		const methods = ['POST', 'post', 'Post', 'pOST', 'PoSt', 'poST', 'POst', 'pOsT'];
-		const method = getRandomElement(methods);
-
-		// PROTOCOL CHAOS
-		const httpVersion = getRandomElement(['1.1', '2.0']);
+		// Standard HTTP method - reliable
+		const method = 'POST';
 
 
-		// MAXIMUM AXIOS CONFIGURATION - All options for maximum bypass
+		// Clean, reliable axios configuration
 		const axiosConfig = {
 			method: method,
 			url: requestUrl,
 			data: processedHeroName,
 			headers: aggressiveHeaders,
-			timeout: 25000, // Higher timeout for stability
+			timeout: 25000,
 			maxRedirects: 10,
 
-			// Aggressive connection management
+			// Standard connection management
 			httpAgent: new (require('http').Agent)({
-				keepAlive: false,
-				maxSockets: 1,
-				timeout: 25000,
-				freeSocketTimeout: 4000
+				keepAlive: true,
+				maxSockets: 5,
+				timeout: 25000
 			}),
 			httpsAgent: new (require('https').Agent)({
-				keepAlive: false,
-				maxSockets: 1,
-				timeout: 25000,
-				freeSocketTimeout: 4000,
-				secureProtocol: 'TLS_method'
-			}),
-
-			// Protocol specific options
-			...(httpVersion === '1.1' && {
-				httpVersion: '1.1',
-				insecureHTTPParser: true
+				keepAlive: true,
+				maxSockets: 5,
+				timeout: 25000
 			}),
 
 			// Response handling
-			validateStatus: (status) => status >= 200 && status < 500, // Accept more status codes
+			validateStatus: (status) => status >= 200 && status < 500,
 			transformResponse: [(data) => {
 				try {
 					return typeof data === 'string' ? JSON.parse(data) : data;
@@ -1403,9 +1364,15 @@ async function analyzeHeroData(heroName, retryCount = 0) {
 		// Process the build data
 		const buildData = processBuildData(rawBuilds, heroData, artifactData);
 
+		// If we got no valid build data, return null to trigger stale cache fallback
+		if (!buildData.stats) {
+			console.log(`⚠️  No valid build data for ${actualHeroName} - stats is null`);
+			return null;
+		}
+
 		const result = {
 			heroName: actualHeroName,
-			totalBuilds: rawBuilds.data.length,
+			totalBuilds: rawBuilds?.data?.length || 0,
 			topSets: buildData.stats.setPopularity?.slice(0, 3).map(set => ({
 				sets: set.sets,
 				percentage: set.percentage.toString()
