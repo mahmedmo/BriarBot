@@ -340,6 +340,9 @@ async function processCommand(commandData) {
 				content: displayMessage,
 				files: [attachment]
 			});
+		} else if (result && result.noData) {
+			// Character exists but no build data available
+			await loadingMessage.edit(result.message);
 		} else {
 			await loadingMessage.edit(`❌ I called for **${characterName}**... no one answered.`);
 		}
@@ -427,7 +430,12 @@ async function getHeroWithDeduplication(heroName, message) {
 				}
 
 				console.error(`❌ No data available for ${heroName} (no fresh data, no stale cache)`);
-				return null;
+
+				// Return a special indicator for "character exists but no data"
+				return {
+					noData: true,
+					message: `🌫️   **${heroName}** lingers in the shadows... not enough data has been gathered yet.`
+				};
 			}
 
 			screenshot = await generateReportImage(heroAnalysis);
