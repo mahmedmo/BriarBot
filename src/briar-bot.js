@@ -336,12 +336,6 @@ async function processCommand(commandData) {
 			// Create appropriate message based on cache status
 			let displayMessage = `☾   ${characterName}`;
 
-			if (result.isStale) {
-				displayMessage = `☾   ${characterName}\n⚠️ *Showing older data (${result.daysOld} day${result.daysOld > 1 ? 's' : ''} old) - API currently unavailable*`;
-			} else if (result.fromCache) {
-				displayMessage = `☾   ${characterName} (cached)`;
-			}
-
 			await loadingMessage.edit({
 				content: displayMessage,
 				files: [attachment]
