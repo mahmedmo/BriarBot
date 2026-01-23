@@ -131,7 +131,7 @@ async function testAnnouncements(client, type = 'both', testChannel = null)
         const channelIds = getAnnouncementChannels();
         if (!channelIds.includes(testChannel.id))
         {
-            await testChannel.send('🕸️ This channel is not configured for guild war announcements. Check your `.env` file.');
+            await testChannel.send(`🕸️ This channel (\`${testChannel.id}\`) is not configured for guild war announcements. Check your \`.env\` file.`);
             return;
         }
     }
