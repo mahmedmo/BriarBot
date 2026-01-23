@@ -41,7 +41,7 @@ const DEFENSE_ANNOUNCEMENTS = [
     '🛡️ @everyone **War begins in 3 hours.** Watchful eyes gaze from afar. 🧵',
     '🛡️ @everyone **War begins in 3 hours.** The spirits grow restless. 🌑',
     '🛡️ @everyone **War begins in 3 hours.** Time thins like morning fog. ☾',
-    '🛡️ @everyone **War begins in 3 hours.** The witch's ravens circle overhead. 🕸️',
+    '🛡️ @everyone **War begins in 3 hours.** The witch\'s ravens circle overhead. 🕸️',
     '🛡️ @everyone **War begins in 3 hours.** Distant blades sing against stone. 🕯',
     '🛡️ @everyone **War begins in 3 hours.** The hour of reckoning draws near. 🧵',
     '🛡️ @everyone **War begins in 3 hours.** The barrier grows thin. 🌑',
