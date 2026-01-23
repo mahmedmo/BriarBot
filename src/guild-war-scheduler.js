@@ -83,6 +83,7 @@ async function postAnnouncement(client, message)
             if (channel && channel.isTextBased())
             {
                 await channel.send(message);
+                console.log(`[Guild War] Announcement sent to ${channelId}`);
             }
         }
         catch (error)
@@ -131,7 +132,7 @@ async function testAnnouncements(client, type = 'both', testChannel = null)
         const channelIds = getAnnouncementChannels();
         if (!channelIds.includes(testChannel.id))
         {
-            await testChannel.send(`🕸️ This channel (\`${testChannel.id}\`) is not configured for guild war announcements. Check your \`.env\` file.`);
+            console.error(`[Guild War Test] Channel ${testChannel.id} not in configured announcement channels`);
             return;
         }
     }
@@ -145,6 +146,7 @@ async function testAnnouncements(client, type = 'both', testChannel = null)
             try
             {
                 await testChannel.send(message);
+                console.log(`[Guild War Test] Attack announcement sent to ${testChannel.id}`);
             }
             catch (error)
             {
@@ -166,6 +168,7 @@ async function testAnnouncements(client, type = 'both', testChannel = null)
             try
             {
                 await testChannel.send(message);
+                console.log(`[Guild War Test] Defense announcement sent to ${testChannel.id}`);
             }
             catch (error)
             {
@@ -195,8 +198,12 @@ function initializeGuildWarScheduler(client)
         return;
     }
 
+    console.log(`[Guild War] Initializing scheduler for ${channels.length} channel(s): ${channels.join(', ')}`);
+
     scheduleAttackAnnouncements(client);
     scheduleDefenseAnnouncements(client);
+
+    console.log('[Guild War] Scheduler initialized - Mon/Wed/Fri (attack), Sun/Tue/Thu (defense) at 00:00 UTC');
 }
 
 module.exports = {
