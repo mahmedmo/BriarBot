@@ -14,15 +14,24 @@ A Discord bot that provides Epic Seven character build analysis and statistics.
 - **Popular Gear Sets** - Most used set combinations
 - **Artifact Recommendations** - Popular artifact choices
 - **Visual Reports** - Clean stat cards with build data
+- **Guild War Announcements** - Automated reminders for guild war attack and defense phases
 - **Server Integration** - Seamless discord server integration
 
 
 ## Commands
 
+**Character Builds:**
 ```
 !arbiter vildred    → Get Arbiter Vildred build data
 !luna               → Get Luna build data
 !seaside bellona    → Get Seaside Bellona build data
+```
+
+**Guild War Announcements (Admin Only):**
+```
+!testguildwar both     → Test both announcement types
+!testguildwar attack   → Test attack announcement
+!testguildwar defense  → Test defense announcement
 ```
 
 ## Setup
