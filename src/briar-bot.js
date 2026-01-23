@@ -9,6 +9,7 @@ const getHeroImageUrl = require('./fetch-hero');
 const { findBestCharacterMatch, getCharacterSuggestions } = require('./character-search');
 const CacheManager = require('./cache-manager');
 const RateLimiter = require('./rate-limiter');
+const { initializeGuildWarScheduler, testAnnouncements } = require('./guild-war-scheduler');
 require('dotenv').config();
 
 
@@ -1962,6 +1963,7 @@ if (require.main === module) {
 		console.log(`Logged in as ${client.user.tag}!`);
 		await loadGameData();
 		logMemoryUsage();
+		initializeGuildWarScheduler(client);
 
 	});
 
@@ -2014,6 +2016,26 @@ if (require.main === module) {
 		if (message.content.toLowerCase() === '!resetcircuit') {
 			rateLimiter.reset();
 			await message.reply('🔄 Circuit breaker has been reset. API requests will resume normally.');
+			return;
+		}
+
+		// Admin command: !testguildwar [attack|defense|both]
+		if (message.content.toLowerCase().startsWith('!testguildwar')) {
+			if (!message.member.permissions.has('Administrator')) {
+				await message.reply('🕸️ Only those who command the guild may test the war horns.');
+				return;
+			}
+
+			const args = message.content.split(' ');
+			const type = args[1]?.toLowerCase() || 'both';
+
+			if (!['attack', 'defense', 'both'].includes(type)) {
+				await message.reply('🕸️ Speak clearly: `!testguildwar [attack|defense|both]`');
+				return;
+			}
+
+			await message.reply('🧪 The witch summons the war spirits for testing...');
+			await testAnnouncements(client, type);
 			return;
 		}
 
