@@ -1,308 +1,132 @@
 {
   "version": "2.0",
-  "lastGlobalUpdate": "2025-10-03T20:02:28.120Z",
+  "lastGlobalUpdate": "2026-01-14T17:13:28.835Z",
   "heroes": {
-    "Aramintha": {
-      "filename": "aramintha",
-      "cacheKey": "834812f9",
-      "lastUpdated": "2025-09-06T01:00:23.837Z",
+    "Navy Captain Landy": {
+      "filename": "navy_captain_landy",
+      "cacheKey": "1d940e24",
+      "lastUpdated": "2025-12-28T03:36:14.033Z",
       "fileExists": true,
-      "fileSizeBytes": 834384,
+      "fileSizeBytes": 849498,
       "totalBuilds": 3000,
       "validData": true,
       "accessCount": 1,
-      "lastAccessed": "2025-09-29T04:22:41.421Z"
-    },
-    "Ray": {
-      "filename": "ray",
-      "cacheKey": "070dd723",
-      "lastUpdated": "2025-09-07T04:59:46.585Z",
-      "fileExists": true,
-      "fileSizeBytes": 824977,
-      "totalBuilds": 3000,
-      "validData": true,
-      "accessCount": 0,
-      "lastAccessed": "2025-09-07T04:59:46.585Z"
-    },
-    "Boss Arunka": {
-      "filename": "boss_arunka",
-      "cacheKey": "416ed601",
-      "lastUpdated": "2025-09-07T08:54:26.878Z",
-      "fileExists": true,
-      "fileSizeBytes": 841892,
-      "totalBuilds": 3000,
-      "validData": true,
-      "accessCount": 0,
-      "lastAccessed": "2025-09-07T08:54:26.878Z"
-    },
-    "Straze": {
-      "filename": "straze",
-      "cacheKey": "d4a0a7fa",
-      "lastUpdated": "2025-09-07T16:45:33.939Z",
-      "fileExists": true,
-      "fileSizeBytes": 828620,
-      "totalBuilds": 3000,
-      "validData": true,
-      "accessCount": 3,
-      "lastAccessed": "2025-09-29T02:52:10.955Z"
-    },
-    "Astromancer Elena": {
-      "filename": "astromancer_elena",
-      "cacheKey": "27e07136",
-      "lastUpdated": "2025-09-08T02:43:28.148Z",
-      "fileExists": true,
-      "fileSizeBytes": 843858,
-      "totalBuilds": 3000,
-      "validData": true,
-      "accessCount": 0,
-      "lastAccessed": "2025-09-08T02:43:28.148Z"
-    },
-    "Archdemon's Shadow": {
-      "filename": "archdemons_shadow",
-      "cacheKey": "f4d3dfdd",
-      "lastUpdated": "2025-09-09T19:26:39.598Z",
-      "fileExists": true,
-      "fileSizeBytes": 856523,
-      "totalBuilds": 3000,
-      "validData": true,
-      "accessCount": 1,
-      "lastAccessed": "2025-09-09T19:27:13.303Z"
-    },
-    "Sylvan Sage Vivian": {
-      "filename": "sylvan_sage_vivian",
-      "cacheKey": "be51092d",
-      "lastUpdated": "2025-09-09T22:30:01.646Z",
-      "fileExists": true,
-      "fileSizeBytes": 847162,
-      "totalBuilds": 3000,
-      "validData": true,
-      "accessCount": 1,
-      "lastAccessed": "2025-10-04T21:59:51.409Z"
-    },
-    "Angel of Light Angelica": {
-      "filename": "angel_of_light_angelica",
-      "cacheKey": "aac352fe",
-      "lastUpdated": "2025-09-12T13:36:18.419Z",
-      "fileExists": true,
-      "fileSizeBytes": 848459,
-      "totalBuilds": 3000,
-      "validData": true,
-      "accessCount": 0,
-      "lastAccessed": "2025-09-12T13:36:18.419Z"
-    },
-    "Successor Taeyou": {
-      "filename": "successor_taeyou",
-      "cacheKey": "8c2afc6f",
-      "lastUpdated": "2025-09-12T19:54:48.890Z",
-      "fileExists": true,
-      "fileSizeBytes": 844018,
-      "totalBuilds": 3000,
-      "validData": true,
-      "accessCount": 0,
-      "lastAccessed": "2025-09-12T19:54:48.890Z"
-    },
-    "Top Model Luluca": {
-      "filename": "top_model_luluca",
-      "cacheKey": "360e4814",
-      "lastUpdated": "2025-09-13T02:45:06.353Z",
-      "fileExists": true,
-      "fileSizeBytes": 842503,
-      "totalBuilds": 3000,
-      "validData": true,
-      "accessCount": 0,
-      "lastAccessed": "2025-09-13T02:45:06.353Z"
-    },
-    "Ras": {
-      "filename": "ras",
-      "cacheKey": "1c280670",
-      "lastUpdated": "2025-09-15T23:47:12.263Z",
-      "fileExists": true,
-      "fileSizeBytes": 812435,
-      "totalBuilds": 11,
-      "validData": true,
-      "accessCount": 0,
-      "lastAccessed": "2025-09-15T23:47:12.263Z"
-    },
-    "Genesis Ras": {
-      "filename": "genesis_ras",
-      "cacheKey": "6ce35361",
-      "lastUpdated": "2025-09-15T23:49:16.038Z",
-      "fileExists": true,
-      "fileSizeBytes": 845316,
-      "totalBuilds": 381,
-      "validData": true,
-      "accessCount": 6,
-      "lastAccessed": "2025-09-30T22:37:34.025Z"
-    },
-    "Pirate Captain Flan": {
-      "filename": "pirate_captain_flan",
-      "cacheKey": "73ce4d2c",
-      "lastUpdated": "2025-09-24T04:58:40.759Z",
-      "fileExists": true,
-      "fileSizeBytes": 835977,
-      "totalBuilds": 3000,
-      "validData": true,
-      "accessCount": 1,
-      "lastAccessed": "2025-09-24T04:58:49.183Z"
+      "lastAccessed": "2026-01-21T22:40:10.587Z"
     },
     "Bystander Hwayoung": {
       "filename": "bystander_hwayoung",
       "cacheKey": "02848ec0",
-      "lastUpdated": "2025-09-26T04:45:54.183Z",
+      "lastUpdated": "2025-12-30T04:02:40.600Z",
       "fileExists": true,
-      "fileSizeBytes": 853516,
-      "totalBuilds": 3000,
-      "validData": true,
-      "accessCount": 1,
-      "lastAccessed": "2025-09-26T04:45:56.173Z"
-    },
-    "Seaside Bellona": {
-      "filename": "seaside_bellona",
-      "cacheKey": "a9571f11",
-      "lastUpdated": "2025-09-26T05:52:07.883Z",
-      "fileExists": true,
-      "fileSizeBytes": 845361,
+      "fileSizeBytes": 854170,
       "totalBuilds": 3000,
       "validData": true,
       "accessCount": 0,
-      "lastAccessed": "2025-09-26T05:52:07.883Z"
+      "lastAccessed": "2025-12-30T04:02:40.600Z"
     },
-    "Lionheart Cermia": {
-      "filename": "lionheart_cermia",
-      "cacheKey": "573bc12d",
-      "lastUpdated": "2025-09-26T13:26:53.698Z",
+    "Guard Captain Krau": {
+      "filename": "guard_captain_krau",
+      "cacheKey": "f6141237",
+      "lastUpdated": "2025-12-30T18:56:45.400Z",
       "fileExists": true,
-      "fileSizeBytes": 841969,
+      "fileSizeBytes": 846977,
       "totalBuilds": 3000,
       "validData": true,
       "accessCount": 0,
-      "lastAccessed": "2025-09-26T13:26:53.698Z"
+      "lastAccessed": "2025-12-30T18:56:45.400Z"
     },
-    "Designer Lilibet": {
-      "filename": "designer_lilibet",
-      "cacheKey": "aaf2385d",
-      "lastUpdated": "2025-09-26T15:37:36.927Z",
+    "Requiem Roana": {
+      "filename": "requiem_roana",
+      "cacheKey": "ef61fae5",
+      "lastUpdated": "2026-01-01T04:17:45.533Z",
       "fileExists": true,
-      "fileSizeBytes": 840528,
+      "fileSizeBytes": 841765,
       "totalBuilds": 3000,
       "validData": true,
       "accessCount": 0,
-      "lastAccessed": "2025-09-26T15:37:36.927Z"
+      "lastAccessed": "2026-01-01T04:17:45.533Z"
     },
-    "Immortal Wukong": {
-      "filename": "immortal_wukong",
-      "cacheKey": "cf5f77af",
-      "lastUpdated": "2025-09-29T03:22:40.830Z",
+    "Shepherd of the Dark Diene": {
+      "filename": "shepherd_of_the_dark_diene",
+      "cacheKey": "d83fe3fd",
+      "lastUpdated": "2026-01-02T02:25:39.508Z",
       "fileExists": true,
-      "fileSizeBytes": 849489,
-      "totalBuilds": 3000,
+      "fileSizeBytes": 859559,
+      "totalBuilds": 63,
       "validData": true,
       "accessCount": 0,
-      "lastAccessed": "2025-09-29T03:22:40.830Z"
+      "lastAccessed": "2026-01-02T02:25:39.508Z"
     },
     "Empyrean Ilynav": {
       "filename": "empyrean_ilynav",
       "cacheKey": "8a92a87b",
-      "lastUpdated": "2025-09-29T03:58:29.319Z",
+      "lastUpdated": "2026-01-02T02:32:02.998Z",
       "fileExists": true,
-      "fileSizeBytes": 852169,
+      "fileSizeBytes": 849541,
       "totalBuilds": 3000,
       "validData": true,
       "accessCount": 0,
-      "lastAccessed": "2025-09-29T03:58:29.319Z"
+      "lastAccessed": "2026-01-02T02:32:02.998Z"
     },
-    "Abyssal Yufine": {
-      "filename": "abyssal_yufine",
-      "cacheKey": "e706d6e0",
-      "lastUpdated": "2025-09-29T17:01:24.489Z",
+    "Spirit Eye Celine": {
+      "filename": "spirit_eye_celine",
+      "cacheKey": "f3e1ee75",
+      "lastUpdated": "2026-01-02T23:55:54.301Z",
       "fileExists": true,
-      "fileSizeBytes": 840693,
+      "fileSizeBytes": 842852,
       "totalBuilds": 3000,
       "validData": true,
       "accessCount": 0,
-      "lastAccessed": "2025-09-29T17:01:24.489Z"
+      "lastAccessed": "2026-01-02T23:55:54.301Z"
     },
-    "Zio": {
-      "filename": "zio",
-      "cacheKey": "2eceb979",
-      "lastUpdated": "2025-09-30T04:07:51.161Z",
+    "Briar Witch Iseria": {
+      "filename": "briar_witch_iseria",
+      "cacheKey": "3a921003",
+      "lastUpdated": "2026-01-03T21:13:41.219Z",
       "fileExists": true,
-      "fileSizeBytes": 815416,
+      "fileSizeBytes": 850554,
       "totalBuilds": 3000,
       "validData": true,
       "accessCount": 0,
-      "lastAccessed": "2025-09-30T04:07:51.161Z"
+      "lastAccessed": "2026-01-03T21:13:41.219Z"
     },
-    "Brieg": {
-      "filename": "brieg",
-      "cacheKey": "5d522693",
-      "lastUpdated": "2025-09-30T16:23:49.362Z",
+    "New Moon Luna": {
+      "filename": "new_moon_luna",
+      "cacheKey": "d771bed1",
+      "lastUpdated": "2026-01-03T21:14:07.130Z",
       "fileExists": true,
-      "fileSizeBytes": 830847,
+      "fileSizeBytes": 840190,
       "totalBuilds": 3000,
       "validData": true,
       "accessCount": 0,
-      "lastAccessed": "2025-09-30T16:23:49.362Z"
+      "lastAccessed": "2026-01-03T21:14:07.130Z"
     },
-    "Blood Blade Karin": {
-      "filename": "blood_blade_karin",
-      "cacheKey": "54c6a886",
-      "lastUpdated": "2025-10-01T21:06:59.230Z",
+    "Twisted Eidolon Kayron": {
+      "filename": "twisted_eidolon_kayron",
+      "cacheKey": "ca118f87",
+      "lastUpdated": "2026-01-08T01:56:38.105Z",
       "fileExists": true,
-      "fileSizeBytes": 856313,
+      "fileSizeBytes": 855130,
       "totalBuilds": 3000,
       "validData": true,
       "accessCount": 0,
-      "lastAccessed": "2025-10-01T21:06:59.230Z"
+      "lastAccessed": "2026-01-08T01:56:38.105Z"
     },
-    "Arbiter Vildred": {
-      "filename": "arbiter_vildred",
-      "cacheKey": "f71d035c",
-      "lastUpdated": "2025-10-01T21:24:13.632Z",
+    "Festive Eda": {
+      "filename": "festive_eda",
+      "cacheKey": "d4cce731",
+      "lastUpdated": "2026-01-14T17:13:28.835Z",
       "fileExists": true,
-      "fileSizeBytes": 846137,
+      "fileSizeBytes": 835201,
       "totalBuilds": 3000,
       "validData": true,
       "accessCount": 0,
-      "lastAccessed": "2025-10-01T21:24:13.632Z"
-    },
-    "Fallen Cecilia": {
-      "filename": "fallen_cecilia",
-      "cacheKey": "f02d1c9c",
-      "lastUpdated": "2025-10-02T04:04:53.105Z",
-      "fileExists": true,
-      "fileSizeBytes": 822710,
-      "totalBuilds": 3000,
-      "validData": true,
-      "accessCount": 0,
-      "lastAccessed": "2025-10-02T04:04:53.105Z"
-    },
-    "Summertime Iseria": {
-      "filename": "summertime_iseria",
-      "cacheKey": "06708197",
-      "lastUpdated": "2025-10-03T04:35:29.341Z",
-      "fileExists": true,
-      "fileSizeBytes": 841867,
-      "totalBuilds": 3000,
-      "validData": true,
-      "accessCount": 0,
-      "lastAccessed": "2025-10-03T04:35:29.341Z"
-    },
-    "Maid Chloe": {
-      "filename": "maid_chloe",
-      "cacheKey": "be766475",
-      "lastUpdated": "2025-10-03T20:02:28.120Z",
-      "fileExists": true,
-      "fileSizeBytes": 831477,
-      "totalBuilds": 3000,
-      "validData": true,
-      "accessCount": 2,
-      "lastAccessed": "2025-10-05T22:15:57.914Z"
+      "lastAccessed": "2026-01-14T17:13:28.835Z"
     }
   },
-  "totalHeroes": 32,
-  "successfulHeroes": 32,
+  "totalHeroes": 13,
+  "successfulHeroes": 13,
   "failedHeroes": [],
-  "cacheSize": 27,
-  "totalDiskUsage": 21.62
+  "cacheSize": 11,
+  "totalDiskUsage": 8.89
 }
