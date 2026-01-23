@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile
     image: briar-bot:latest
-    container_name: briar-bot-prod
+    container_name: briar-bot
     restart: unless-stopped
     
     # Environment
