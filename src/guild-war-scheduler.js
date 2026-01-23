@@ -82,6 +82,13 @@ async function postAnnouncement(client, message)
             const channel = await client.channels.fetch(channelId);
             if (channel && channel.isTextBased())
             {
+                const permissions = channel.permissionsFor(client.user);
+                console.log(`[Guild War Debug] Channel ${channelId} permissions:`, {
+                    SendMessages: permissions.has('SendMessages'),
+                    MentionEveryone: permissions.has('MentionEveryone'),
+                    ViewChannel: permissions.has('ViewChannel')
+                });
+
                 await channel.send(message);
                 console.log(`[Guild War] Announcement sent to ${channelId}`);
             }
