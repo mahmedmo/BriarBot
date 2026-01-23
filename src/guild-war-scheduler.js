@@ -82,15 +82,7 @@ async function postAnnouncement(client, message)
             const channel = await client.channels.fetch(channelId);
             if (channel && channel.isTextBased())
             {
-                const permissions = channel.permissionsFor(client.user);
-                console.log(`[Guild War Debug] Channel ${channelId} permissions:`, {
-                    SendMessages: permissions.has('SendMessages'),
-                    MentionEveryone: permissions.has('MentionEveryone'),
-                    ViewChannel: permissions.has('ViewChannel')
-                });
-
                 await channel.send(message);
-                console.log(`[Guild War] Announcement sent to ${channelId}`);
             }
         }
         catch (error)
@@ -113,8 +105,6 @@ function scheduleAttackAnnouncements(client)
     {
         timezone: 'UTC'
     });
-
-    console.log(`[Guild War] Attack announcements scheduled: ${cronExpression} UTC`);
 }
 
 // Schedule defense announcements (Sun/Tue/Thu at midnight UTC)
@@ -130,25 +120,51 @@ function scheduleDefenseAnnouncements(client)
     {
         timezone: 'UTC'
     });
-
-    console.log(`[Guild War] Defense announcements scheduled: ${cronExpression} UTC`);
 }
 
 // Test command handler for manual testing
-async function testAnnouncements(client, type = 'both')
+async function testAnnouncements(client, type = 'both', testChannel = null)
 {
     if (type === 'attack' || type === 'both')
     {
-        console.log('[Guild War Test] Sending attack announcement...');
         const message = getRandomAnnouncement(ATTACK_ANNOUNCEMENTS);
-        await postAnnouncement(client, message);
+
+        if (testChannel)
+        {
+            try
+            {
+                await testChannel.send(message);
+            }
+            catch (error)
+            {
+                console.error(`[Guild War Test] Failed to send attack: ${error.message}`);
+            }
+        }
+        else
+        {
+            await postAnnouncement(client, message);
+        }
     }
 
     if (type === 'defense' || type === 'both')
     {
-        console.log('[Guild War Test] Sending defense announcement...');
         const message = getRandomAnnouncement(DEFENSE_ANNOUNCEMENTS);
-        await postAnnouncement(client, message);
+
+        if (testChannel)
+        {
+            try
+            {
+                await testChannel.send(message);
+            }
+            catch (error)
+            {
+                console.error(`[Guild War Test] Failed to send defense: ${error.message}`);
+            }
+        }
+        else
+        {
+            await postAnnouncement(client, message);
+        }
     }
 }
 
@@ -168,13 +184,8 @@ function initializeGuildWarScheduler(client)
         return;
     }
 
-    console.log(`[Guild War] Initializing scheduler for ${channels.length} channel(s)...`);
-    console.log(`[Guild War] Announcements scheduled for ${ANNOUNCEMENT_HOUR_UTC}:00 UTC (midnight)`);
-
     scheduleAttackAnnouncements(client);
     scheduleDefenseAnnouncements(client);
-
-    console.log('[Guild War] Scheduler initialized successfully');
 }
 
 module.exports = {

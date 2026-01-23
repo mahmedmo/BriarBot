@@ -2035,7 +2035,7 @@ if (require.main === module) {
 			}
 
 			await message.reply('🧪 The witch summons the war spirits for testing...');
-			await testAnnouncements(client, type);
+			await testAnnouncements(client, type, message.channel);
 			return;
 		}
 
