@@ -93,10 +93,10 @@ async function postAnnouncement(client, message)
     }
 }
 
-// Schedule attack announcements (Mon/Wed/Fri at midnight UTC)
+// Schedule attack announcements (Mon/Wed/Fri at 5pm MST = Tue/Thu/Sat midnight UTC)
 function scheduleAttackAnnouncements(client)
 {
-    const cronExpression = `0 ${ANNOUNCEMENT_HOUR_UTC} * * 1,3,5`;
+    const cronExpression = `0 ${ANNOUNCEMENT_HOUR_UTC} * * 2,4,6`;
 
     cron.schedule(cronExpression, async () =>
     {
@@ -108,10 +108,10 @@ function scheduleAttackAnnouncements(client)
     });
 }
 
-// Schedule defense announcements (Sun/Tue/Thu at midnight UTC)
+// Schedule defense announcements (Sun/Tue/Thu at 5pm MST = Mon/Wed/Fri midnight UTC)
 function scheduleDefenseAnnouncements(client)
 {
-    const cronExpression = `0 ${ANNOUNCEMENT_HOUR_UTC} * * 0,2,4`;
+    const cronExpression = `0 ${ANNOUNCEMENT_HOUR_UTC} * * 1,3,5`;
 
     cron.schedule(cronExpression, async () =>
     {
@@ -203,7 +203,7 @@ function initializeGuildWarScheduler(client)
     scheduleAttackAnnouncements(client);
     scheduleDefenseAnnouncements(client);
 
-    console.log('[Guild War] Scheduler initialized - Mon/Wed/Fri (attack), Sun/Tue/Thu (defense) at 00:00 UTC');
+    console.log('[Guild War] Scheduler initialized - Mon/Wed/Fri 5pm MST (attack), Sun/Tue/Thu 5pm MST (defense)');
 }
 
 module.exports = {
