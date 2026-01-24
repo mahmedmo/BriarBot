@@ -140,45 +140,13 @@ async function testAnnouncements(client, type = 'both', testChannel = null)
     if (type === 'attack' || type === 'both')
     {
         const message = getRandomAnnouncement(ATTACK_ANNOUNCEMENTS);
-
-        if (testChannel)
-        {
-            try
-            {
-                await testChannel.send(message);
-                console.log(`[Guild War Test] Attack announcement sent to ${testChannel.id}`);
-            }
-            catch (error)
-            {
-                console.error(`[Guild War Test] Failed to send attack: ${error.message}`);
-            }
-        }
-        else
-        {
-            await postAnnouncement(client, message);
-        }
+        await postAnnouncement(client, message);
     }
 
     if (type === 'defense' || type === 'both')
     {
         const message = getRandomAnnouncement(DEFENSE_ANNOUNCEMENTS);
-
-        if (testChannel)
-        {
-            try
-            {
-                await testChannel.send(message);
-                console.log(`[Guild War Test] Defense announcement sent to ${testChannel.id}`);
-            }
-            catch (error)
-            {
-                console.error(`[Guild War Test] Failed to send defense: ${error.message}`);
-            }
-        }
-        else
-        {
-            await postAnnouncement(client, message);
-        }
+        await postAnnouncement(client, message);
     }
 }
 
