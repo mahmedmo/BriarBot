@@ -68,9 +68,7 @@ The test suite includes:
 - **Node.js** - Runtime environment
 - **Discord.js** - Discord API integration  
 - **Puppeteer** - Web scraping and image generation
-- **Axios & Node-Fetch** - HTTP requests
 - **Docker** - Containerized deployment
-- **PM2** - Process management
 - **[Fribbels Epic 7 Optimizer](https://github.com/fribbels/Fribbels-Epic-7-Optimizer)** - Build data source
 
 ---
