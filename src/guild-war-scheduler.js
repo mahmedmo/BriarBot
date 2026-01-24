@@ -126,17 +126,6 @@ function scheduleDefenseAnnouncements(client)
 // Test command handler for manual testing
 async function testAnnouncements(client, type = 'both', testChannel = null)
 {
-    // Check if test channel is in configured channels
-    if (testChannel)
-    {
-        const channelIds = getAnnouncementChannels();
-        if (!channelIds.includes(testChannel.id))
-        {
-            console.error(`[Guild War Test] Channel ${testChannel.id} not in configured announcement channels`);
-            return;
-        }
-    }
-
     if (type === 'attack' || type === 'both')
     {
         const message = getRandomAnnouncement(ATTACK_ANNOUNCEMENTS);
