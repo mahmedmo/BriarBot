@@ -1,32 +1,38 @@
 #!/bin/bash
 
 # BriarBot Deployment Script
-# This script stops, rebuilds (no cache), and restarts the bot
+# Local mode: pulls git + rebuilds from source
+# Server image mode: pulls the published container image instead
 
 set -e  # Exit on error
+
+COMPOSE_FILE="${COMPOSE_FILE:-docker-compose.yml}"
+COMPOSE_CMD=(docker compose -f "$COMPOSE_FILE")
 
 echo "🌙 BriarBot Deployment"
 echo "======================"
 echo ""
 
-# Pull latest code
-echo "Pulling latest code from git..."
-git pull origin main
-echo ""
+if [ "$COMPOSE_FILE" = "docker-compose.server.yml" ] || [ -n "${BRIARBOT_IMAGE:-}" ]; then
+	echo "Pulling latest published image..."
+	"${COMPOSE_CMD[@]}" pull
+	echo ""
+else
+	echo "Pulling latest code from git..."
+	git pull origin main
+	echo ""
 
-# Stop containers
+	echo "Building Docker image (no cache)..."
+	"${COMPOSE_CMD[@]}" build --no-cache
+	echo ""
+fi
+
 echo "Stopping containers..."
-docker compose down
+"${COMPOSE_CMD[@]}" down
 echo ""
 
-# Build without cache
-echo "Building Docker image (no cache)..."
-docker compose build --no-cache
-echo ""
-
-# Start containers
 echo "Starting containers..."
-docker compose up -d
+"${COMPOSE_CMD[@]}" up -d
 echo ""
 
 echo "✅ Deployment complete!"
@@ -34,4 +40,4 @@ echo ""
 
 # Show logs
 echo "Container logs (Ctrl+C to exit):"
-docker compose logs -f
+"${COMPOSE_CMD[@]}" logs -f

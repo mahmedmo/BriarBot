@@ -7,6 +7,7 @@
 		"start": "node src/briar-bot.js",
 		"dev": "nodemon src/briar-bot.js",
 		"test": "node tests/automated-test-suite.js",
+		"test:character-data": "node tests/character-data-test.js",
 		"test:interactive": "node tests/interactive-test-runner.js",
 		"test:auto": "node tests/automated-test-suite.js",
 		"build": "npm run install-chrome"
@@ -33,5 +34,5 @@
 		"e7"
 	],
 	"author": "mahmedmo",
-	"license": "MIT"
+	"license": "GPL-3.0-only"
 }

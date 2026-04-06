@@ -1,0 +1,65 @@
+name: Manage Character Data
+
+on:
+  workflow_dispatch:
+    inputs:
+      character_name:
+        description: Full Epic Seven character name
+        required: true
+        type: string
+      aliases:
+        description: Optional aliases or abbreviations, separated by commas or new lines
+        required: false
+        type: string
+      target_branch:
+        description: Branch to update
+        required: true
+        default: main
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  update-character-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.target_branch }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Update character data
+        env:
+          CHARACTER_NAME: ${{ inputs.character_name }}
+          CHARACTER_ALIASES: ${{ inputs.aliases }}
+        run: node scripts/upsert-character-data.js --character "$CHARACTER_NAME" --aliases "$CHARACTER_ALIASES"
+
+      - name: Validate character data
+        run: npm run test:character-data
+
+      - name: Commit changes
+        env:
+          CHARACTER_NAME: ${{ inputs.character_name }}
+          TARGET_BRANCH: ${{ inputs.target_branch }}
+        run: |
+          if git diff --quiet; then
+            echo "No character data changes detected."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/data/character-names.json assets/data/character-aliases.json
+          git commit -m "chore(data): update ${CHARACTER_NAME}"
+          git push origin "HEAD:${TARGET_BRANCH}"

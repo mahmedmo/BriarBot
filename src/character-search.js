@@ -3,13 +3,22 @@ const path = require('path');
 
 // Load character names
 const characterDataPath = path.join(__dirname, '..', 'assets', 'data', 'character-names.json');
+const characterAliasDataPath = path.join(__dirname, '..', 'assets', 'data', 'character-aliases.json');
 let characterNames = [];
+let communityAbbreviations = {};
 
 try {
     const characterData = JSON.parse(fs.readFileSync(characterDataPath, 'utf8'));
     characterNames = characterData.characters;
 } catch (error) {
     console.error('Error loading character names:', error);
+}
+
+try {
+    const characterAliasData = JSON.parse(fs.readFileSync(characterAliasDataPath, 'utf8'));
+    communityAbbreviations = characterAliasData.aliases || {};
+} catch (error) {
+    console.error('Error loading character aliases:', error);
 }
 
 // Calculate Levenshtein distance for fuzzy matching
@@ -44,80 +53,6 @@ function levenshteinDistance(str1, str2) {
     return matrix[len2][len1];
 }
 
-// Common community abbreviations and nicknames
-const COMMUNITY_ABBREVIATIONS = {
-    // Moonlight (ML) abbreviations
-    'arby': 'Arbiter Vildred',
-    'arb': 'Arbiter Vildred',
-    'aravi': 'Apocalypse Ravi',
-    'czerato': 'Champion Zerato',
-    'sbara': 'Silver Blade Aramintha',
-	'pflan': 'Pirate Captain Flan',
-	'aflan': 'Afternoon Soak Flan',
-	'asflan': 'Afternoon Soak Flan',
-	'yenya': 'Young Senya',
-	'spoli': 'Sea Phantom Politis',
-	'atywin': 'Ambitious Tywin',
-    'mlkise': 'Judge Kise',
-	'jkise': 'Judge Kise',
-    'rviolet': 'Remnant Violet',
-	'riolet': 'Remnant Violet',
-    'lrk': 'Last Rider Krau',
-	'aras': 'Adventurer Ras',
-    'bbkarin': 'Blood Blade Karin',
-	'bbk': 'Blood Blade Karin',
-    'cmrin': 'Crescent Moon Rin',
-	'seline': 'Spirit Eye Celine',
-	'bhwa': 'Bystander Hwayoung',
-	'ahwa': 'Argent Waves Hwayoung',
-	'awhwa': 'Argent Waves Hwayoung',
-	'hwa': 'Hwayoung',
-	'dks': 'Dragon King Sharun',
-	'briseria': 'Briar Witch Iseria',
-	'mliseria': 'Briar Witch Iseria',
-	'seaseria': 'Summertime Iseria',
-    'ssb': 'Seaside Bellona',
-    'sb': 'Seaside Bellona',
-	'lcb': 'Lone Crescent Bellona',
-	'lcbellona': 'Lone Crescent Bellona',
-    'summerbellona': 'Seaside Bellona',
-    'holidayyufine': 'Holiday Yufine',
-    'hyufine': 'Holiday Yufine',
-	'summer yufine': 'Holiday Yufine',
-    'summer charlotte': 'Summer Break Charlotte',
-    'sharklotte': 'Summer Break Charlotte',
-    'lqc': 'Little Queen Charlotte',
-	'lhc': 'Lionheart Cermia',
-	'lermia': 'Lionheart Cermia',
-	'cavel': 'Commander Pavel',
-	'barunka': 'Boss Arunka',
-	'moona': 'New Moon Luna',
-	'clilias': 'Conqueror Lilias',
-	'fluri': 'Falconer Kluri',
-	'flidica': 'Faithless Lidica',
-	'mllidica': 'Faithless Lidica',
-	'blidica': 'Blooming Lidica',
-	'wtene': 'Witch of the Mere Tenebria',
-	'stene': 'Specter Tenebria',
-	'mltenebria': Math.random() < 0.5 ? 'Specter Tenebria' : 'Witch of the Mere Tenebria',
-	'mltene': Math.random() < 0.5 ? 'Specter Tenebria' : 'Witch of the Mere Tenebria',
-	'2beru': 'Lady of the Scales',
-	'lady': 'Lady of the Scales',
-	'lmeru': 'Lady of the Scales',
-	'light meru': 'Lady of the Scales',
-	'dark meru': 'Archdemon\'s Shadow',
-	'ameru': 'Archdemon\'s Shadow',
-	'techron': 'Twisted Eidolon Kayron',
-	'spez': 'Specimen Sez',
-	'djb': 'Desert Jewel Basar',
-	'ddr': 'Death Dealer Ray',
-	'grass': 'Genesis Ras',
-	'gras': 'Genesis Ras',
-	'mlras': 'Genesis Ras',
-	'mlluluca': 'Top Model Luluca',
-	'tomoca': 'Top Model Luluca',
-};
-
 // Normalize text for better matching
 function normalizeText(text) {
     return text.toLowerCase()
@@ -140,6 +75,14 @@ function getRandomizedConfidence(baseConfidence) {
 	return baseConfidence + baseConfidence * randomPercentage;
 }
 
+function resolveAlias(aliasValue) {
+	if (Array.isArray(aliasValue)) {
+		return aliasValue[Math.floor(Math.random() * aliasValue.length)];
+	}
+
+	return aliasValue;
+}
+
 // Find the best character match
 function findBestCharacterMatch(input) {
     if (!input || input.trim().length === 0) {
@@ -160,12 +103,12 @@ function findBestCharacterMatch(input) {
                 matchType: 'exact' 
             };
         }
-    }
+	}
     
 	// Second pass: Check community abbreviations second
-	if (COMMUNITY_ABBREVIATIONS[normalizedInput]) {
+	if (communityAbbreviations[normalizedInput]) {
 		return {
-			character: COMMUNITY_ABBREVIATIONS[normalizedInput],
+			character: resolveAlias(communityAbbreviations[normalizedInput]),
 			confidence: getRandomizedConfidence(0.65),
 			matchType: 'abbreviation'
 		};
@@ -345,5 +288,6 @@ module.exports = {
     getCharacterSuggestions,
     formatDiscordInput,
     testSearch,
-    characterNames
+    characterNames,
+    communityAbbreviations
 };
