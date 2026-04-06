@@ -1,5 +1,6 @@
 {
 	"aliases": {
+		"2beru": "Lady of the Scales",
 		"aflan": "Afternoon Soak Flan",
 		"ahwa": "Argent Waves Hwayoung",
 		"ameru": "Archdemon's Shadow",
@@ -20,10 +21,10 @@
 		"clilias": "Conqueror Lilias",
 		"cmrin": "Crescent Moon Rin",
 		"czerato": "Champion Zerato",
+		"dark meru": "Archdemon's Shadow",
 		"ddr": "Death Dealer Ray",
 		"djb": "Desert Jewel Basar",
 		"dks": "Dragon King Sharun",
-		"dark meru": "Archdemon's Shadow",
 		"flidica": "Faithless Lidica",
 		"fluri": "Falconer Kluri",
 		"gras": "Genesis Ras",
@@ -63,17 +64,16 @@
 		"seaseria": "Summertime Iseria",
 		"seline": "Spirit Eye Celine",
 		"sharklotte": "Summer Break Charlotte",
-		"spoli": "Sea Phantom Politis",
 		"spez": "Specimen Sez",
+		"spoli": "Sea Phantom Politis",
 		"ssb": "Seaside Bellona",
+		"stene": "Specter Tenebria",
 		"summer charlotte": "Summer Break Charlotte",
 		"summer yufine": "Holiday Yufine",
 		"summerbellona": "Seaside Bellona",
-		"stene": "Specter Tenebria",
 		"techron": "Twisted Eidolon Kayron",
 		"tomoca": "Top Model Luluca",
 		"wtene": "Witch of the Mere Tenebria",
-		"yenya": "Young Senya",
-		"2beru": "Lady of the Scales"
+		"yenya": "Young Senya"
 	}
 }
