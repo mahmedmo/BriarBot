@@ -59,7 +59,7 @@ You can now add a new Epic Seven unit without hand-editing source files:
 3. Optionally enter abbreviations in `aliases` as comma-separated values like `spoli, sea politis`.
 4. Run the workflow against `main` or `develop`.
 
-The workflow updates both [assets/data/character-names.json](assets/data/character-names.json) and [assets/data/character-aliases.json](assets/data/character-aliases.json), validates the search layer, and commits the result back to the branch.
+The workflow updates both [assets/data/character-names.json](assets/data/character-names.json) and [assets/data/character-aliases.json](assets/data/character-aliases.json), validates the search layer, and commits the result back to the branch. When you target `main`, the same workflow also publishes a fresh GHCR image for the server to pick up automatically.
 
 ## Hands-Off Server Updates
 
@@ -69,7 +69,7 @@ For a one-time server setup, use the published GitHub Container Registry image p
 2. Start the production stack with `docker compose -f docker-compose.server.yml up -d --remove-orphans`.
 3. Install the automatic update job with `bash scripts/install-server-auto-update-cron.sh 5`.
 
-After that, pushes to `main` trigger the **Publish Container** workflow, GHCR gets a fresh image, and the server cron job checks for updates every few minutes and recreates BriarBot when a new image appears.
+After that, character updates run through **Manage Character Data**, which publishes a fresh GHCR image when targeting `main`, and the server cron job checks for updates every few minutes and recreates BriarBot when a new image appears. The separate **Publish Container** workflow is still available for manual rebuilds and normal code pushes to `main`.
 
 ## Testing
 
