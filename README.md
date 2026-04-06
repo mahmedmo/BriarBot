@@ -63,13 +63,13 @@ The workflow updates both [assets/data/character-names.json](assets/data/charact
 
 ## Hands-Off Server Updates
 
-For a one-time server setup, use the published GitHub Container Registry image plus Watchtower:
+For a one-time server setup, use the published GitHub Container Registry image plus a host cron job:
 
 1. On the server, set `BRIARBOT_IMAGE=ghcr.io/<owner>/<repo>:latest` in `.env`.
-2. Run `docker login ghcr.io` once on the server.
-3. Start the production stack with `docker compose -f docker-compose.server.yml up -d`.
+2. Start the production stack with `docker compose -f docker-compose.server.yml up -d --remove-orphans`.
+3. Install the automatic update job with `bash scripts/install-server-auto-update-cron.sh 5`.
 
-After that, pushes to `main` trigger the **Publish Container** workflow, GHCR gets a fresh image, and Watchtower automatically pulls and restarts BriarBot on your server.
+After that, pushes to `main` trigger the **Publish Container** workflow, GHCR gets a fresh image, and the server cron job checks for updates every few minutes and recreates BriarBot when a new image appears.
 
 ## Testing
 

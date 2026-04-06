@@ -15,7 +15,7 @@ echo ""
 
 if [ "$COMPOSE_FILE" = "docker-compose.server.yml" ] || [ -n "${BRIARBOT_IMAGE:-}" ]; then
 	echo "Pulling latest published image..."
-	"${COMPOSE_CMD[@]}" pull
+	"${COMPOSE_CMD[@]}" pull briar-bot
 	echo ""
 else
 	echo "Pulling latest code from git..."
@@ -32,7 +32,7 @@ echo "Stopping containers..."
 echo ""
 
 echo "Starting containers..."
-"${COMPOSE_CMD[@]}" up -d
+"${COMPOSE_CMD[@]}" up -d --remove-orphans
 echo ""
 
 echo "✅ Deployment complete!"
