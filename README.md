@@ -12,7 +12,7 @@ Look up popular character builds, gear sets, artifacts, and guild war reminders 
   <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black">
   <img alt="Discord" src="https://img.shields.io/badge/Discord-5865F2?style=flat&logo=discord&logoColor=white">
   <img alt="Self-Hosted" src="https://img.shields.io/badge/Self--Hosted-2496ED?style=flat&logo=docker&logoColor=white">
-  <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-GPL--3.0-0B1F3A?style=flat"></a>
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/%E2%9A%96-0B1F3A?style=flat"></a>
 </p>
 
 <img src="assets/shared/briar-bot.png" alt="Briar Bot" width="280">
@@ -66,11 +66,11 @@ docker compose -f .docker/compose.yml pull
 docker compose -f .docker/compose.yml up -d --remove-orphans
 ```
 
-Detailed configuration, environment variables, and the optional image updater are available in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
+Detailed configuration, environment variables, and the optional image updater are available in [DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
 ## Development
 
-Instructions for installing dependencies with Bun, running the bot locally, and executing the test suite are available in [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md).
+Instructions for installing dependencies with Bun, running the bot locally, and executing the test suite are available in [DEVELOPMENT.md](docs/DEVELOPMENT.md).
 
 ## Contributing
 
