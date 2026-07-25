@@ -68,7 +68,7 @@ See [DEPLOYMENT.md](docs/DEPLOYMENT.md) for configuration.
 
 ## Development
 
-Local setup is in [DEVELOPMENT.md](docs/DEVELOPMENT.md).
+See [DEVELOPMENT.md](docs/DEVELOPMENT.md).
 
 ## Contributing
 
