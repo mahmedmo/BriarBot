@@ -49,6 +49,8 @@ Once the bot is online, look up builds by character name or alias:
 !seaside bellona
 ```
 
+<img width="250" alt="Briar Bot character build response" src="assets/shared/screenshot.png" />
+
 Guild war announcement tests (when channels are configured):
 
 ```text
@@ -56,8 +58,6 @@ Guild war announcement tests (when channels are configured):
 !testguildwar attack
 !testguildwar defense
 ```
-
-<img width="250" alt="Briar Bot character build response" src="assets/shared/screenshot.png" />
 
 For more in-depth setup instructions, refer to [DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
