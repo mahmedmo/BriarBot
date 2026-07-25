@@ -64,11 +64,11 @@ docker compose -f .docker/compose.yml pull
 docker compose -f .docker/compose.yml up -d --remove-orphans
 ```
 
-Detailed configuration, environment variables, and the optional image updater are available in [DEPLOYMENT.md](docs/DEPLOYMENT.md).
+See [DEPLOYMENT.md](docs/DEPLOYMENT.md) for configuration.
 
 ## Development
 
-Instructions for installing dependencies with Bun, running the bot locally, and executing the test suite are available in [DEVELOPMENT.md](docs/DEVELOPMENT.md).
+Local setup is in [DEVELOPMENT.md](docs/DEVELOPMENT.md).
 
 ## Contributing
 
