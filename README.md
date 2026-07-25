@@ -29,9 +29,19 @@ It provides:
 
 Briar Bot is meant to stay a focused Epic Seven utility for Discord communities rather than a general-purpose game bot.
 
-## Usage
+## Getting Started
 
-Character lookups:
+The usual path is Docker. Pull the published image and run it with Compose:
+
+```bash
+docker pull ghcr.io/ahdmuh/briar-bot:latest
+cp .env.example .env
+# Set BOT_TOKEN (and optional guild war channels) in .env
+docker compose -f .docker/compose.yml pull
+docker compose -f .docker/compose.yml up -d --remove-orphans
+```
+
+Once the bot is online, look up builds by character name or alias:
 
 ```text
 !arbiter vildred
@@ -47,21 +57,7 @@ Guild war announcement tests (when channels are configured):
 !testguildwar defense
 ```
 
-<p><strong>Build Lookup</strong></p>
-
 <img width="250" alt="Briar Bot character build response" src="assets/shared/screenshot.png" />
-
-## Getting Started
-
-The usual path is Docker. Pull the published image and run it with Compose:
-
-```bash
-docker pull ghcr.io/ahdmuh/briar-bot:latest
-cp .env.example .env
-# Set BOT_TOKEN (and optional guild war channels) in .env
-docker compose -f .docker/compose.yml pull
-docker compose -f .docker/compose.yml up -d --remove-orphans
-```
 
 For more in-depth setup instructions, refer to [DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
