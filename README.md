@@ -11,7 +11,7 @@ Look up popular character builds, gear sets, artifacts, and guild war reminders 
 <p>
   <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black">
   <img alt="Discord" src="https://img.shields.io/badge/Discord-5865F2?style=flat&logo=discord&logoColor=white">
-  <img alt="Self-Hosted" src="https://img.shields.io/badge/Self--Hosted-2496ED?style=flat&logo=docker&logoColor=white">
+  <img alt="Self-Host" src="https://img.shields.io/badge/Self--Host-2496ED?style=flat&logo=docker&logoColor=white">
   <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/%E2%9A%96%20GPL--3.0-0B1F3A?style=flat"></a>
 </p>
 
