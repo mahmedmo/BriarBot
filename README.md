@@ -2,8 +2,6 @@
 
 # Briar Bot
 
----
-
 **Epic Seven builds in Discord.**
 
 Look up popular character builds, gear sets, artifacts, and guild war reminders from chat.
