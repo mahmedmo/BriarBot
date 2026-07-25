@@ -64,7 +64,7 @@ docker compose -f .docker/compose.yml pull
 docker compose -f .docker/compose.yml up -d --remove-orphans
 ```
 
-For further information, refer to [DEPLOYMENT.md](docs/DEPLOYMENT.md).
+For more in-depth setup instructions, refer to [DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
 ## Development
 
