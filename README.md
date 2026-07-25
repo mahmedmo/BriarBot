@@ -10,7 +10,7 @@ Look up popular character builds, gear sets, artifacts, and guild war reminders 
   <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black">
   <img alt="Discord" src="https://img.shields.io/badge/Discord-5865F2?style=flat&logo=discord&logoColor=white">
   <img alt="Self-Host" src="https://img.shields.io/badge/Self--Host-2496ED?style=flat&logo=docker&logoColor=white">
-  <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/%E2%9A%96%20GPL--3.0-0B1F3A?style=flat"></a>
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/GPL--3.0-0B1F3A?style=flat&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0iI2ZmZiIgZD0iTTEyIDNjLS42IDAtMSAuNC0xIDF2LjljLTIuNS40LTQuNSAyLjUtNC41IDUuMXYuMkwzLjYgMTFhMSAxIDAgMCAwLS41IDEuNGwyLjUgNC4zQTMgMyAwIDEgMCAxMSAxNS4zVjE5SDlhMSAxIDAgMSAwIDAgMmg2YTEgMSAwIDEgMCAwLTJoLTJ2LTMuN2EzIDMgMCAxIDAgNS40LTEuNmwyLjUtNC4zYTEgMSAwIDAgMC0uNS0xLjRMMTcuNSAxMC4ydi0uMmMwLTIuNi0yLTQuNy00LjUtNS4xVjRjMC0uNi0uNC0xLTEtMXptLTMgOC40IDMgMSAzLTEgLjkgMS42QTEgMSAwIDEgMSAxNCAxNWExIDEgMCAwIDEtLjItLjdMMTIgMTMuMWwtMS44IDEuMkExIDEgMCAxIDEgOC4xIDEzbC45LTEuNnoiLz48L3N2Zz4%3D&logoColor=white"></a>
 </p>
 
 <img src="assets/shared/briar-bot.png" alt="Briar Bot" width="280">
