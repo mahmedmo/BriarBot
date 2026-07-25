@@ -1,9 +1,19 @@
-name: Briar · Image
+name: Briar Bot · Image
 
 on:
   push:
     branches:
       - main
+    paths:
+      - "src/**"
+      - "data/**"
+      - "assets/**"
+      - "scripts/**"
+      - "package.json"
+      - "bun.lock"
+      - ".docker/**"
+      - ".dockerignore"
+      - ".github/workflows/briar-image.yml"
   workflow_dispatch:
   workflow_call:
     inputs:
