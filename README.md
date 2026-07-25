@@ -24,9 +24,8 @@ Briar Bot is a Discord bot for Epic Seven players who want popular character bui
 It provides:
 
 - Character build lookups by name or common aliases
-- Visual build report cards with common stat ranges, gear sets, and artifacts
-- Optional guild war attack and defense reminders on a schedule
-- A published container image for private and home-server deployments
+- Visual build report cards with common stats, gear sets, and artifacts
+- Optional guild war attack and defense reminders
 
 Briar Bot is meant to stay a focused Epic Seven utility for Discord communities rather than a general-purpose game bot.
 
