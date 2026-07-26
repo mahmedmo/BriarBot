@@ -12,7 +12,7 @@ on:
       - "package.json"
       - "bun.lock"
       - ".docker/**"
-      - ".dockerignore"
+      - ".docker/.dockerignore"
       - ".github/workflows/briar-image.yml"
   workflow_dispatch:
   workflow_call:
