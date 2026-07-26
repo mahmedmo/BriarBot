@@ -5,7 +5,7 @@ Requires [Bun](https://bun.sh) 1.3.14 or newer (`packageManager` in `package.jso
 ## Setup
 
 ```bash
-cp .env.example .env
+cp .env.template .env
 # Set BOT_TOKEN for a live Discord connection
 bun install --frozen-lockfile
 ```

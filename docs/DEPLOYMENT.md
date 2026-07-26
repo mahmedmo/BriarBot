@@ -7,7 +7,7 @@ Briar Bot runs as a single Docker Compose service. Runtime cache and logs live i
 From a checkout of this repository (or any directory that has the compose file and a `.env` beside it as compose expects):
 
 ```bash
-cp .env.example .env
+cp .env.template .env
 # Edit .env and set BOT_TOKEN
 docker compose -f .docker/compose.yml pull
 docker compose -f .docker/compose.yml up -d --remove-orphans
@@ -38,7 +38,7 @@ The `5` is the update check interval in minutes. The updater runs `scripts/updat
 
 ## Configuration
 
-Copy `.env.example` to `.env` and set the variables you need. Full defaults also appear in `.env.example`.
+Copy `.env.template` to `.env` and set the variables you need. Full defaults also appear in `.env.template`.
 
 | Variable | Requirement | Description | Default |
 | -------- | ----------- | ----------- | ------- |

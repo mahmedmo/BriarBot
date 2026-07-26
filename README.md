@@ -35,7 +35,7 @@ The usual path is Docker. Pull the published image and run it with Compose:
 
 ```bash
 docker pull ghcr.io/ahdmuh/briar-bot:latest
-cp .env.example .env
+cp .env.template .env
 # Set BOT_TOKEN (and optional guild war channels) in .env
 docker compose -f .docker/compose.yml pull
 docker compose -f .docker/compose.yml up -d --remove-orphans
@@ -67,7 +67,7 @@ See [DEVELOPMENT.md](docs/DEVELOPMENT.md).
 
 ## Contributing
 
-Bug fixes, security patches, and other critical improvements are welcome. Larger changes and feature enhancements will be reviewed individually to ensure they fit the project’s direction. See [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request. I’m also a student with limited free time, so reviews may take a while. Thanks for bearing with me.
+Bug fixes, security patches, and other critical improvements are welcome. Larger changes and feature enhancements will be reviewed individually to ensure they fit the project’s direction. See [CONTRIBUTING.md](.github/CONTRIBUTING.md) before opening a pull request. I’m also a student with limited free time, so reviews may take a while. Thanks for bearing with me.
 
 ## Transparency
 
